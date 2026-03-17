@@ -15,7 +15,7 @@ function TestPage() {
     fetchMessage();
   }, []);
 
-  return <span className="message">{message}</span>;
+  return <span className="message">{message ? message : "Loading..."}</span>;
 }
 
 export default TestPage;
