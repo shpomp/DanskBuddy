@@ -1,5 +1,5 @@
 import React from "react";
-
+import "./components/Shared/Shared.css";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { initStorage } from "./utils/initStorage";
