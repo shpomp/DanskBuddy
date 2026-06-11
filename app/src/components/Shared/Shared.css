@@ -1,0 +1,16 @@
+.spinner {
+  font-size: 18px;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.empty-state {
+  text-align: center;
+  padding: 20px;
+  color: gray;
+}
