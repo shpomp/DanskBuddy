@@ -1,11 +1,13 @@
 import React from "react";
+import "./components/Shared/Shared.css";
 import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { initStorage } from "./utils/initStorage";
 import Layout from "./components/Layout/Layout.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import TestPage from "./components/TestPage/TestPage.jsx";
 import "./main.css";
-
+initStorage();
 const router = createBrowserRouter([
   {
     path: "/",
