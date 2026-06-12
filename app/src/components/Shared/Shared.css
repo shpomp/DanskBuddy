@@ -1,0 +1,22 @@
+.badge-green,
+.badge-blue,
+.badge-purple,
+.badge-gray {
+  font-weight: bold;
+}
+
+.badge-green {
+  color: green;
+}
+
+.badge-blue {
+  color: blue;
+}
+
+.badge-purple {
+  color: purple;
+}
+
+.badge-gray {
+  color: gray;
+}
