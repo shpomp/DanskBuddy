@@ -49,7 +49,7 @@ export function AppProvider({ children }) {
     const exists = matches.some(
       (m) =>
         (m.requesterId === requesterId && m.receiverId === receiverId) ||
-        (m.requesterId === receiverId && m.receiverId === requesterId),
+        (m.requesterId === receiverId && m.receiverId === requesterId)
     );
     if (exists) return { success: false, error: "Already sent." };
     const match = {
@@ -64,12 +64,12 @@ export function AppProvider({ children }) {
   }
   function respondToMatch(matchId, status) {
     setMatches((prev) =>
-      prev.map((m) => (m.id === matchId ? { ...m, status } : m)),
+      prev.map((m) => (m.id === matchId ? { ...m, status } : m))
     );
   }
   function getMatchesForUser(userId) {
     return matches.filter(
-      (m) => m.requesterId === userId || m.receiverId === userId,
+      (m) => m.requesterId === userId || m.receiverId === userId
     );
   }
 
@@ -118,7 +118,7 @@ export function AppProvider({ children }) {
             ? p.likes.filter((id) => id !== userId)
             : [...p.likes, userId],
         };
-      }),
+      })
     );
   }
   function deletePost(postId, requesterId) {

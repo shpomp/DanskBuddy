@@ -20,8 +20,7 @@ export function AuthProvider({ children }) {
     const users = getUsers();
     const match = users.find(
       (u) =>
-        u.email.toLowerCase() === email.toLowerCase() &&
-        u.password === password,
+        u.email.toLowerCase() === email.toLowerCase() && u.password === password
     );
     if (!match) return { success: false, error: "Invalid email or password." };
     setCurrentUser(match.id);
