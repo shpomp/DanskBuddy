@@ -1,3 +1,7 @@
 export default function LoadingSpinner() {
-  return <div className="spinner">Loading...</div>;
+  return (
+    <div className="spinner" role="status" aria-label="Loading">
+      Loading...
+    </div>
+  );
 }

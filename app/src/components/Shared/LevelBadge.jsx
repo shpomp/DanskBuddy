@@ -1,9 +1,11 @@
 export default function LevelBadge({ level }) {
-  let color = "gray";
+  let className = "badge-gray";
 
-  if (level === "A1" || level === "A2") color = "green";
-  if (level === "B1" || level === "B2") color = "blue";
-  if (level === "C1" || level === "native") color = "purple";
+  if (level === "A1" || level === "A2") className = "badge-green";
+  if (level === "B1" || level === "B2") className = "badge-blue";
+  if (level === "C1" || level === "C2" || level === "native") {
+    className = "badge-purple";
+  }
 
-  return <span style={{ color, fontWeight: "bold" }}>{level}</span>;
+  return <span className={className}>{level}</span>;
 }
