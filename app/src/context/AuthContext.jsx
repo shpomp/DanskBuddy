@@ -18,7 +18,7 @@ export function AuthProvider({ children }) {
   }, []);
   function login(email, password) {
     const users = getUsers();
-    const match = users.find (
+    const match = users.find(
       (u) =>
         u.email.toLowerCase() === email.toLowerCase() &&
         u.password === password,
