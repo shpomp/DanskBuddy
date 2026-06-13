@@ -1,4 +1,10 @@
-import { createContext, useContext, useState, useEffect } from "react";
+import {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { generateId } from "../utils/uuid";
 import {
   getUsers,
@@ -10,13 +16,19 @@ import {
   getPosts,
   savePosts,
 } from "../utils/storage";
+import { AuthProvider } from "./AuthContext";
+
+// ─── Context ──────────────────────────────────────────────────────────────────
 const AppContext = createContext(null);
+
+// ─── Provider ─────────────────────────────────────────────────────────────────
 export function AppProvider({ children }) {
   const [users, setUsers] = useState(() => getUsers());
   const [matches, setMatches] = useState(() => getMatches());
   const [messages, setMessages] = useState(() => getMessages());
   const [posts, setPosts] = useState(() => getPosts());
 
+  // Keep localStorage in sync whenever state changes
   useEffect(() => {
     saveUsers(users);
   }, [users]);
@@ -30,7 +42,27 @@ export function AppProvider({ children }) {
     savePosts(posts);
   }, [posts]);
 
-  function registerUser(userData) {
+  // ── Sync callback for AuthContext ──────────────────────────────────────────
+  // When AuthContext calls updateUser, it passes the updated user here
+  // so AppContext.users state also updates — preventing desync between
+  // the two contexts holding different versions of the same user object.
+  const handleUpdateUser = useCallback((updatedUser) => {
+    setUsers((prev) =>
+      prev.map((u) => (u.id === updatedUser.id ? updatedUser : u))
+    );
+  }, []);
+
+  // ── User helpers ────────────────────────────────────────────────────────────
+
+  /**
+
+- registerUser(userData)
+- IMPORTANT: caller must hash the password BEFORE passing it in.
+- Use hashPassword() from AuthContext:
+- const hashed = await hashPassword(password);
+- registerUser({ ...data, password: hashed });
+*/
+  const registerUser = useCallback((userData) => {
     const newUser = {
       id: generateId(),
       createdAt: new Date().toISOString().split("T")[0],
@@ -40,62 +72,103 @@ export function AppProvider({ children }) {
     };
     setUsers((prev) => [...prev, newUser]);
     return newUser;
-  }
-  function getUserById(id) {
-    return users.find((u) => u.id === id);
-  }
+  }, []);
 
-  function sendMatchRequest(requesterId, receiverId) {
-    const exists = matches.some(
-      (m) =>
-        (m.requesterId === requesterId && m.receiverId === receiverId) ||
-        (m.requesterId === receiverId && m.receiverId === requesterId)
-    );
-    if (exists) return { success: false, error: "Already sent." };
-    const match = {
-      id: generateId(),
-      requesterId,
-      receiverId,
-      status: "pending",
-      createdAt: new Date().toISOString().split("T")[0],
-    };
-    setMatches((prev) => [...prev, match]);
-    return { success: true, match };
-  }
-  function respondToMatch(matchId, status) {
+  const getUserById = useCallback(
+    (id) => {
+      return users.find((u) => u.id === id);
+    },
+    [users]
+  );
+
+  const getAllLearners = useCallback(() => {
+    return users.filter((u) => u.role === "learner");
+  }, [users]);
+
+  const getAllNatives = useCallback(() => {
+    return users.filter((u) => u.role === "native");
+  }, [users]);
+
+  // ── Match helpers ───────────────────────────────────────────────────────────
+
+  const sendMatchRequest = useCallback(
+    (requesterId, receiverId) => {
+      const exists = matches.some(
+        (m) =>
+          (m.requesterId === requesterId && m.receiverId === receiverId) ||
+          (m.requesterId === receiverId && m.receiverId === requesterId)
+      );
+      if (exists) return { success: false, error: "Already sent." };
+      const match = {
+        id: generateId(),
+        requesterId,
+        receiverId,
+        status: "pending",
+        createdAt: new Date().toISOString().split("T")[0],
+      };
+      setMatches((prev) => [...prev, match]);
+      return { success: true, match };
+    },
+    [matches]
+  );
+
+  const respondToMatch = useCallback((matchId, status) => {
     setMatches((prev) =>
       prev.map((m) => (m.id === matchId ? { ...m, status } : m))
     );
-  }
-  function getMatchesForUser(userId) {
-    return matches.filter(
-      (m) => m.requesterId === userId || m.receiverId === userId
-    );
-  }
+  }, []);
 
-  function buildConversationId(userId1, userId2) {
+  const getMatchesForUser = useCallback(
+    (userId) => {
+      return matches.filter(
+        (m) => m.requesterId === userId || m.receiverId === userId
+      );
+    },
+    [matches]
+  );
+
+  const getAcceptedMatchesForUser = useCallback(
+    (userId) => {
+      return getMatchesForUser(userId).filter((m) => m.status === "accepted");
+    },
+    [getMatchesForUser]
+  );
+
+  // ── Message helpers ─────────────────────────────────────────────────────────
+
+  const buildConversationId = useCallback((userId1, userId2) => {
     return [userId1, userId2].sort().join("-");
-  }
-  function sendMessage(senderId, receiverId, text) {
-    const conversationId = buildConversationId(senderId, receiverId);
-    const msg = {
-      id: generateId(),
-      conversationId,
-      senderId,
-      text,
-      createdAt: new Date().toISOString(),
-    };
-    setMessages((prev) => ({
-      ...prev,
-      [conversationId]: [...(prev[conversationId] ?? []), msg],
-    }));
-    return msg;
-  }
-  function getConversation(userId1, userId2) {
-    return messages[buildConversationId(userId1, userId2)] ?? [];
-  }
+  }, []);
 
-  function createPost(authorId, authorName, content) {
+  const sendMessage = useCallback(
+    (senderId, receiverId, text) => {
+      const conversationId = buildConversationId(senderId, receiverId);
+      const msg = {
+        id: generateId(),
+        conversationId,
+        senderId,
+        text,
+        createdAt: new Date().toISOString(),
+      };
+      setMessages((prev) => ({
+        ...prev,
+        [conversationId]: [...(prev[conversationId] ?? []), msg],
+      }));
+      return msg;
+    },
+    [buildConversationId]
+  );
+
+  const getConversation = useCallback(
+    (userId1, userId2) => {
+      return messages[buildConversationId(userId1, userId2)] ?? [];
+    },
+    [messages, buildConversationId]
+  );
+
+  // ── Post helpers ────────────────────────────────────────────────────────────
+
+  const createPost = useCallback((authorId, authorName, content) => {
     const post = {
       id: generateId(),
       authorId,
@@ -106,8 +179,9 @@ export function AppProvider({ children }) {
     };
     setPosts((prev) => [post, ...prev]);
     return post;
-  }
-  function toggleLike(postId, userId) {
+  }, []);
+
+  const toggleLike = useCallback((postId, userId) => {
     setPosts((prev) =>
       prev.map((p) => {
         if (p.id !== postId) return p;
@@ -120,15 +194,21 @@ export function AppProvider({ children }) {
         };
       })
     );
-  }
-  function deletePost(postId, requesterId) {
-    const post = posts.find((p) => p.id === postId);
-    if (!post) return { success: false, error: "Not found." };
-    if (post.authorId !== requesterId)
-      return { success: false, error: "Not allowed." };
-    setPosts((prev) => prev.filter((p) => p.id !== postId));
-    return { success: true };
-  }
+  }, []);
+
+  const deletePost = useCallback(
+    (postId, requesterId) => {
+      const post = posts.find((p) => p.id === postId);
+      if (!post) return { success: false, error: "Not found." };
+      if (post.authorId !== requesterId)
+        return { success: false, error: "Not allowed." };
+      setPosts((prev) => prev.filter((p) => p.id !== postId));
+      return { success: true };
+    },
+    [posts]
+  );
+
+  // ── Wrap AuthProvider here so it can receive onUpdateUser callback ──────────
   return (
     <AppContext.Provider
       value={{
@@ -138,9 +218,12 @@ export function AppProvider({ children }) {
         posts,
         registerUser,
         getUserById,
+        getAllLearners,
+        getAllNatives,
         sendMatchRequest,
         respondToMatch,
         getMatchesForUser,
+        getAcceptedMatchesForUser,
         buildConversationId,
         sendMessage,
         getConversation,
@@ -149,12 +232,16 @@ export function AppProvider({ children }) {
         deletePost,
       }}
     >
-      {children}
+      <AuthProvider onUpdateUser={handleUpdateUser}>{children}</AuthProvider>
     </AppContext.Provider>
   );
 }
+
+// ─── Hook ─────────────────────────────────────────────────────────────────────
 export function useApp() {
   const ctx = useContext(AppContext);
   if (!ctx) throw new Error("useApp must be used inside <AppProvider>");
   return ctx;
 }
+
+export default AppContext;
