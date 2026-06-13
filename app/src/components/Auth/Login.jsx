@@ -10,11 +10,11 @@ function Login() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
-  function handleLogin(event) {
+  async function handleLogin(event) {
     event.preventDefault();
     setError("");
 
-    const result = login(email, password);
+    const result = await login(email, password);
 
     if (result.success) {
       navigate("/browse");
