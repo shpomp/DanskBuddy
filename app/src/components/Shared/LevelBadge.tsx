@@ -7,9 +7,9 @@ interface Props {
 export default function LevelBadge({ level }: Props) {
   let className = "badge-gray";
 
-  if (level === "A1" || level === "A2") className = "badge-green";
-  if (level === "B1" || level === "B2") className = "badge-blue";
-  if (level === "C1" || level === "C2" || level === "native") {
+  if (level === "beginner") className = "badge-green";
+  if (level === "intermediate") className = "badge-blue";
+  if (level === "advanced" || level === "native") {
     className = "badge-purple";
   }
 
