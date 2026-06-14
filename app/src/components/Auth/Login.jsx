@@ -29,22 +29,27 @@ function Login() {
         <h1>Login</h1>
 
         {error && <p>{error}</p>}
+        <label>
+          Email
+          <input
+            type="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value)}
+            placeholder="Email address"
+            required
+          />
+        </label>
 
-        <input
-          type="email"
-          value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          placeholder="Email address"
-          required
-        />
-
-        <input
-          type="password"
-          value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          placeholder="Password"
-          required
-        />
+        <label>
+          Password
+          <input
+            type="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            placeholder="Password"
+            required
+          />
+        </label>
 
         <button type="submit">Login</button>
       </form>
