@@ -9,17 +9,25 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
 
   async function handleLogin(event) {
     event.preventDefault();
     setError("");
+    setIsLoading(true);
 
-    const result = await login(email, password);
+    try {
+      const result = await login(email, password);
 
-    if (result.success) {
-      navigate("/browse");
-    } else {
-      setError(result.error);
+      if (result.success) {
+        navigate("/browse");
+      } else {
+        setError(result.error);
+      }
+    } catch (error) {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsLoading(false);
     }
   }
 
@@ -28,10 +36,11 @@ function Login() {
       <form onSubmit={handleLogin}>
         <h1>Login</h1>
 
-        {error && <p>{error}</p>}
+        {error && <p role="alert">{error}</p>}
         <label>
           Email
           <input
+            id="email"
             type="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
@@ -43,6 +52,7 @@ function Login() {
         <label>
           Password
           <input
+            id="password"
             type="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
@@ -51,7 +61,9 @@ function Login() {
           />
         </label>
 
-        <button type="submit">Login</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? "Logging in..." : "Login"}
+        </button>
       </form>
     </section>
   );
