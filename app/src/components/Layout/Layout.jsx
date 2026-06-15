@@ -5,10 +5,10 @@ export default function Layout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  function handleLogout() {
+  const handleLogout = () => {
     logout();
     navigate("/login");
-  }
+  };
   return (
     <div className="min-h-screen flex flex-col">
       <nav className="bg-rose-900 text-white h-16 flex items-center justify-between px-6 sticky top-0 z-50">
