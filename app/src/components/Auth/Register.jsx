@@ -14,13 +14,14 @@ function Register() {
     email: "",
     password: "",
     role: "learner",
+    avatar: "🙂",
     city: "Copenhagen",
     danishLevel: "beginner",
     nativeLanguage: "",
-    bio: "",
+    learningGoals: "",
     topics: "",
-    availability: "",
-    avatar: "",
+    availability: "weekends",
+    bio: "",
   });
 
   const [error, setError] = useState("");
@@ -40,18 +41,25 @@ function Register() {
 
     const hashedPassword = await hashPassword(formData.password);
 
+    const topicsArray = formData.topics
+      .split(",")
+      .map((topic) => topic.trim())
+      .filter(Boolean);
+
     const registerResult = registerUser({
       name: formData.name,
       email: formData.email,
       password: hashedPassword,
       role: formData.role,
+      avatar: formData.avatar,
       city: formData.city,
       danishLevel: formData.danishLevel,
       nativeLanguage: formData.nativeLanguage,
-      bio: formData.bio,
-      topics: formData.topics,
+      learningGoals: formData.learningGoals,
+      topics: topicsArray,
       availability: formData.availability,
-      avatar: formData.avatar,
+      bio: formData.bio,
+      createdAt: new Date().toISOString(),
     });
 
     if (registerResult && registerResult.success === false) {
@@ -74,12 +82,14 @@ function Register() {
       <form onSubmit={handleRegister}>
         <h1>Create account</h1>
 
-        {error && <p>{error}</p>}
+        {error && <p role="alert">{error}</p>}
 
         <label>
           Name
           <input
             name="name"
+            id="name"
+            type="text"
             value={formData.name}
             onChange={handleChange}
             placeholder="Name"
@@ -91,6 +101,7 @@ function Register() {
           Email
           <input
             name="email"
+            id="email"
             type="email"
             value={formData.email}
             onChange={handleChange}
@@ -104,6 +115,7 @@ function Register() {
           <input
             name="password"
             type="password"
+            id="password"
             value={formData.password}
             onChange={handleChange}
             placeholder="Password"
@@ -113,15 +125,44 @@ function Register() {
 
         <label>
           Role
-          <select name="role" value={formData.role} onChange={handleChange}>
+          <select
+            name="role"
+            id="role"
+            value={formData.role}
+            onChange={handleChange}
+          >
             <option value="learner">Learner</option>
-            <option value="native speaker">Native speaker</option>
+            <option value="native">Native speaker</option>
+            <option value="both">Both</option>
+          </select>
+        </label>
+
+        <label>
+          Avatar
+          <select
+            name="avatar"
+            id="avatar"
+            value={formData.avatar}
+            onChange={handleChange}
+          >
+            <option value="🙂">🙂 Friendly</option>
+            <option value="👩">👩 Woman</option>
+            <option value="👨">👨 Man</option>
+            <option value="👩‍🦰">👩‍🦰 Red hair</option>
+            <option value="👨‍🦱">👨‍🦱 Curly hair</option>
+            <option value="👩‍🦳">👩‍🦳 Older woman</option>
+            <option value="🧑">🧑 Person</option>
           </select>
         </label>
 
         <label>
           City
-          <select name="city" value={formData.city} onChange={handleChange}>
+          <select
+            name="city"
+            id="city"
+            value={formData.city}
+            onChange={handleChange}
+          >
             <option value="Copenhagen">Copenhagen</option>
             <option value="Aarhus">Aarhus</option>
             <option value="Odense">Odense</option>
@@ -133,12 +174,14 @@ function Register() {
           Danish level
           <select
             name="danishLevel"
+            id="danishLevel"
             value={formData.danishLevel}
             onChange={handleChange}
           >
             <option value="beginner">Beginner</option>
             <option value="intermediate">Intermediate</option>
             <option value="advanced">Advanced</option>
+            <option value="native">Native</option>
           </select>
         </label>
 
@@ -146,9 +189,62 @@ function Register() {
           Native language
           <input
             name="nativeLanguage"
+            id="nativeLanguage"
+            type="text"
             value={formData.nativeLanguage}
             onChange={handleChange}
             required
+          />
+        </label>
+
+        <label>
+          Learning goals
+          <input
+            name="learningGoals"
+            id="learningGoals"
+            type="text"
+            value={formData.learningGoals}
+            onChange={handleChange}
+            placeholder="Example: Improve conversational Danish"
+          />
+        </label>
+
+        <label>
+          Availability
+          <select
+            name="availability"
+            id="availability"
+            value={formData.availability}
+            onChange={handleChange}
+          >
+            <option value="weekends">Weekends</option>
+            <option value="evenings">Evenings</option>
+            <option value="weekdays">Weekdays</option>
+            <option value="mornings">Mornings</option>
+            <option value="flexible">Flexible</option>
+          </select>
+        </label>
+
+        <label>
+          Bio
+          <textarea
+            name="bio"
+            id="bio"
+            value={formData.bio}
+            onChange={handleChange}
+            placeholder="Tell others a little about yourself"
+          />
+        </label>
+
+        <label>
+          Topics
+          <input
+            name="topics"
+            id="topics"
+            type="text"
+            value={formData.topicsText}
+            onChange={handleChange}
+            placeholder="culture, food, travel"
           />
         </label>
 
