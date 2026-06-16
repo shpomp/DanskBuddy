@@ -1,4 +1,10 @@
-export default function LevelBadge({ level }) {
+type Level = "beginner" | "intermediate" | "advanced" | "native";
+
+interface Props {
+  level: Level;
+}
+
+export default function LevelBadge({ level }: Props) {
   let className = "badge-gray";
 
   if (level === "beginner") className = "badge-green";
