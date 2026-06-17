@@ -12,15 +12,27 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <nav className="bg-white-900 text-white h-16 flex items-center justify-between px-6 sticky top-0 z-50">
-        <span className="text-red-900 font-bold text-lg"> DanskBuddy</span>
+        <span className="text-red-900 font-bold text-lg">
+          <div className="flex items-center gap-2">
+            <svg width="28" height="28" viewBox="0 0 204 204">
+              <rect width="204" height="204" rx="20" fill="#E63946" />
+              <rect x="78" y="0" width="34" height="204" fill="#fff" />
+              <rect x="0" y="78" width="204" height="34" fill="#fff" />
+            </svg>
+            <span className="font-bold text-lg">
+              <span style={{ color: "#E63946" }}>dansk</span>
+              <span style={{ color: "#F4A261" }}>buddy</span>
+            </span>
+          </div>
+        </span>
 
         <div className="hidden md:flex gap-6">
           <NavLink
             to="/browse"
             className={({ isActive }) =>
               isActive
-                ? "text-white border-b-2 border-indigo-400 pb-1"
-                : "text-red-900 hover:text-black pb-1"
+                ? "text-black border-b-2 border-indigo-400 pb-1"
+                : "text-red-400 hover:text-black pb-1"
             }
           >
             Browse
@@ -29,8 +41,8 @@ export default function Layout() {
             to="/matches"
             className={({ isActive }) =>
               isActive
-                ? "text-black-border-b-2 border-indigo-400 pb-1"
-                : "text-red-900 hover:text-black pb-1"
+                ? "text-black border-b-2 border-indigo-400 pb-1"
+                : "text-red-400 hover:text-black pb-1"
             }
           >
             Matches
@@ -39,8 +51,8 @@ export default function Layout() {
             to="/messages"
             className={({ isActive }) =>
               isActive
-                ? "text-red- border-b-2 border-indigo-400 pb-1"
-                : "text-red-900 hover:text-black pb-1"
+                ? "text-black border-b-2 border-indigo-400 pb-1"
+                : "text-red-400 hover:text-black pb-1"
             }
           >
             Messages
@@ -49,8 +61,8 @@ export default function Layout() {
             to="/feed"
             className={({ isActive }) =>
               isActive
-                ? "text-white border-b-2 border-indigo-400 pb-1"
-                : "text-red-900 hover:text-black pb-1"
+                ? "text-black border-b-2 border-indigo-400 pb-1"
+                : "text-red-400 hover:text-black pb-1"
             }
           >
             Feed
@@ -63,13 +75,13 @@ export default function Layout() {
             className="flex items-center gap-2 text-white no-underline"
           >
             <span className="text-2xl">{user?.avatar}</span>
-            <span className="text-sm text-gray-200 hidden md:block">
+            <span className="text-sm text-red-400 hidden md:block">
               {user?.name}
             </span>
           </NavLink>
           <button
             onClick={handleLogout}
-            className="bg-white text-red-900 hover:bg-gray-100 text-sm px-3 py-1.5 rounded-md font-medium"
+            className="bg-white text-red-400 hover:bg-gray-100 text-sm px-3 py-1.5 rounded-md font-medium"
           >
             Log out
           </button>
@@ -77,7 +89,7 @@ export default function Layout() {
 
         {/* Hamburger — mobile only */}
         <button
-          className="md:hidden text-red-900 text-2xl"
+          className="md:hidden text-red-400 text-2xl"
           onClick={() => setMenuOpen((prev) => !prev)}
           aria-label={
             menuOpen ? "Close navigation menu" : "Open navigation menu"
