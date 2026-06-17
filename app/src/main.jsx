@@ -8,6 +8,7 @@ import HomePage from "./components/HomePage/HomePage.jsx";
 import TestPage from "./components/TestPage/TestPage.jsx";
 import MessagesPage from "./components/Messages/MessagesPage.jsx";
 import ChatWindow from "./components/Messages/ChatWindow.jsx";
+import Login from "./components/Auth/Login.jsx";
 import "./main.css";
 initStorage();
 const router = createBrowserRouter([
@@ -30,6 +31,10 @@ const router = createBrowserRouter([
       {
         path: "messages/:userId",
         element: <ChatWindow />,
+      },
+       {
+        path: "/login",
+        element: <Login />,
       },
     ],
   },
