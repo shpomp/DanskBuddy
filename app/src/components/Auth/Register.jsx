@@ -52,7 +52,7 @@ function StyledDropdown({ name, value, options, isOpen, onToggle, onSelect }) {
         aria-haspopup="listbox"
         aria-expanded={isOpen}
         onClick={onToggle}
-        className="flex w-full items-center justify-between rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-left text-[15px] font-semibold text-[#2B2A28] outline-none transition hover:border-[#E6DCCF] hover:bg-[#FBF7F1] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]"
+        className="flex w-full cursor-pointer items-center justify-between rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-left text-[15px] font-semibold text-[#2B2A28] outline-none transition hover:border-[#E6DCCF] hover:bg-[#FBF7F1] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC] active:bg-[#F6F0E8]"
       >
         <span>{selectedOption.label}</span>
         <span
@@ -65,7 +65,11 @@ function StyledDropdown({ name, value, options, isOpen, onToggle, onSelect }) {
 
       {isOpen && (
         <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-20 overflow-hidden rounded-2xl border border-[#EFE8DD] bg-white p-1.5 shadow-[0_18px_32px_-18px_rgba(43,42,40,0.45)]">
-          <div role="listbox" aria-label={name} className="max-h-56 overflow-auto">
+          <div
+            role="listbox"
+            aria-label={name}
+            className="max-h-56 overflow-auto"
+          >
             {options.map((option) => {
               const isSelected = option.value === value;
 
@@ -76,14 +80,27 @@ function StyledDropdown({ name, value, options, isOpen, onToggle, onSelect }) {
                   role="option"
                   aria-selected={isSelected}
                   onClick={() => onSelect(name, option.value)}
-                  className={`flex w-full items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-sm font-bold transition ${
+                  className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-sm font-bold transition ${
                     isSelected
                       ? "bg-[#FDEAEC] text-[#D62F3C]"
                       : "text-[#6E665C] hover:bg-[#F6F0E8] hover:text-[#2B2A28]"
                   }`}
                 >
                   <span>{option.label}</span>
-                  {isSelected && <span className="text-[#E63946]">✓</span>}
+                  {isSelected && (
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4 text-[#E63946]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="m5 12 4 4 10-10" />
+                    </svg>
+                  )}
                 </button>
               );
             })}
@@ -121,17 +138,17 @@ function Register() {
   function handleChange(event) {
     const { name, value } = event.target;
 
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
   }
 
   function handleDropdownChange(name, value) {
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: value,
-    });
+    }));
     setOpenDropdown("");
   }
 
@@ -139,6 +156,7 @@ function Register() {
     event.preventDefault();
     setError("");
 
+    const rawPassword = formData.password;
     const hashedPassword = await hashPassword(formData.password);
 
     const topicsArray = formData.topics
@@ -167,7 +185,7 @@ function Register() {
       return;
     }
 
-    const loginResult = await login(formData.email, formData.password);
+    const loginResult = await login(formData.email, rawPassword);
 
     if (!loginResult.success) {
       setError(loginResult.error);
@@ -186,21 +204,74 @@ function Register() {
     <section className="-m-8 min-h-[calc(100vh-8rem)] bg-[#F4EFE8] px-4 py-8 font-sans text-[#2B2A28] sm:px-6 lg:px-10">
       <div className="mx-auto flex w-full max-w-6xl overflow-hidden rounded-[18px] border border-[#EAE3D8] bg-white shadow-[0_32px_64px_-24px_rgba(33,30,28,0.40),0_8px_20px_-12px_rgba(33,30,28,0.28)]">
         <aside className="hidden w-[44%] flex-col justify-between bg-gradient-to-br from-[#E63946] via-[#F05258] to-[#F4A261] p-10 text-white lg:flex">
-          <div className="flex h-10 w-10 items-center justify-center rounded-full bg-white/20">
-            <span className="relative block h-8 w-8 rounded-full bg-white/25">
-              <span className="absolute left-1/2 top-0 h-full w-1.5 -translate-x-1/2 bg-white" />
-              <span className="absolute left-0 top-1/2 h-1.5 w-full -translate-y-1/2 bg-white" />
+          <div className="flex items-center gap-3">
+            <span className="relative block h-10 w-10 shrink-0 overflow-hidden rounded-[12px] bg-[#F06A73]">
+              <span className="absolute left-1/2 top-0 h-full w-[7px] -translate-x-1/2 bg-white" />
+              <span className="absolute left-0 top-1/2 h-[7px] w-full -translate-y-1/2 bg-white" />
             </span>
+            
           </div>
 
-          <div className="flex max-w-xs flex-col gap-4 pb-4">
-            <span className="h-3 w-40 rounded-full bg-white/85" />
-            <span className="h-3 w-56 rounded-full bg-white/50" />
-            <span className="h-3 w-44 rounded-full bg-white/50" />
-            <div className="mt-6 flex flex-col gap-3">
-              <span className="h-6 w-36 rounded-full bg-white/25" />
-              <span className="h-6 w-44 rounded-full bg-white/25" />
-              <span className="h-6 w-40 rounded-full bg-white/25" />
+          <div className="max-w-xs pb-4">
+            <h2 className="text-[36px] font-extrabold leading-[0.98] tracking-[-0.03em]">
+              Join in under a minute.
+            </h2>
+            <p className="mt-5 text-[16px] font-semibold leading-relaxed text-[rgb(255,227,214)]">
+              Tell us your level and interests, we will match you with the right
+              partners from day one.
+            </p>
+            <div className="mt-7 flex flex-col gap-3">
+              <span className="flex items-center gap-3 text-[15px] font-bold">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m5 12 4 4 10-10" />
+                  </svg>
+                </span>
+                Quick to start
+              </span>
+              <span className="flex items-center gap-3 text-[15px] font-bold">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m5 12 4 4 10-10" />
+                  </svg>
+                </span>
+                Verified community
+              </span>
+              <span className="flex items-center gap-3 text-[15px] font-bold">
+                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
+                  <svg
+                    aria-hidden="true"
+                    viewBox="0 0 24 24"
+                    className="h-3.5 w-3.5"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="3"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="m5 12 4 4 10-10" />
+                  </svg>
+                </span>
+                Real meetups near you
+              </span>
             </div>
           </div>
         </aside>
@@ -221,6 +292,35 @@ function Register() {
             )}
 
             <div className="mt-8 space-y-4">
+              <fieldset>
+                <legend className="text-[16px] font-extrabold tracking-[-0.01em] text-[#A89F94]">
+                  I am
+                </legend>
+                <div className="mt-2 flex rounded-full bg-[#F6F0E8] p-1">
+                  {roleOptions.map((option) => {
+                    const isSelected = formData.role === option.value;
+
+                    return (
+                      <button
+                        key={option.value}
+                        type="button"
+                        aria-pressed={isSelected}
+                        onClick={() =>
+                          handleDropdownChange("role", option.value)
+                        }
+                        className={`min-w-0 flex-1 cursor-pointer whitespace-nowrap rounded-full px-2 py-3 text-center text-[11px] font-extrabold transition focus:outline-none focus:ring-4 focus:ring-[#FDEAEC] min-[380px]:text-[12px] sm:px-4 sm:text-[13px] ${
+                          isSelected
+                            ? "bg-[#E63946] text-white shadow-[0_10px_18px_-12px_rgba(230,57,70,0.75)]"
+                            : "text-[#6E665C] hover:bg-[#EFE8DD] active:bg-[#E6DCCF]"
+                        }`}
+                      >
+                        {option.label}
+                      </button>
+                    );
+                  })}
+                </div>
+              </fieldset>
+
               <label className={labelClass}>
                 Name
                 <input
@@ -229,7 +329,7 @@ function Register() {
                   type="text"
                   value={formData.name}
                   onChange={handleChange}
-                  placeholder="Name"
+                  placeholder="Maria Holm"
                   required
                   className={fieldClass}
                 />
@@ -243,7 +343,7 @@ function Register() {
                   type="email"
                   value={formData.email}
                   onChange={handleChange}
-                  placeholder="Email address"
+                  placeholder="maria@email.dk"
                   required
                   className={fieldClass}
                 />
@@ -257,23 +357,9 @@ function Register() {
                   id="password"
                   value={formData.password}
                   onChange={handleChange}
-                  placeholder="Password"
+                  placeholder="••••••••"
                   required
                   className={fieldClass}
-                />
-              </label>
-
-              <label className={labelClass}>
-                Role
-                <StyledDropdown
-                  name="role"
-                  value={formData.role}
-                  options={roleOptions}
-                  isOpen={openDropdown === "role"}
-                  onToggle={() =>
-                    setOpenDropdown(openDropdown === "role" ? "" : "role")
-                  }
-                  onSelect={handleDropdownChange}
                 />
               </label>
 
@@ -327,8 +413,10 @@ function Register() {
                   name="nativeLanguage"
                   id="nativeLanguage"
                   type="text"
+                  placeholder="English"
                   value={formData.nativeLanguage}
                   onChange={handleChange}
+                  
                   required
                   className={fieldClass}
                 />
@@ -391,7 +479,7 @@ function Register() {
 
             <button
               type="submit"
-              className="mt-6 w-full rounded-full bg-[#E63946] px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_14px_24px_-12px_rgba(230,57,70,0.75)] transition hover:bg-[#D62F3C] focus:outline-none focus:ring-4 focus:ring-[#FAD2D5] active:translate-y-px"
+              className="mt-6 w-full cursor-pointer rounded-full bg-[#E63946] px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_14px_24px_-12px_rgba(230,57,70,0.75)] transition hover:bg-[#D62F3C] focus:outline-none focus:ring-4 focus:ring-[#FAD2D5] active:translate-y-px"
             >
               Register
             </button>
