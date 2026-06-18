@@ -48,6 +48,18 @@
   --shadow-primary: 0 12px 22px -10px rgba(230, 57, 70, 0.6);
 }
 
+/* ── Gradient utilities ──────────────────────────────────── */
+/*
+ * Use these like any Tailwind class: bg-gradient-brand, bg-gradient-page
+ */
+@utility bg-gradient-brand {
+  background-image: linear-gradient(135deg, #e63946 0%, #f4626b 55%, #f4a261 100%);
+}
+
+@utility bg-gradient-page {
+  background-image: radial-gradient(1200px 600px at 50% -10%, #fbf3e7 0%, #f4efe8 60%);
+}
+
 /* ── Global base styles ──────────────────────────────────── */
 @layer base {
   body {
