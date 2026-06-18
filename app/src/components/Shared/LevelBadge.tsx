@@ -4,14 +4,15 @@ interface Props {
   level: Level;
 }
 
+const BASE = "inline-block px-2.5 py-0.5 rounded-pill text-xs font-semibold";
+
+const VARIANT: Record<Level, string> = {
+  beginner: "bg-success-light text-success-dark",
+  intermediate: "bg-warning-light text-warning",
+  advanced: "bg-info-light text-info",
+  native: "bg-info-light text-info",
+};
+
 export default function LevelBadge({ level }: Props) {
-  let className = "badge-gray";
-
-  if (level === "beginner") className = "badge-green";
-  if (level === "intermediate") className = "badge-blue";
-  if (level === "advanced" || level === "native") {
-    className = "badge-purple";
-  }
-
-  return <span className={className}>{level}</span>;
+  return <span className={`${BASE} ${VARIANT[level]}`}>{level}</span>;
 }

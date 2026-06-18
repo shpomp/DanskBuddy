@@ -1,10 +1,57 @@
 @import "tailwindcss";
 
-html,
-body,
-#root {
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  width: 100%;
+/*
+ * Design tokens — defined here, usable everywhere via CSS variables
+ * or as Tailwind utility classes (e.g. bg-primary, text-text-muted, rounded-card).
+ *
+ * Reference the design in DanskBuddy.html for the full visual spec.
+ * Add new tokens here when you need a value that repeats across components.
+ */
+@theme {
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-sans: "Poppins", sans-serif;
+
+  /* ── Brand ───────────────────────────────────────────────── */
+  --color-primary: #e63946;
+  --color-primary-light: #fdeaec;
+  --color-secondary: #f4a261;
+  --color-secondary-light: #fde7c1;
+
+  /* ── Surfaces & backgrounds ──────────────────────────────── */
+  --color-background: #f4efe8; /* page background */
+  --color-surface: #ece6dd; /* cards, panels */
+  --color-surface-raised: #faf6f0; /* elevated surfaces */
+
+  /* ── Text ────────────────────────────────────────────────── */
+  --color-text: #2b2a28; /* default body text */
+  --color-text-secondary: #7c756b; /* labels, captions */
+  --color-text-muted: #a89f94; /* placeholders, hints */
+
+  /* ── Semantic ────────────────────────────────────────────── */
+  --color-success: #34c77b;
+  --color-success-dark: #2e9c6a;
+  --color-success-light: #d4f5e7;
+  --color-warning: #c97f35;
+  --color-warning-light: #fde7c1;
+  --color-info: #9b7ede;
+  --color-info-light: #ede9fa;
+
+  /* ── Border radius ───────────────────────────────────────── */
+  --radius-pill: 999px; /* tags, badges, chips */
+  --radius-card: 16px; /* cards */
+  --radius-sm: 8px; /* buttons, inputs */
+
+  /* ── Shadows ─────────────────────────────────────────────── */
+  --shadow-card: 0 8px 18px -16px rgba(43, 42, 40, 0.5);
+  --shadow-elevated: 0 32px 64px -24px rgba(33, 30, 28, 0.4),
+    0 8px 20px -12px rgba(33, 30, 28, 0.28);
+  --shadow-primary: 0 12px 22px -10px rgba(230, 57, 70, 0.6);
+}
+
+/* ── Global base styles ──────────────────────────────────── */
+@layer base {
+  body {
+    background-color: var(--color-background);
+    color: var(--color-text);
+  }
 }
