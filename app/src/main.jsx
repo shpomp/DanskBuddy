@@ -7,6 +7,7 @@ import Layout from "./components/Layout/Layout.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import TestPage from "./components/TestPage/TestPage.jsx";
 import Login from "./components/Auth/Login.jsx";
+import MyProfile from "./components/MyProfile/MyProfile.tsx";
 import "./main.css";
 initStorage();
 const router = createBrowserRouter([
@@ -23,8 +24,12 @@ const router = createBrowserRouter([
         element: <TestPage />,
       },
       {
-        path: "/login",
+        path: "login",
         element: <Login />,
+      },
+      {
+        path: "profile/me",
+        element: <MyProfile />,
       },
     ],
   },
