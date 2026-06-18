@@ -1,25 +1,21 @@
-import { useState } from "react";
 import { useApp } from "../../context/AppContext";
 import { useAuth } from "../../context/AuthContext";
 import EmptyState from "../Shared/EmptyState";
-
-import { useNavigate } from "react-router-dom";
+import { Navigate } from "react-router-dom";
+import MessagesList from "./MessagesList";
 import "./Messages.css";
 
 export default function MessagesPage() {
   const { user } = useAuth();
-  const navigate = useNavigate();
+
   const { users } = useApp();
+  if (!user) {
+    return <Navigate to="/login" />;
+  }
 
-  const currentUser = user || {
-    id: "1",
-  };
+  const conversations = users.filter((u) => String(u.id) !== String(user.id));
 
-  const availableUsers = users.filter(
-    (u) => String(u.id) !== String(currentUser.id)
-  );
-
-  if (availableUsers.length === 0) {
+  if (conversations.length === 0) {
     return (
       <EmptyState
         icon="💬"
@@ -33,21 +29,7 @@ export default function MessagesPage() {
     <div className="messages-container">
       <h2>Messages</h2>
 
-      {availableUsers.map((person) => (
-        <div
-          key={person.id}
-          className="conversation-item"
-          onClick={() => navigate(`/messages/${person.id}`)}
-        >
-          <div className="avatar">{person.avatar}</div>
-
-          <div>
-            <h4>{person.name}</h4>
-
-            <p>Start conversation</p>
-          </div>
-        </div>
-      ))}
+      <MessagesList conversations={conversations} />
     </div>
   );
 }
