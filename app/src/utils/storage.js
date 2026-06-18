@@ -61,7 +61,7 @@ export function savePosts(posts) {
 export function getCurrentUser() {
   const id = getItem(KEYS.CURRENT);
   if (!id) return null;
-  return getUsers().find((u) => String(u.id) === String (id)) || null;
+  return getUsers().find((u) => String(u.id) === String(id)) || null;
 }
 
 export function setCurrentUser(userId) {
