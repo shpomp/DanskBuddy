@@ -209,7 +209,6 @@ function Register() {
               <span className="absolute left-1/2 top-0 h-full w-[7px] -translate-x-1/2 bg-white" />
               <span className="absolute left-0 top-1/2 h-[7px] w-full -translate-y-1/2 bg-white" />
             </span>
-            
           </div>
 
           <div className="max-w-xs pb-4">
@@ -416,7 +415,6 @@ function Register() {
                   placeholder="English"
                   value={formData.nativeLanguage}
                   onChange={handleChange}
-                  
                   required
                   className={fieldClass}
                 />
