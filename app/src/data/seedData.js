@@ -2,7 +2,7 @@ const seedData = [
   {
     id: "1",
     email: "maja@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Maja Nielsen",
     role: "native",
     avatar: "👩",
@@ -18,7 +18,7 @@ const seedData = [
   {
     id: "2",
     email: "lars@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Lars Andersen",
     role: "native",
     avatar: "👨",
@@ -34,7 +34,7 @@ const seedData = [
   {
     id: "3",
     email: "sofie@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Sofie Christensen",
     role: "native",
     avatar: "👩‍🦰",
@@ -50,7 +50,7 @@ const seedData = [
   {
     id: "4",
     email: "mikkel@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Mikkel Sørensen",
     role: "native",
     avatar: "👨‍🦱",
@@ -66,7 +66,7 @@ const seedData = [
   {
     id: "5",
     email: "anna@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Anna Hansen",
     role: "native",
     avatar: "👩‍🦳",
@@ -82,7 +82,7 @@ const seedData = [
   {
     id: "6",
     email: "priya@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Priya Sharma",
     role: "learner",
     avatar: "👩",
@@ -98,7 +98,7 @@ const seedData = [
   {
     id: "7",
     email: "carlos@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Carlos Mendez",
     role: "learner",
     avatar: "👨",
@@ -114,7 +114,7 @@ const seedData = [
   {
     id: "8",
     email: "fatima@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Fatima Al-Rashid",
     role: "learner",
     avatar: "👩",
@@ -130,7 +130,7 @@ const seedData = [
   {
     id: "9",
     email: "ivan@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Ivan Petrov",
     role: "learner",
     avatar: "👨",
@@ -146,7 +146,7 @@ const seedData = [
   {
     id: "10",
     email: "amira@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Amira Okonkwo",
     role: "learner",
     avatar: "👩",
@@ -162,7 +162,7 @@ const seedData = [
   {
     id: "11",
     email: "wei@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Wei Zhang",
     role: "learner",
     avatar: "👨",
@@ -178,7 +178,7 @@ const seedData = [
   {
     id: "12",
     email: "elena@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Elena Kovač",
     role: "learner",
     avatar: "👩",
@@ -194,7 +194,7 @@ const seedData = [
   {
     id: "13",
     email: "ahmed@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Ahmed Hassan",
     role: "learner",
     avatar: "👨",
@@ -210,7 +210,7 @@ const seedData = [
   {
     id: "14",
     email: "nadia@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Nadia Kowalski",
     role: "both",
     avatar: "👩",
@@ -226,7 +226,7 @@ const seedData = [
   {
     id: "15",
     email: "thomas@test.com",
-    password: "password123",
+    password: "ef92b778bafe771e89245b89ecbc08a44a4e166c06659911881f383d4473e94f",
     name: "Thomas Müller",
     role: "learner",
     avatar: "👨",
