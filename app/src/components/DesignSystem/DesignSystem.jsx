@@ -6,39 +6,69 @@ import Avatar from "../Shared/Avatar";
 const COLOR_GROUPS = [
   {
     group: "Brand",
-    colors: [
-      { name: "primary", label: "Primary", hex: "#e63946" },
-      { name: "primary-light", label: "Primary Light", hex: "#fdeaec" },
-      { name: "primary-pale", label: "Primary Pale", hex: "#fad2d5" },
-      { name: "secondary", label: "Secondary", hex: "#f4a261" },
-      { name: "secondary-light", label: "Secondary Light", hex: "#fde7c1" },
-      { name: "secondary-dark", label: "Secondary Dark", hex: "#c97f35" },
+    rows: [
+      {
+        label: "Primary",
+        colors: [
+          { name: "primary", label: "Primary", hex: "#e63946" },
+          { name: "primary-light", label: "Primary Light", hex: "#fdeaec" },
+          { name: "primary-pale", label: "Primary Pale", hex: "#fad2d5" },
+        ],
+      },
+      {
+        label: "Secondary",
+        colors: [
+          { name: "secondary", label: "Secondary", hex: "#f4a261" },
+          { name: "secondary-light", label: "Secondary Light", hex: "#fde7c1" },
+          { name: "secondary-dark", label: "Secondary Dark", hex: "#c97f35" },
+        ],
+      },
     ],
   },
   {
     group: "Neutrals",
-    colors: [
-      { name: "foreground", label: "Foreground", hex: "#2b2a28" },
-      { name: "neutral", label: "Neutral", hex: "#7c756b" },
-      { name: "neutral-light", label: "Neutral Light", hex: "#a89f94" },
+    rows: [
+      {
+        label: null,
+        colors: [
+          { name: "foreground", label: "Foreground", hex: "#2b2a28" },
+          { name: "neutral", label: "Neutral", hex: "#7c756b" },
+          { name: "neutral-light", label: "Neutral Light", hex: "#a89f94" },
+        ],
+      },
     ],
   },
   {
     group: "Surfaces",
-    colors: [
-      { name: "background", label: "Background", hex: "#f4efe8" },
-      { name: "surface", label: "Surface", hex: "#ece6dd" },
-      { name: "surface-alt", label: "Surface Alt", hex: "#faf6f0" },
+    rows: [
+      {
+        label: null,
+        colors: [
+          { name: "background", label: "Background", hex: "#f4efe8" },
+          { name: "surface", label: "Surface", hex: "#ece6dd" },
+          { name: "surface-alt", label: "Surface Alt", hex: "#faf6f0" },
+        ],
+      },
     ],
   },
   {
     group: "Semantic",
-    colors: [
-      { name: "success", label: "Success", hex: "#34c77b" },
-      { name: "success-dark", label: "Success Dark", hex: "#2e9c6a" },
-      { name: "success-light", label: "Success Light", hex: "#d4f5e7" },
-      { name: "info", label: "Info", hex: "#9b7ede" },
-      { name: "info-light", label: "Info Light", hex: "#ede9fa" },
+    rows: [
+      {
+        label: "Success",
+        colors: [
+          { name: "success", label: "Success", hex: "#34c77b" },
+          { name: "success-dark", label: "Success Dark", hex: "#2e9c6a" },
+          { name: "success-light", label: "Success Light", hex: "#e8f6ee" },
+        ],
+      },
+      {
+        label: "Info",
+        colors: [
+          { name: "info", label: "Info", hex: "#9b7ede" },
+          { name: "info-light", label: "Info Light", hex: "#ede9fa" },
+        ],
+      },
     ],
   },
 ];
@@ -114,14 +144,25 @@ export default function DesignSystem() {
 
       <Section title="Colors">
         <div className="flex flex-col gap-8">
-          {COLOR_GROUPS.map(({ group, colors }) => (
+          {COLOR_GROUPS.map(({ group, rows }) => (
             <div key={group}>
               <p className="text-xs font-semibold text-neutral-light uppercase tracking-wider mb-3">
                 {group}
               </p>
-              <div className="grid grid-cols-4 gap-4">
-                {colors.map((c) => (
-                  <Swatch key={c.name} {...c} />
+              <div className="flex flex-col gap-4">
+                {rows.map(({ label, colors }) => (
+                  <div key={label ?? group} className="flex gap-3 items-start">
+                    <div className="w-20 shrink-0 pt-3">
+                      {label && (
+                        <p className="text-xs text-neutral-light">{label}</p>
+                      )}
+                    </div>
+                    <div className="grid grid-cols-4 gap-3 flex-1">
+                      {colors.map((c) => (
+                        <Swatch key={c.name} {...c} />
+                      ))}
+                    </div>
+                  </div>
                 ))}
               </div>
             </div>
