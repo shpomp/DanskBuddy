@@ -1,22 +1,7 @@
-.badge-green,
-.badge-blue,
-.badge-purple,
-.badge-gray {
-  font-weight: bold;
-}
-
-.badge-green {
-  color: green;
-}
-
-.badge-blue {
-  color: blue;
-}
-
-.badge-purple {
-  color: purple;
-}
-
-.badge-gray {
-  color: gray;
-}
+/*
+ * Use this file only for styles that can't be expressed with Tailwind utilities:
+ * complex selectors, pseudo-elements, third-party overrides, etc.
+ *
+ * For everything else — write Tailwind classes directly in JSX.
+ * All design tokens are available as Tailwind utilities via main.css 
+ */
