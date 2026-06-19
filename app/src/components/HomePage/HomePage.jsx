@@ -4,7 +4,7 @@ export default function HomePage() {
       <h1 className="text-4xl font-bold text-primary">
         The Hygge Way to Danish
       </h1>
-      <p className="text-text-secondary max-w-md">
+      <p className="text-neutral max-w-md">
         Connect with Danish speakers and learners to practice your language
         skills together.
       </p>

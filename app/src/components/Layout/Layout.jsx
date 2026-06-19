@@ -69,7 +69,7 @@ export default function Layout() {
           </NavLink>
           <button
             onClick={handleLogout}
-            className="bg-surface-raised text-primary hover:bg-background text-sm px-3 py-1.5 rounded-md font-medium"
+            className="bg-surface-alt text-primary hover:bg-background text-sm px-3 py-1.5 rounded-md font-medium"
           >
             Log out
           </button>
@@ -90,7 +90,7 @@ export default function Layout() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden bg-text flex flex-col gap-4 px-6 py-4">
+        <div className="md:hidden bg-foreground flex flex-col gap-4 px-6 py-4">
           <NavLink
             to="/browse"
             onClick={() => setMenuOpen(false)}
@@ -126,7 +126,7 @@ export default function Layout() {
         <Outlet />
       </main>
 
-      <footer className="text-center text-sm text-text-muted py-4 border-t">
+      <footer className="text-center text-sm text-neutral-light py-4 border-t">
         © 2026 DanskBuddy · Find your Danish conversation partner 🇩🇰
       </footer>
     </div>
