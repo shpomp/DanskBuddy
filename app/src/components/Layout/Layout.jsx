@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import markInverse from "../../assets/icon/mark-inverse.svg";
+import wordmarkOnDark from "../../assets/wordmark/wordmark-on-dark.svg";
 export default function Layout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
@@ -12,7 +14,10 @@ export default function Layout() {
   return (
     <div className="min-h-screen flex flex-col">
       <nav className="bg-primary text-white h-16 flex items-center justify-between px-6 sticky top-0 z-50">
-        <span className="text-white font-bold text-lg">DanskBuddy</span>
+        <NavLink to="/" className="flex items-center gap-3 no-underline">
+          <img src={markInverse} alt="" className="h-8 w-8" />
+          <img src={wordmarkOnDark} alt="DanskBuddy" className="h-5" />
+        </NavLink>
 
         <div className="hidden md:flex gap-6">
           <NavLink
