@@ -32,17 +32,9 @@
 .message-bubble {
   padding: 10px 15px;
   border-radius: 15px;
-  max-width: 60%;
+  max-width: 80%;
   word-wrap: break-word;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-}
-
-.sent .message-bubble {
-  background: #dcf8c6;
-}
-
-.received .message-bubble {
-  background: #eeeeee;
 }
 
 .chat-input {
@@ -62,13 +54,13 @@
 .chat-input button {
   padding: 10px 20px;
 }
-.sent .message-bubble {
-  background: #dbeafe;
-  color: black;
-}
 
 .received .message-bubble {
   background: #436ab7;
+  color: white;
+}
+.sent .message-bubble {
+  background: #dbeafe;
   color: black;
 }
 .conversation-item {
