@@ -12,6 +12,7 @@ import Layout from "./components/Layout/Layout.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import Login from "./components/Auth/Login.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
+import Register from "./components/Auth/Register.jsx";
 import "./main.css";
 function Placeholder({ name }) {
   return (
@@ -88,6 +89,10 @@ const router = createBrowserRouter([
             <Placeholder name="Public Profile" />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/register",
+        element: <Register />,
       },
     ],
   },
