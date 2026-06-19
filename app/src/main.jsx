@@ -12,6 +12,11 @@ import Layout from "./components/Layout/Layout.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import Login from "./components/Auth/Login.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
+
+
+import MessagesPage from "./components/Messages/MessagesPage.jsx";
+
+
 import Register from "./components/Auth/Register.jsx";
 import "./main.css";
 function Placeholder({ name }) {
@@ -89,6 +94,13 @@ const router = createBrowserRouter([
             <Placeholder name="Public Profile" />
           </ProtectedRoute>
         ),
+        path: "messages",
+        element: <MessagesPage />,
+      },
+
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/register",
