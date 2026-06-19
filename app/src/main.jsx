@@ -7,6 +7,7 @@ import Layout from "./components/Layout/Layout.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import TestPage from "./components/TestPage/TestPage.jsx";
 import Login from "./components/Auth/Login.jsx";
+import DesignSystem from "./components/DesignSystem/DesignSystem.jsx";
 import "./main.css";
 initStorage();
 const router = createBrowserRouter([
@@ -25,6 +26,10 @@ const router = createBrowserRouter([
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/design",
+        element: <DesignSystem />,
       },
     ],
   },
