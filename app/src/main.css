@@ -12,36 +12,36 @@
   --font-sans: "Poppins", sans-serif;
 
   /* ── Brand ───────────────────────────────────────────────── */
-  --color-primary: #e63946;        /* brand red */
-  --color-primary-dark: #b0202c;   /* deep red — C1/C2 badge text */
-  --color-primary-light: #fdeaec;  /* soft red background */
-  --color-primary-pale: #fad2d5;   /* softer red background */
+  --color-primary: #e63946; /* brand red */
+  --color-primary-dark: #b0202c; /* deep red — C1/C2 badge text */
+  --color-primary-light: #fdeaec; /* soft red background */
+  --color-primary-pale: #fad2d5; /* softer red background */
 
-  --color-secondary: #f4a261;      /* brand orange */
+  --color-secondary: #f4a261; /* brand orange */
   --color-secondary-light: #fde7c1; /* soft orange background */
-  --color-secondary-dark: #c97f35;  /* text on secondary-light */
+  --color-secondary-dark: #c97f35; /* text on secondary-light */
 
   /* ── Neutrals ────────────────────────────────────────────── */
-  --color-foreground: #2b2a28;     /* body text, strong contrast */
-  --color-neutral: #7c756b;        /* secondary text, labels */
-  --color-neutral-light: #a89f94;  /* placeholder text, hints */
+  --color-foreground: #2b2a28; /* body text, strong contrast */
+  --color-neutral: #7c756b; /* secondary text, labels */
+  --color-neutral-light: #a89f94; /* placeholder text, hints */
 
   /* ── Surfaces ────────────────────────────────────────────── */
-  --color-background: #f4efe8;     /* page background */
-  --color-surface: #ece6dd;        /* cards, panels */
-  --color-surface-alt: #faf6f0;    /* elevated surfaces */
+  --color-background: #f4efe8; /* page background */
+  --color-surface: #ece6dd; /* cards, panels */
+  --color-surface-alt: #faf6f0; /* elevated surfaces */
 
   /* ── Semantic ────────────────────────────────────────────── */
   --color-success: #34c77b;
   --color-success-dark: #2e9c6a;
-  --color-success-light: #e8f6ee;  /* online status pill background */
+  --color-success-light: #e8f6ee; /* online status pill background */
   --color-info: #9b7ede;
   --color-info-light: #ede9fa;
 
   /* ── Border radius ───────────────────────────────────────── */
-  --radius-pill: 999px;  /* tags, badges, chips */
-  --radius-card: 16px;   /* cards */
-  --radius-sm: 8px;      /* buttons, inputs */
+  --radius-pill: 999px; /* tags, badges, chips */
+  --radius-card: 16px; /* cards */
+  --radius-sm: 8px; /* buttons, inputs */
 
   /* ── Shadows ─────────────────────────────────────────────── */
   --shadow-card: 0 8px 18px -16px rgba(43, 42, 40, 0.5);
@@ -60,11 +60,20 @@
 
 /* ── Gradient utilities ──────────────────────────────────── */
 @utility bg-gradient-brand {
-  background-image: linear-gradient(135deg, #e63946 0%, #f4626b 55%, #f4a261 100%);
+  background-image: linear-gradient(
+    135deg,
+    #e63946 0%,
+    #f4626b 55%,
+    #f4a261 100%
+  );
 }
 
 @utility bg-gradient-page {
-  background-image: radial-gradient(1200px 600px at 50% -10%, #fbf3e7 0%, #f4efe8 60%);
+  background-image: radial-gradient(
+    1200px 600px at 50% -10%,
+    #fbf3e7 0%,
+    #f4efe8 60%
+  );
 }
 
 /* ── Global base styles ──────────────────────────────────── */
