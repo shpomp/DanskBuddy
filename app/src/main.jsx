@@ -13,9 +13,7 @@ import HomePage from "./components/HomePage/HomePage.jsx";
 import Login from "./components/Auth/Login.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
 
-
 import MessagesPage from "./components/Messages/MessagesPage.jsx";
-
 
 import Register from "./components/Auth/Register.jsx";
 import "./main.css";
@@ -33,8 +31,10 @@ function ProtectedRoute({ children }) {
 }
 initStorage();
 const router = createBrowserRouter([
+  // Public routes — OUTSIDE Layout, no navbar
   { path: "/login", element: <Login /> },
-  { path: "/register", element: <Placeholder name="Register" /> },
+  { path: "/register", element: <Register /> },
+  // Protected routes — INSIDE Layout, has navbar
   {
     element: <Layout />,
     children: [
@@ -59,7 +59,7 @@ const router = createBrowserRouter([
         path: "/messages",
         element: (
           <ProtectedRoute>
-            <Placeholder name="Messages" />
+            <MessagesPage />
           </ProtectedRoute>
         ),
       },
@@ -94,17 +94,6 @@ const router = createBrowserRouter([
             <Placeholder name="Public Profile" />
           </ProtectedRoute>
         ),
-        path: "messages",
-        element: <MessagesPage />,
-      },
-
-      {
-        path: "/login",
-        element: <Login />,
-      },
-      {
-        path: "/register",
-        element: <Register />,
       },
     ],
   },
