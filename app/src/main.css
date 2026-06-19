@@ -2,7 +2,7 @@
 
 /*
  * Design tokens — defined here, usable everywhere via CSS variables
- * or as Tailwind utility classes (e.g. bg-primary, text-text-muted, rounded-card).
+ * or as Tailwind utility classes (e.g. bg-primary, text-neutral, rounded-card).
  *
  * Reference the design in DanskBuddy.html for the full visual spec.
  * Add new tokens here when you need a value that repeats across components.
@@ -12,34 +12,36 @@
   --font-sans: "Poppins", sans-serif;
 
   /* ── Brand ───────────────────────────────────────────────── */
-  --color-primary: #e63946;
-  --color-primary-light: #fdeaec;
-  --color-secondary: #f4a261;
-  --color-secondary-light: #fde7c1;
+  --color-primary: #e63946;        /* brand red */
+  --color-primary-dark: #b0202c;   /* deep red — C1/C2 badge text */
+  --color-primary-light: #fdeaec;  /* soft red background */
+  --color-primary-pale: #fad2d5;   /* softer red background */
 
-  /* ── Surfaces & backgrounds ──────────────────────────────── */
-  --color-background: #f4efe8; /* page background */
-  --color-surface: #ece6dd; /* cards, panels */
-  --color-surface-raised: #faf6f0; /* elevated surfaces */
+  --color-secondary: #f4a261;      /* brand orange */
+  --color-secondary-light: #fde7c1; /* soft orange background */
+  --color-secondary-dark: #c97f35;  /* text on secondary-light */
 
-  /* ── Text ────────────────────────────────────────────────── */
-  --color-text: #2b2a28; /* default body text */
-  --color-text-secondary: #7c756b; /* labels, captions */
-  --color-text-muted: #a89f94; /* placeholders, hints */
+  /* ── Neutrals ────────────────────────────────────────────── */
+  --color-foreground: #2b2a28;     /* body text, strong contrast */
+  --color-neutral: #7c756b;        /* secondary text, labels */
+  --color-neutral-light: #a89f94;  /* placeholder text, hints */
+
+  /* ── Surfaces ────────────────────────────────────────────── */
+  --color-background: #f4efe8;     /* page background */
+  --color-surface: #ece6dd;        /* cards, panels */
+  --color-surface-alt: #faf6f0;    /* elevated surfaces */
 
   /* ── Semantic ────────────────────────────────────────────── */
   --color-success: #34c77b;
   --color-success-dark: #2e9c6a;
-  --color-success-light: #d4f5e7;
-  --color-warning: #c97f35;
-  --color-warning-light: #fde7c1;
+  --color-success-light: #e8f6ee;  /* online status pill background */
   --color-info: #9b7ede;
   --color-info-light: #ede9fa;
 
   /* ── Border radius ───────────────────────────────────────── */
-  --radius-pill: 999px; /* tags, badges, chips */
-  --radius-card: 16px; /* cards */
-  --radius-sm: 8px; /* buttons, inputs */
+  --radius-pill: 999px;  /* tags, badges, chips */
+  --radius-card: 16px;   /* cards */
+  --radius-sm: 8px;      /* buttons, inputs */
 
   /* ── Shadows ─────────────────────────────────────────────── */
   --shadow-card: 0 8px 18px -16px rgba(43, 42, 40, 0.5);
@@ -48,10 +50,15 @@
   --shadow-primary: 0 12px 22px -10px rgba(230, 57, 70, 0.6);
 }
 
-/* ── Gradient utilities ──────────────────────────────────── */
 /*
- * Use these like any Tailwind class: bg-gradient-brand, bg-gradient-page
+ * Force-include token classes that aren't used in any component yet.
+ * Without this, Tailwind v4 tree-shakes unused CSS variables out of the build,
+ * making those utility classes silently do nothing.
+ * Add a class here when you define a new token that isn't used in code yet.
  */
+@source inline("bg-success text-success border-success bg-primary-pale text-primary-pale border-primary-pale bg-primary-dark text-primary-dark border-primary-dark");
+
+/* ── Gradient utilities ──────────────────────────────────── */
 @utility bg-gradient-brand {
   background-image: linear-gradient(135deg, #e63946 0%, #f4626b 55%, #f4a261 100%);
 }
@@ -64,6 +71,6 @@
 @layer base {
   body {
     background-color: var(--color-background);
-    color: var(--color-text);
+    color: var(--color-foreground);
   }
 }
