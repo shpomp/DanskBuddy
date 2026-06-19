@@ -152,8 +152,6 @@ function Login() {
               {isLoading ? "Logging in..." : "Login"}
             </button>
 
-            
-
             <p className="text-center text-[13px] font-semibold text-[#7C756B] mt-2">
               New here?{" "}
               <span
