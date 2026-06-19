@@ -11,6 +11,7 @@ import { useAuth } from "./context/AuthContext";
 import Layout from "./components/Layout/Layout.jsx";
 import HomePage from "./components/HomePage/HomePage.jsx";
 import Login from "./components/Auth/Login.jsx";
+import DesignSystem from "./components/DesignSystem/DesignSystem.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
 
 import MessagesPage from "./components/Messages/MessagesPage.jsx";
@@ -94,6 +95,10 @@ const router = createBrowserRouter([
             <Placeholder name="Public Profile" />
           </ProtectedRoute>
         ),
+      },
+      {
+        path: "/design",
+        element: <DesignSystem />,
       },
     ],
   },
