@@ -41,6 +41,66 @@ type ProfileFormData = {
   bio: string;
 };
 
+type SelectOption<T extends string = string> = {
+  value: T;
+  label: string;
+};
+
+type DropdownName =
+  | "avatar"
+  | "city"
+  | "danishLevel"
+  | "availability";
+
+const roleOptions: SelectOption<UserRole>[] = [
+  { value: "learner", label: "Learner" },
+  { value: "native", label: "Native speaker" },
+  { value: "both", label: "Both" },
+];
+
+const avatarOptions: SelectOption[] = [
+  { value: "🙂", label: "🙂 Friendly" },
+  { value: "👩", label: "👩 Woman" },
+  { value: "👨", label: "👨 Man" },
+  { value: "👩‍🦰", label: "👩‍🦰 Red hair" },
+  { value: "👨‍🦱", label: "👨‍🦱 Curly hair" },
+  { value: "👩‍🦳", label: "👩‍🦳 Older woman" },
+  { value: "🧑", label: "🧑 Person" },
+];
+
+const cityOptions: SelectOption[] = [
+  { value: "Copenhagen", label: "Copenhagen" },
+  { value: "Aarhus", label: "Aarhus" },
+  { value: "Odense", label: "Odense" },
+  { value: "Other", label: "Other" },
+];
+
+const danishLevelOptions: SelectOption[] = [
+  { value: "beginner", label: "Beginner" },
+  { value: "intermediate", label: "Intermediate" },
+  { value: "advanced", label: "Advanced" },
+  { value: "native", label: "Native" },
+];
+
+const availabilityOptions: SelectOption[] = [
+  { value: "weekends", label: "Weekends" },
+  { value: "evenings", label: "Evenings" },
+  { value: "weekdays", label: "Weekdays" },
+  { value: "mornings", label: "Mornings" },
+  { value: "flexible", label: "Flexible" },
+];
+
+const fieldClass =
+  "mt-2 w-full rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-[15px] font-semibold text-[#2B2A28] outline-none transition placeholder:text-[#A89F94] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]";
+
+const labelClass =
+  "block text-[12px] font-extrabold tracking-[-0.01em] text-[#6E665C]";
+
+const readOnlyValueClass =
+  "text-[15px] font-semibold leading-relaxed text-[#2B2A28]";
+
+const readOnlyRowClass = "flex flex-wrap items-baseline gap-x-2 gap-y-1";
+
 function getFormDataFromUser(user: ProfileUser): ProfileFormData {
   return {
     avatar: user.avatar ?? "",
@@ -57,19 +117,118 @@ function getFormDataFromUser(user: ProfileUser): ProfileFormData {
   };
 }
 
-const fieldClass =
-  "w-full bg-background border border-surface rounded-sm px-4 py-3 text-foreground text-sm placeholder:text-neutral-light focus:outline-none focus:border-primary transition-colors";
+function getOptionsWithCurrentValue(options: SelectOption[], value: string) {
+  if (!value || options.some((option) => option.value === value)) {
+    return options;
+  }
 
-const fieldGroupClass = "flex flex-col gap-1.5";
+  return [{ value, label: value }, ...options];
+}
 
-const fieldLabelClass =
-  "text-xs font-semibold text-neutral uppercase tracking-wide";
+function getRoleLabel(role: UserRole) {
+  return roleOptions.find((option) => option.value === role)?.label ?? role;
+}
+
+function getOptionLabel(options: SelectOption[], value: string) {
+  return getOptionsWithCurrentValue(options, value).find(
+    (option) => option.value === value
+  )?.label;
+}
+
+function StyledDropdown({
+  name,
+  value,
+  options,
+  isOpen,
+  onToggle,
+  onSelect,
+}: {
+  name: DropdownName;
+  value: string;
+  options: SelectOption[];
+  isOpen: boolean;
+  onToggle: () => void;
+  onSelect: (name: DropdownName, value: string) => void;
+}) {
+  const dropdownOptions = getOptionsWithCurrentValue(options, value);
+  const selectedOption =
+    dropdownOptions.find((option) => option.value === value) ??
+    dropdownOptions[0];
+
+  return (
+    <div className="relative mt-2">
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        onClick={onToggle}
+        className="flex w-full cursor-pointer items-center justify-between rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-left text-[15px] font-semibold text-[#2B2A28] outline-none transition hover:border-[#E6DCCF] hover:bg-[#FBF7F1] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC] active:bg-[#F6F0E8]"
+      >
+        <span>{selectedOption?.label}</span>
+        <span
+          aria-hidden="true"
+          className={`text-[#A89F94] transition-transform ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        >
+          ▾
+        </span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-20 overflow-hidden rounded-2xl border border-[#EFE8DD] bg-white p-1.5 shadow-[0_18px_32px_-18px_rgba(43,42,40,0.45)]">
+          <div
+            role="listbox"
+            aria-label={name}
+            className="max-h-56 overflow-auto"
+          >
+            {dropdownOptions.map((option) => {
+              const isSelected = option.value === value;
+
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  onClick={() => onSelect(name, option.value)}
+                  className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-sm font-bold transition ${
+                    isSelected
+                      ? "bg-[#FDEAEC] text-[#D62F3C]"
+                      : "text-[#6E665C] hover:bg-[#F6F0E8] hover:text-[#2B2A28]"
+                  }`}
+                >
+                  <span>{option.label}</span>
+                  {isSelected && (
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4 text-[#E63946]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="m5 12 4 4 10-10" />
+                    </svg>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
 
 function MyProfile() {
   const { user, updateUser } = useAuth() as AuthContextValue;
 
   const [isEditing, setIsEditing] = useState(false);
   const [message, setMessage] = useState("");
+  const [openDropdown, setOpenDropdown] = useState<DropdownName | "">("");
 
   const [formData, setFormData] = useState<ProfileFormData>({
     avatar: "",
@@ -98,9 +257,7 @@ function MyProfile() {
   const currentUser = user;
 
   function handleChange(
-    event: ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+    event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) {
     const { name, value } = event.target;
 
@@ -110,10 +267,31 @@ function MyProfile() {
     }));
   }
 
+  function handleRoleChange(role: UserRole) {
+    setFormData((prev) => ({
+      ...prev,
+      role,
+    }));
+  }
+
+  function handleDropdownChange(name: DropdownName, value: string) {
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+    setOpenDropdown("");
+  }
+
+  function handleEdit() {
+    setFormData(getFormDataFromUser(currentUser));
+    setMessage("");
+    setIsEditing(true);
+  }
+
   function handleCancel() {
     setIsEditing(false);
     setMessage("");
-
+    setOpenDropdown("");
     setFormData(getFormDataFromUser(currentUser));
   }
 
@@ -145,106 +323,111 @@ function MyProfile() {
     updateUser(updatedProfile);
 
     setIsEditing(false);
+    setOpenDropdown("");
     setMessage("Profile updated successfully.");
   }
 
   return (
-    <main className="min-h-screen bg-background px-4 py-10">
-      <h1 className="max-w-lg mx-auto text-2xl font-bold text-foreground mb-6">
-        My Profile
-      </h1>
+    <main className="-m-8 min-h-[calc(100vh-8rem)] bg-background px-4 py-8 font-sans text-[#2B2A28] sm:px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-[520px]">
+        <h1 className="text-[28px] font-extrabold leading-tight tracking-[-0.02em] text-[#161616]">
+          My Profile
+        </h1>
 
-      {message && (
-        <p className="max-w-lg mx-auto mb-4 px-4 py-3 bg-success-light text-success-dark rounded-card text-sm font-medium">
-          {message}
-        </p>
-      )}
+        {message && (
+          <p className="mt-5 rounded-2xl border border-[#D7EFE2] bg-success-light px-4 py-3 text-sm font-bold text-success-dark">
+            {message}
+          </p>
+        )}
+      </div>
 
       {!isEditing ? (
-        <section className="max-w-lg mx-auto bg-surface-alt rounded-card shadow-card p-6">
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Avatar:
-            </strong>
-            {user.avatar || "No avatar"}
-          </p>
+        <section className="mx-auto mt-8 w-full max-w-[520px] rounded-[18px] border border-[#EAE3D8] bg-white p-5 shadow-[0_32px_64px_-24px_rgba(33,30,28,0.40),0_8px_20px_-12px_rgba(33,30,28,0.28)] sm:p-8">
+          <div className="space-y-5">
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Avatar:</span>
+              <p className={readOnlyValueClass}>
+                {getOptionLabel(avatarOptions, currentUser.avatar) ||
+                  currentUser.avatar ||
+                  "No avatar"}
+              </p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Name:
-            </strong>
-            {user.name}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Name:</span>
+              <p className={readOnlyValueClass}>{currentUser.name}</p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Email:
-            </strong>
-            {user.email}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Email:</span>
+              <p className={readOnlyValueClass}>{currentUser.email}</p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Role:
-            </strong>
-            {user.role}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Role:</span>
+              <p className={readOnlyValueClass}>
+                {getRoleLabel(currentUser.role)}
+              </p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              City:
-            </strong>
-            {user.city}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>City:</span>
+              <p className={readOnlyValueClass}>{currentUser.city}</p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Danish level:
-            </strong>
-            {user.danishLevel}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Danish level:</span>
+              <p className={readOnlyValueClass}>
+                {getOptionLabel(danishLevelOptions, currentUser.danishLevel) ||
+                  currentUser.danishLevel}
+              </p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Native language:
-            </strong>
-            {user.nativeLanguage}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Native language:</span>
+              <p className={readOnlyValueClass}>
+                {currentUser.nativeLanguage}
+              </p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Learning goals:
-            </strong>
-            {user.learningGoals}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Learning goals:</span>
+              <p className={readOnlyValueClass}>
+                {currentUser.learningGoals}
+              </p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Topics:
-            </strong>{" "}
-            {user.topics && user.topics.length > 0
-              ? user.topics.join(", ")
-              : "No topics added"}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Topics:</span>
+              <p className={readOnlyValueClass}>
+                {currentUser.topics && currentUser.topics.length > 0
+                  ? currentUser.topics.join(", ")
+                  : "No topics added"}
+              </p>
+            </div>
 
-          <p className="flex gap-3 py-3 border-b border-surface text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Availability:
-            </strong>
-            {user.availability}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Availability:</span>
+              <p className={readOnlyValueClass}>
+                {getOptionLabel(
+                  availabilityOptions,
+                  currentUser.availability
+                ) || currentUser.availability}
+              </p>
+            </div>
 
-          <p className="flex gap-3 py-3 text-sm">
-            <strong className="text-neutral font-medium w-36 shrink-0">
-              Bio:
-            </strong>
-            {user.bio}
-          </p>
+            <div className={readOnlyRowClass}>
+              <span className={labelClass}>Bio:</span>
+              <p className={`${readOnlyValueClass} whitespace-pre-wrap`}>
+                {currentUser.bio}
+              </p>
+            </div>
+          </div>
 
           <button
             type="button"
-            onClick={() => setIsEditing(true)}
-            className="mt-6 w-full bg-primary text-white font-semibold py-3 rounded-pill shadow-primary hover:bg-primary-dark transition-colors text-sm cursor-pointer"
+            onClick={handleEdit}
+            className="mt-7 w-full cursor-pointer rounded-full bg-[#E63946] px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_14px_24px_-12px_rgba(230,57,70,0.75)] transition hover:bg-[#D62F3C] focus:outline-none focus:ring-4 focus:ring-[#FAD2D5] active:translate-y-px"
           >
             Edit profile
           </button>
@@ -252,171 +435,175 @@ function MyProfile() {
       ) : (
         <form
           onSubmit={handleSubmit}
-          className="max-w-lg mx-auto bg-surface-alt rounded-card shadow-elevated p-6 space-y-4"
+          className="mx-auto mt-8 w-full max-w-[520px] rounded-[18px] border border-[#EAE3D8] bg-white p-5 shadow-[0_32px_64px_-24px_rgba(33,30,28,0.40),0_8px_20px_-12px_rgba(33,30,28,0.28)] sm:p-8"
         >
-          <div className={fieldGroupClass}>
-            <label htmlFor="avatar" className={fieldLabelClass}>
-              Avatar
-            </label>
-            <input
-              id="avatar"
-              name="avatar"
-              type="text"
-              value={formData.avatar}
-              onChange={handleChange}
-              className={fieldClass}
-            />
-          </div>
+          <div className="space-y-4">
+            <fieldset>
+              <legend className="text-[16px] font-extrabold tracking-[-0.01em] text-[#A89F94]">
+                I am
+              </legend>
+              <div className="mt-2 flex rounded-full bg-[#F6F0E8] p-1">
+                {roleOptions.map((option) => {
+                  const isSelected = formData.role === option.value;
 
-          <div className={fieldGroupClass}>
-            <label htmlFor="name" className={fieldLabelClass}>
+                  return (
+                    <button
+                      key={option.value}
+                      type="button"
+                      aria-pressed={isSelected}
+                      onClick={() => handleRoleChange(option.value)}
+                      className={`min-w-0 flex-1 cursor-pointer whitespace-nowrap rounded-full px-2 py-3 text-center text-[11px] font-extrabold transition focus:outline-none focus:ring-4 focus:ring-[#FDEAEC] min-[380px]:text-[12px] sm:px-4 sm:text-[13px] ${
+                        isSelected
+                          ? "bg-[#E63946] text-white shadow-[0_10px_18px_-12px_rgba(230,57,70,0.75)]"
+                          : "text-[#6E665C] hover:bg-[#EFE8DD] active:bg-[#E6DCCF]"
+                      }`}
+                    >
+                      {option.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+
+            <label htmlFor="name" className={labelClass}>
               Name
+              <input
+                id="name"
+                name="name"
+                type="text"
+                value={formData.name}
+                onChange={handleChange}
+                required
+                className={fieldClass}
+              />
             </label>
-            <input
-              id="name"
-              name="name"
-              type="text"
-              value={formData.name}
-              onChange={handleChange}
-              required
-              className={fieldClass}
-            />
-          </div>
 
-          <div className={fieldGroupClass}>
-            <label htmlFor="email" className={fieldLabelClass}>
+            <label htmlFor="email" className={labelClass}>
               Email
+              <input
+                id="email"
+                name="email"
+                type="email"
+                value={formData.email}
+                onChange={handleChange}
+                required
+                className={fieldClass}
+              />
             </label>
-            <input
-              id="email"
-              name="email"
-              type="email"
-              value={formData.email}
-              onChange={handleChange}
-              required
-              className={fieldClass}
-            />
-          </div>
 
-          <div className={fieldGroupClass}>
-            <label htmlFor="role" className={fieldLabelClass}>
-              Role
+            <label className={labelClass}>
+              Avatar
+              <StyledDropdown
+                name="avatar"
+                value={formData.avatar}
+                options={avatarOptions}
+                isOpen={openDropdown === "avatar"}
+                onToggle={() =>
+                  setOpenDropdown(openDropdown === "avatar" ? "" : "avatar")
+                }
+                onSelect={handleDropdownChange}
+              />
             </label>
-            <select
-              id="role"
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              className={fieldClass}
-            >
-              <option value="learner">Learner</option>
-              <option value="native">Native speaker</option>
-              <option value="both">Both</option>
-            </select>
-          </div>
 
-          <div className={fieldGroupClass}>
-            <label htmlFor="city" className={fieldLabelClass}>
+            <label className={labelClass}>
               City
+              <StyledDropdown
+                name="city"
+                value={formData.city}
+                options={cityOptions}
+                isOpen={openDropdown === "city"}
+                onToggle={() =>
+                  setOpenDropdown(openDropdown === "city" ? "" : "city")
+                }
+                onSelect={handleDropdownChange}
+              />
             </label>
-            <input
-              id="city"
-              name="city"
-              type="text"
-              value={formData.city}
-              onChange={handleChange}
-              className={fieldClass}
-            />
-          </div>
 
-          <div className={fieldGroupClass}>
-            <label htmlFor="danishLevel" className={fieldLabelClass}>
+            <label className={labelClass}>
               Danish level
+              <StyledDropdown
+                name="danishLevel"
+                value={formData.danishLevel}
+                options={danishLevelOptions}
+                isOpen={openDropdown === "danishLevel"}
+                onToggle={() =>
+                  setOpenDropdown(
+                    openDropdown === "danishLevel" ? "" : "danishLevel"
+                  )
+                }
+                onSelect={handleDropdownChange}
+              />
             </label>
-            <input
-              id="danishLevel"
-              name="danishLevel"
-              type="text"
-              value={formData.danishLevel}
-              onChange={handleChange}
-              className={fieldClass}
-            />
-          </div>
 
-          <div className={fieldGroupClass}>
-            <label htmlFor="nativeLanguage" className={fieldLabelClass}>
-              Native language
-            </label>
-            <input
-              id="nativeLanguage"
-              name="nativeLanguage"
-              type="text"
-              value={formData.nativeLanguage}
-              onChange={handleChange}
-              className={fieldClass}
-            />
-          </div>
-
-          <div className={fieldGroupClass}>
-            <label htmlFor="learningGoals" className={fieldLabelClass}>
-              Learning goals
-            </label>
-            <textarea
-              id="learningGoals"
-              name="learningGoals"
-              value={formData.learningGoals}
-              onChange={handleChange}
-              rows={3}
-              className={fieldClass}
-            />
-          </div>
-
-          <div className={fieldGroupClass}>
-            <label htmlFor="topics" className={fieldLabelClass}>
-              Topics
-            </label>
-            <input
-              id="topics"
-              name="topics"
-              type="text"
-              value={formData.topics}
-              onChange={handleChange}
-              placeholder="culture, food, travel"
-              className={fieldClass}
-            />
-          </div>
-
-          <div className={fieldGroupClass}>
-            <label htmlFor="availability" className={fieldLabelClass}>
+            <label className={labelClass}>
               Availability
+              <StyledDropdown
+                name="availability"
+                value={formData.availability}
+                options={availabilityOptions}
+                isOpen={openDropdown === "availability"}
+                onToggle={() =>
+                  setOpenDropdown(
+                    openDropdown === "availability" ? "" : "availability"
+                  )
+                }
+                onSelect={handleDropdownChange}
+              />
             </label>
-            <input
-              id="availability"
-              name="availability"
-              type="text"
-              value={formData.availability}
-              onChange={handleChange}
-              className={fieldClass}
-            />
-          </div>
 
-          <div className={fieldGroupClass}>
-            <label htmlFor="bio" className={fieldLabelClass}>
-              Bio
+            <label htmlFor="nativeLanguage" className={labelClass}>
+              Native language
+              <input
+                id="nativeLanguage"
+                name="nativeLanguage"
+                type="text"
+                value={formData.nativeLanguage}
+                onChange={handleChange}
+                className={fieldClass}
+              />
             </label>
-            <textarea
-              id="bio"
-              name="bio"
-              value={formData.bio}
-              onChange={handleChange}
-              rows={4}
-              className={fieldClass}
-            />
+
+            <label htmlFor="learningGoals" className={labelClass}>
+              Learning goals
+              <input
+                id="learningGoals"
+                name="learningGoals"
+                type="text"
+                value={formData.learningGoals}
+                onChange={handleChange}
+                className={fieldClass}
+              />
+            </label>
+
+            <label htmlFor="topics" className={labelClass}>
+              Topics
+              <input
+                id="topics"
+                name="topics"
+                type="text"
+                value={formData.topics}
+                onChange={handleChange}
+                placeholder="culture, food, travel"
+                className={fieldClass}
+              />
+            </label>
+
+            <label htmlFor="bio" className={labelClass}>
+              Bio
+              <textarea
+                id="bio"
+                name="bio"
+                value={formData.bio}
+                onChange={handleChange}
+                rows={4}
+                className={`${fieldClass} min-h-28 resize-y`}
+              />
+            </label>
           </div>
 
           <button
             type="submit"
-            className="w-full bg-primary text-white font-semibold py-3 rounded-pill shadow-primary hover:bg-primary-dark transition-colors text-sm cursor-pointer"
+            className="mt-6 w-full cursor-pointer rounded-full bg-[#E63946] px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_14px_24px_-12px_rgba(230,57,70,0.75)] transition hover:bg-[#D62F3C] focus:outline-none focus:ring-4 focus:ring-[#FAD2D5] active:translate-y-px"
           >
             Save profile
           </button>
@@ -424,7 +611,7 @@ function MyProfile() {
           <button
             type="button"
             onClick={handleCancel}
-            className="w-full bg-surface text-neutral font-medium py-3 rounded-pill hover:bg-surface-alt transition-colors text-sm cursor-pointer"
+            className="mt-3 w-full cursor-pointer rounded-full bg-[#ECE6DD] px-6 py-3.5 text-[15px] font-extrabold text-[#6E665C] transition hover:bg-[#F6F0E8] focus:outline-none focus:ring-4 focus:ring-[#FDEAEC] active:translate-y-px"
           >
             Cancel
           </button>
