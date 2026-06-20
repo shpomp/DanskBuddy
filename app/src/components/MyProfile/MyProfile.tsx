@@ -8,7 +8,6 @@ type UserRole = "learner" | "native" | "both";
 type ProfileUser = {
   id: string;
   email: string;
-  password?: string;
   name: string;
   role: UserRole;
   avatar: string;
