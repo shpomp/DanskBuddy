@@ -9,7 +9,10 @@ const VARIANT = {
 
 export default function Chip({ children, variant = "filled", onClick }) {
   return (
-    <span onClick={onClick} className={`${BASE} ${VARIANT[variant] ?? VARIANT.filled}`}>
+    <span
+      onClick={onClick}
+      className={`${BASE} ${VARIANT[variant] ?? VARIANT.filled}`}
+    >
       {children}
     </span>
   );

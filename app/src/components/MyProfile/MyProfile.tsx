@@ -46,11 +46,7 @@ type SelectOption<T extends string = string> = {
   label: string;
 };
 
-type DropdownName =
-  | "avatar"
-  | "city"
-  | "danishLevel"
-  | "availability";
+type DropdownName = "avatar" | "city" | "danishLevel" | "availability";
 
 const roleOptions: SelectOption<UserRole>[] = [
   { value: "learner", label: "Learner" },
@@ -385,16 +381,12 @@ function MyProfile() {
 
             <div className={readOnlyRowClass}>
               <span className={labelClass}>Native language:</span>
-              <p className={readOnlyValueClass}>
-                {currentUser.nativeLanguage}
-              </p>
+              <p className={readOnlyValueClass}>{currentUser.nativeLanguage}</p>
             </div>
 
             <div className={readOnlyRowClass}>
               <span className={labelClass}>Learning goals:</span>
-              <p className={readOnlyValueClass}>
-                {currentUser.learningGoals}
-              </p>
+              <p className={readOnlyValueClass}>{currentUser.learningGoals}</p>
             </div>
 
             <div className={readOnlyRowClass}>
