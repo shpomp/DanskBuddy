@@ -1,7 +1,7 @@
-import LevelBadge from "../Shared/LevelBadge";
-import Button from "../Shared/Button";
-import Chip from "../Shared/Chip";
-import Avatar from "../Shared/Avatar";
+import LevelBadge from "../components/Shared/LevelBadge";
+import Button from "../components/Shared/Button";
+import Chip from "../components/Shared/Chip";
+import Avatar from "../components/Shared/Avatar";
 
 const COLOR_GROUPS = [
   {

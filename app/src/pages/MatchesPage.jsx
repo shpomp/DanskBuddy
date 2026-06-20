@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { useApp } from "../../context/AppContext";
-import { useAuth } from "../../context/AuthContext";
-import MatchCard from "./MatchCard";
-export default function MatchesList() {
+import { useApp } from "../context/AppContext";
+import { useAuth } from "../context/AuthContext";
+import MatchCard from "../components/Matches/MatchCard";
+export default function MatchesPage() {
   const { getMatchesForUser } = useApp();
   const { user } = useAuth();
   const [activeTab, setActiveTab] = useState("pending");

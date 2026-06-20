@@ -9,14 +9,12 @@ import { initStorage } from "./utils/initStorage";
 import { AppProvider } from "./context/AppContext";
 import { useAuth } from "./context/AuthContext";
 import Layout from "./components/Layout/Layout.jsx";
-import HomePage from "./components/HomePage/HomePage.jsx";
-import Login from "./components/Auth/Login.jsx";
-import DesignSystem from "./components/DesignSystem/DesignSystem.jsx";
-import MatchesList from "./components/Matches/MatchesList.jsx";
-
-import MessagesPage from "./components/Messages/MessagesPage.jsx";
-
-import Register from "./components/Auth/Register.jsx";
+import Home from "./pages/Home.jsx";
+import Login from "./pages/Login.jsx";
+import Register from "./pages/Register.jsx";
+import MatchesPage from "./pages/MatchesPage.jsx";
+import MessagesPage from "./pages/MessagesPage.jsx";
+import DesignSystem from "./dev/DesignSystem.jsx";
 import "./main.css";
 function Placeholder({ name }) {
   return (
@@ -39,7 +37,7 @@ const router = createBrowserRouter([
   {
     element: <Layout />,
     children: [
-      { index: true, element: <HomePage /> },
+      { index: true, element: <Home /> },
       {
         path: "/browse",
         element: (
@@ -52,7 +50,7 @@ const router = createBrowserRouter([
         path: "/matches",
         element: (
           <ProtectedRoute>
-            <MatchesList />
+            <MatchesPage />
           </ProtectedRoute>
         ),
       },

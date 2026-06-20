@@ -1,10 +1,9 @@
 import { Navigate } from "react-router-dom";
-import { useApp } from "../../context/AppContext";
-import { useAuth } from "../../context/AuthContext";
-import EmptyState from "../Shared/EmptyState";
-import MessagesList from "./MessagesList";
-
-import "./Messages.css";
+import { useApp } from "../context/AppContext";
+import { useAuth } from "../context/AuthContext";
+import EmptyState from "../components/Shared/EmptyState";
+import MessagesList from "../components/Messages/MessagesList";
+import "../components/Messages/Messages.css";
 
 export default function MessagesPage() {
   const { user } = useAuth();

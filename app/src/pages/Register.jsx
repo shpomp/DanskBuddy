@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth, hashPassword } from "../../context/AuthContext";
-import { useApp } from "../../context/AppContext";
+import { useAuth, hashPassword } from "../context/AuthContext";
+import { useApp } from "../context/AppContext";
 
 const roleOptions = [
   { value: "learner", label: "Learner" },
@@ -202,12 +202,12 @@ function Register() {
 
   return (
     <section className="-m-8 min-h-[calc(100vh-8rem)] bg-[#F4EFE8] px-4 py-8 font-sans text-[#2B2A28] sm:px-6 lg:px-10">
-      <div className="mx-auto flex w-full max-w-6xl overflow-hidden rounded-[18px] border border-[#EAE3D8] bg-white shadow-[0_32px_64px_-24px_rgba(33,30,28,0.40),0_8px_20px_-12px_rgba(33,30,28,0.28)]">
-        <aside className="hidden w-[44%] flex-col justify-between bg-gradient-to-br from-[#E63946] via-[#F05258] to-[#F4A261] p-10 text-white lg:flex">
+      <div className="mx-auto flex w-full max-w-6xl overflow-hidden rounded-[18px] border border-[#EAE3D8] bg-white shadow-elevated">
+        <aside className="hidden w-[44%] flex-col justify-between bg-linear-to-br from-[#E63946] via-[#F05258] to-[#F4A261] p-10 text-white lg:flex">
           <div className="flex items-center gap-3">
-            <span className="relative block h-10 w-10 shrink-0 overflow-hidden rounded-[12px] bg-[#F06A73]">
-              <span className="absolute left-1/2 top-0 h-full w-[7px] -translate-x-1/2 bg-white" />
-              <span className="absolute left-0 top-1/2 h-[7px] w-full -translate-y-1/2 bg-white" />
+            <span className="relative block h-10 w-10 shrink-0 overflow-hidden rounded-xl bg-[#F06A73]">
+              <span className="absolute left-1/2 top-0 h-full w-1.75 -translate-x-1/2 bg-white" />
+              <span className="absolute left-0 top-1/2 h-1.75 w-full -translate-y-1/2 bg-white" />
             </span>
           </div>
 
@@ -276,7 +276,7 @@ function Register() {
         </aside>
 
         <div className="flex w-full items-start justify-center bg-white px-5 py-8 sm:px-8 md:py-12 lg:w-[56%] lg:px-16">
-          <form onSubmit={handleRegister} className="w-full max-w-[380px]">
+          <form onSubmit={handleRegister} className="w-full max-w-95">
             <h1 className="text-[28px] font-extrabold leading-tight tracking-[-0.02em] text-[#161616]">
               Create account
             </h1>
