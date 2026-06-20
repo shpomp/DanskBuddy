@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import type { ChangeEvent, FormEventHandler } from "react";
+import type { ChangeEvent, FormEvent } from "react";
+
 import { useAuth } from "../../context/AuthContext";
 
 type UserRole = "learner" | "native" | "both";
@@ -94,6 +95,8 @@ function MyProfile() {
     return null;
   }
 
+  const currentUser = user;
+
   function handleChange(
     event: ChangeEvent<
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
@@ -111,10 +114,10 @@ function MyProfile() {
     setIsEditing(false);
     setMessage("");
 
-    setFormData(getFormDataFromUser(user));
+    setFormData(getFormDataFromUser(currentUser));
   }
 
-  const handleSubmit: FormEventHandler<HTMLFormElement> = (event) => {
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     if (!updateUser) {
@@ -143,7 +146,7 @@ function MyProfile() {
 
     setIsEditing(false);
     setMessage("Profile updated successfully.");
-  };
+  }
 
   return (
     <main className="min-h-screen bg-background px-4 py-10">
