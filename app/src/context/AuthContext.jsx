@@ -2,7 +2,6 @@ import {
   createContext,
   useContext,
   useState,
-  useEffect,
   useCallback,
 } from "react";
 import {
@@ -34,13 +33,7 @@ const AuthContext = createContext(null);
 // Without this, AuthContext and AppContext would hold different versions
 // of the same user object until the next page reload.
 export function AuthProvider({ children, onUpdateUser }) {
-  const [user, setUser] = useState(null);
-
-  // On mount — rehydrate session from localStorage
-  useEffect(() => {
-    const found = getCurrentUser();
-    setUser(found);
-  }, []);
+  const [user, setUser] = useState(() => getCurrentUser());
 
   /**
 
