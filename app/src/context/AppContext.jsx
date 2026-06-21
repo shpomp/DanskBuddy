@@ -137,7 +137,7 @@ export function AppProvider({ children }) {
   // ── Message helpers ─────────────────────────────────────────────────────────
 
   const buildConversationId = useCallback((userId1, userId2) => {
-    return [userId1, userId2].sort().join("-");
+    return [userId1, userId2].sort().join("::");
   }, []);
 
   const sendMessage = useCallback(
