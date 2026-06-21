@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useApp } from "../../context/AppContext.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 export default function MatchCard({ match }) {
-  const { respondToMatch, getUserById, buildConversationId } = useApp();
+  const { respondToMatch, getUserById } = useApp();
   const { user } = useAuth();
   const navigate = useNavigate();
   const [toast, setToast] = useState("");
@@ -27,8 +27,7 @@ export default function MatchCard({ match }) {
     showToast("❌ Declined");
   }
   function handleMessage() {
-    const conversationId = buildConversationId(user.id, otherUser.id);
-    navigate(`/messages/${conversationId}`);
+    navigate(`/messages/${otherUser.id}`);
   }
   const statusColors = {
     pending: "bg-yellow-100 text-yellow-800",
