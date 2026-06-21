@@ -42,7 +42,14 @@ export default function ChatWindow() {
     <div className="chat-window">
       <button onClick={() => navigate("/messages")}>← Back</button>
 
-      <h3>Chat with {otherUser.name}</h3>
+      <div className="chat-header">
+        <div className="avatar">{otherUser.avatar}</div>
+
+        <div>
+          <h3>{otherUser.name}</h3>
+          <span>Online</span>
+        </div>
+      </div>
 
       <div className="chat-messages">
         {messages.length === 0 ? (

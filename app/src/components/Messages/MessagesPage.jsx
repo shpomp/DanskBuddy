@@ -9,30 +9,24 @@ import "./Messages.css";
 export default function MessagesPage() {
   const { user } = useAuth();
   const { users, messages } = useApp();
-
+  console.log("MESSAGES OBJECT:", messages);
   if (!user) {
     return <Navigate to="/login" />;
   }
 
-  const conversations = Object.entries(messages || {})
-    .map(([conversationId, msgs]) => {
-      const [id1, id2] = conversationId.split("::");
+  const conversations = users
+    .filter((u) => String(u.id) !== String(user.id))
+    .map((otherUser) => {
+      const conversationId = [user.id, otherUser.id].sort().join("::");
 
-      const otherUserId = String(id1) === String(user.id) ? id2 : id1;
-
-      const otherUser = users.find((u) => String(u.id) === String(otherUserId));
-
-      if (!otherUser) {
-        return null;
-      }
+      const msgs = messages[conversationId] || [];
 
       return {
         conversationId,
         otherUser,
-        lastMessage: msgs[msgs.length - 1]?.text || "",
+        lastMessage: msgs[msgs.length - 1]?.text || "Start conversation",
       };
-    })
-    .filter(Boolean);
+    });
 
   if (conversations.length === 0) {
     return (
