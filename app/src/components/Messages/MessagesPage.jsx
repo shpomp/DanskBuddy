@@ -16,7 +16,7 @@ export default function MessagesPage() {
 
   const conversations = Object.entries(messages || {})
     .map(([conversationId, msgs]) => {
-      const [id1, id2] = conversationId.split("-");
+      const [id1, id2] = conversationId.split("::");
 
       const otherUserId = String(id1) === String(user.id) ? id2 : id1;
 
