@@ -17,6 +17,7 @@ import MatchesList from "./components/Matches/MatchesList.jsx";
 import MessagesPage from "./components/Messages/MessagesPage.jsx";
 
 import Register from "./components/Auth/Register.jsx";
+import MyProfile from "./components/MyProfile/MyProfile.tsx";
 import "./main.css";
 function Placeholder({ name }) {
   return (
@@ -73,7 +74,7 @@ const router = createBrowserRouter([
         ),
       },
       {
-        path: "/feed",
+        path: "feed",
         element: (
           <ProtectedRoute>
             <Placeholder name="Feed" />
@@ -84,7 +85,7 @@ const router = createBrowserRouter([
         path: "/profile/me",
         element: (
           <ProtectedRoute>
-            <Placeholder name="My Profile" />
+            <MyProfile />
           </ProtectedRoute>
         ),
       },

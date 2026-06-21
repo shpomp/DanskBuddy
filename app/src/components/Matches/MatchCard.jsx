@@ -18,7 +18,7 @@ export default function MatchCard({ match }) {
   }
   function handleAccept() {
     respondToMatch(match.id, "accepted");
-    setStatus("accepted"); 
+    setStatus("accepted");
     showToast("✅ Connected!");
   }
   function handleDecline() {

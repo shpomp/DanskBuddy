@@ -4,7 +4,8 @@ interface Props {
   level: Level;
 }
 
-const BASE = "inline-flex items-center justify-center px-[10px] py-[5px] rounded-sm text-xs font-extrabold";
+const BASE =
+  "inline-flex items-center justify-center px-[10px] py-[5px] rounded-sm text-xs font-extrabold";
 
 const VARIANT: Record<Level, string> = {
   A1: "bg-secondary-light text-secondary-dark",

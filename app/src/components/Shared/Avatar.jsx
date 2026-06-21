@@ -7,7 +7,12 @@ const SIZE = {
   lg: "w-14 h-14 text-base",
 };
 
-export default function Avatar({ initials, online = false, size = "md", color = AVATAR_COLOR }) {
+export default function Avatar({
+  initials,
+  online = false,
+  size = "md",
+  color = AVATAR_COLOR,
+}) {
   return (
     <div className="relative inline-flex">
       <div
