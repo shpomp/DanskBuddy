@@ -111,10 +111,7 @@ function matchesSearch(user: BrowseUser, searchTerm: string) {
     topic.toLowerCase().includes(normalizedSearch)
   );
 
-  return (
-    name.includes(normalizedSearch) ||
-    topicMatches
-  );
+  return name.includes(normalizedSearch) || topicMatches;
 }
 
 function matchesFilter(userValue: string | undefined, selectedValue: string) {
