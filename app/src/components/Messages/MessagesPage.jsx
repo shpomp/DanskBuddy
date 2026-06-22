@@ -9,7 +9,7 @@ import "./Messages.css";
 export default function MessagesPage() {
   const { user } = useAuth();
   const { users, messages } = useApp();
-  console.log("MESSAGES OBJECT:", messages);
+
   if (!user) {
     return <Navigate to="/login" />;
   }
@@ -33,6 +33,7 @@ export default function MessagesPage() {
       };
     })
     .filter(Boolean);
+
   if (conversations.length === 0) {
     return (
       <EmptyState
