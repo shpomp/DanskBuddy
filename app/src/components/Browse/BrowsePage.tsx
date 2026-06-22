@@ -105,7 +105,6 @@ function matchesSearch(user: BrowseUser, searchTerm: string) {
   }
 
   const name = user.name.toLowerCase();
-  const city = user.city?.toLowerCase() ?? "";
   const topics = user.topics ?? [];
 
   const topicMatches = topics.some((topic) =>
@@ -114,7 +113,6 @@ function matchesSearch(user: BrowseUser, searchTerm: string) {
 
   return (
     name.includes(normalizedSearch) ||
-    city.includes(normalizedSearch) ||
     topicMatches
   );
 }
@@ -343,7 +341,7 @@ function BrowsePage() {
               htmlFor="search"
               className={`${labelClass} col-span-2 lg:col-span-4`}
             >
-              Search by name, city, or topic
+              Search by name or topic
               <input
                 type="search"
                 id="search"
