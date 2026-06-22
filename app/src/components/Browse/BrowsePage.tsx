@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type { ChangeEvent } from "react";
 
 import { useApp } from "../../context/AppContext";
@@ -147,6 +147,7 @@ function StyledDropdown({
   isOpen,
   onToggle,
   onSelect,
+  onClose,
 }: {
   name: FilterName;
   value: string;
@@ -154,12 +155,38 @@ function StyledDropdown({
   isOpen: boolean;
   onToggle: () => void;
   onSelect: (name: FilterName, value: string) => void;
+  onClose: () => void;
 }) {
+  const dropdownRef = useRef<HTMLDivElement>(null);
   const selectedOption =
     options.find((option) => option.value === value) ?? options[0];
 
+  useEffect(() => {
+    if (!isOpen) return;
+
+    function handlePointerDown(event: PointerEvent) {
+      if (!dropdownRef.current?.contains(event.target as Node)) {
+        onClose();
+      }
+    }
+
+    function handleKeyDown(event: KeyboardEvent) {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    }
+
+    document.addEventListener("pointerdown", handlePointerDown);
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", handlePointerDown);
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isOpen, onClose]);
+
   return (
-    <div className="relative mt-2">
+    <div ref={dropdownRef} className="relative mt-2">
       <button
         type="button"
         aria-haspopup="listbox"
@@ -338,6 +365,7 @@ function BrowsePage() {
                   setOpenDropdown(openDropdown === "city" ? "" : "city")
                 }
                 onSelect={handleDropdownChange}
+                onClose={() => setOpenDropdown("")}
               />
             </label>
 
@@ -352,6 +380,7 @@ function BrowsePage() {
                   setOpenDropdown(openDropdown === "role" ? "" : "role")
                 }
                 onSelect={handleDropdownChange}
+                onClose={() => setOpenDropdown("")}
               />
             </label>
 
@@ -368,6 +397,7 @@ function BrowsePage() {
                   )
                 }
                 onSelect={handleDropdownChange}
+                onClose={() => setOpenDropdown("")}
               />
             </label>
 
@@ -384,6 +414,7 @@ function BrowsePage() {
                   )
                 }
                 onSelect={handleDropdownChange}
+                onClose={() => setOpenDropdown("")}
               />
             </label>
           </div>
