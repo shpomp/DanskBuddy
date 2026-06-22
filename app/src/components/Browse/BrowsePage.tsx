@@ -344,7 +344,7 @@ function BrowsePage() {
                 id="search"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                placeholder="Example: Maja, Copenhagen, food"
+                placeholder="Example: Maja, food"
                 className={inputClass}
               />
             </label>
