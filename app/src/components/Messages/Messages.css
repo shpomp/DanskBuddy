@@ -72,7 +72,7 @@
   display: flex;
 
   flex-direction: column;
-
+  overflow: hidden;
   background: var(--color-surface-alt);
 }
 
@@ -196,9 +196,9 @@
 /* sent bubble */
 
 .sent .message-bubble {
-  background: var(--color-primary-pale);
+  background: var(--color-primary);
 
-  color: var(--color-foreground);
+  color: var(--color-surface-alt);
 
   border-radius: 18px 18px 4px 18px;
 }
@@ -228,7 +228,7 @@
 
   background: var(--color-surface);
 
-  border-radius: 25px;
+  border-radius: var(--radius-pill);
 
   padding: 0 18px;
 
@@ -281,14 +281,21 @@
   background: var(--color-primary-dark);
 }
 /* mobile */
-
 @media (max-width: 600px) {
-  .messages-container,
   .chat-window {
-    padding: 15px;
+    height: calc(100dvh - 80px);
+    margin: 0;
+    padding: 12px;
+    overflow: hidden;
   }
 
   .chat-messages {
-    max-height: 50vh;
+    flex: 1;
+    overflow-y: auto;
+    min-height: 0;
+  }
+
+  .chat-input {
+    flex-shrink: 0;
   }
 }
