@@ -17,7 +17,7 @@ type BrowseUser = {
   role?: UserRole;
   danishLevel?: string;
   topics?: string[];
-  availability?: string[];
+  availability?: string;
   bio?: string;
 };
 
@@ -55,12 +55,21 @@ const danishLevelOptions: SelectOption[] = [
 ];
 
 const availabilityOptions: SelectOption[] = [
-  allOption,  
+  allOption,
   { value: "mornings", label: "Mornings" },
   { value: "evenings", label: "Evenings" },
   { value: "weekends", label: "Weekends" },
   { value: "flexible", label: "Flexible" },
 ];
+
+const labelClass =
+  "block text-[12px] font-extrabold tracking-[-0.01em] text-[#6E665C]";
+
+const inputClass =
+  "mt-2 w-full rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-[15px] font-semibold text-[#2B2A28] outline-none transition placeholder:text-[#A89F94] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]";
+
+const selectClass =
+  "w-full cursor-pointer appearance-none rounded-2xl border border-[#ECE6DD] bg-white py-3.5 pl-4 pr-10 text-[15px] font-semibold text-[#2B2A28] outline-none transition hover:border-[#E6DCCF] hover:bg-[#FBF7F1] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]";
 
 function getDisplayLabel(value: string) {
   if (!value) {
@@ -166,7 +175,7 @@ function BrowsePage() {
     );
     const availabilityMatches = matchesFilter(profileUser.availability, availabilityFilter);
 
-    return searchMatches && cityMatches && roleMatches && danishLevelMatches;
+    return searchMatches && cityMatches && roleMatches && danishLevelMatches && availabilityMatches;
   });
 
   function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
@@ -198,92 +207,162 @@ function BrowsePage() {
   }
 
   return (
-    <main>
-      <header>
-        <h1>Browse language partners</h1>
-      </header>
+    <main className="-m-8 min-h-[calc(100vh-8rem)] bg-background px-4 py-8 font-sans sm:px-6 lg:px-10">
+      <div className="mx-auto w-full max-w-5xl">
+        <header className="mb-6">
+          <h1 className="text-[28px] font-extrabold leading-tight tracking-[-0.02em] text-[#161616]">
+            Browse language partners
+          </h1>
+        </header>
 
-      <section>
-        <label>
-          Search by name, city, or topic
-          <input
-            type="search"
-            id="search"
-            value={searchTerm}
-            onChange={handleSearchChange}
-            placeholder="Example: Maja, Copenhagen, food"
-          />
-        </label>
+        <section
+          aria-label="Search and filter"
+          className="rounded-[18px] border border-[#EAE3D8] bg-white p-5 shadow-card sm:p-6"
+        >
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+            <label
+              htmlFor="search"
+              className={`${labelClass} col-span-2 lg:col-span-4`}
+            >
+              Search by name, city, or topic
+              <input
+                type="search"
+                id="search"
+                value={searchTerm}
+                onChange={handleSearchChange}
+                placeholder="Example: Maja, Copenhagen, food"
+                className={inputClass}
+              />
+            </label>
 
-        <label>
-          City
-          <select value={cityFilter} onChange={handleCityChange}>
-            {cityOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
+            <label className={labelClass}>
+              City
+              <div className="relative mt-2">
+                <select
+                  value={cityFilter}
+                  onChange={handleCityChange}
+                  className={selectClass}
+                >
+                  {cityOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#A89F94]"
+                >
+                  ▾
+                </span>
+              </div>
+            </label>
 
-        <label>
-          Role
-          <select value={roleFilter} onChange={handleRoleChange}>
-            {roleOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label}
-              </option>
-            ))}
-          </select>
-        </label>
+            <label className={labelClass}>
+              Role
+              <div className="relative mt-2">
+                <select
+                  value={roleFilter}
+                  onChange={handleRoleChange}
+                  className={selectClass}
+                >
+                  {roleOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label}
+                    </option>
+                  ))}
+                </select>
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#A89F94]"
+                >
+                  ▾
+                </span>
+              </div>
+            </label>
 
-        <label>
-          Danish level
-          <select value={danishLevelFilter} onChange={handleDanishLevelChange}>
-            {danishLevelOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label || getDisplayLabel(option.value)}
-              </option>
-            ))}
-          </select>
-        </label>
+            <label className={labelClass}>
+              Danish level
+              <div className="relative mt-2">
+                <select
+                  value={danishLevelFilter}
+                  onChange={handleDanishLevelChange}
+                  className={selectClass}
+                >
+                  {danishLevelOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label || getDisplayLabel(option.value)}
+                    </option>
+                  ))}
+                </select>
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#A89F94]"
+                >
+                  ▾
+                </span>
+              </div>
+            </label>
 
-        <label>
-          Availability
-          <select value={availabilityFilter} onChange={handleAvailabilityChange}>
-            {availabilityOptions.map((option) => (
-              <option key={option.value} value={option.value}>
-                {option.label || getDisplayLabel(option.value)}
-              </option>
-            ))}
-          </select>
-        </label>
+            <label className={labelClass}>
+              Availability
+              <div className="relative mt-2">
+                <select
+                  value={availabilityFilter}
+                  onChange={handleAvailabilityChange}
+                  className={selectClass}
+                >
+                  {availabilityOptions.map((option) => (
+                    <option key={option.value} value={option.value}>
+                      {option.label || getDisplayLabel(option.value)}
+                    </option>
+                  ))}
+                </select>
+                <span
+                  aria-hidden="true"
+                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#A89F94]"
+                >
+                  ▾
+                </span>
+              </div>
+            </label>
+          </div>
 
-        <button type="button" onClick={handleResetFilters}>
-          Reset filters
-        </button>
-      </section>
-
-      <p>
-        Showing {filteredUsers.length} of {availableUsers.length} users
-      </p>
-
-      {filteredUsers.length > 0 ? (
-        <section>
-          {filteredUsers.map((profileUser) => (
-            <ProfileCard
-              key={profileUser.id}
-              user={toProfileCardUser(profileUser)}
-              showViewProfileLink
-            />
-          ))}
+          <div className="mt-5 flex justify-end">
+            <button
+              type="button"
+              onClick={handleResetFilters}
+              className="cursor-pointer rounded-full bg-[#ECE6DD] px-5 py-2.5 text-sm font-extrabold text-[#6E665C] transition hover:bg-[#F6F0E8] focus:outline-none focus:ring-4 focus:ring-[#FDEAEC] active:translate-y-px"
+            >
+              Reset filters
+            </button>
+          </div>
         </section>
-      ) : (
-        <EmptyState
-          title="No users found"
-          message="Try changing your search or filters."
-        />
-      )}
+
+        <p className="mt-4 text-sm font-semibold text-[#7C756B]">
+          Showing {filteredUsers.length} of {availableUsers.length} users
+        </p>
+
+        {filteredUsers.length > 0 ? (
+          <section
+            aria-label="Language partners"
+            className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+          >
+            {filteredUsers.map((profileUser) => (
+              <ProfileCard
+                key={profileUser.id}
+                user={toProfileCardUser(profileUser)}
+                showViewProfileLink
+              />
+            ))}
+          </section>
+        ) : (
+          <EmptyState
+            title="No users found"
+            message="Try changing your search or filters."
+          />
+        )}
+      </div>
     </main>
   );
 }
