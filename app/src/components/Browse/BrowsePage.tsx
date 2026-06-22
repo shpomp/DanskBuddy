@@ -34,6 +34,8 @@ type SelectOption = {
   label: string;
 };
 
+type FilterName = "city" | "role" | "danishLevel" | "availability";
+
 const allOption: SelectOption = {
   value: "all",
   label: "All",
@@ -67,17 +69,6 @@ const labelClass =
 
 const inputClass =
   "mt-2 w-full rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-[15px] font-semibold text-[#2B2A28] outline-none transition placeholder:text-[#A89F94] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]";
-
-const selectClass =
-  "w-full cursor-pointer appearance-none rounded-2xl border border-[#ECE6DD] bg-white py-3.5 pl-4 pr-10 text-[15px] font-semibold text-[#2B2A28] outline-none transition hover:border-[#E6DCCF] hover:bg-[#FBF7F1] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]";
-
-function getDisplayLabel(value: string) {
-  if (!value) {
-    return "";
-  }
-
-  return value.charAt(0).toUpperCase() + value.slice(1);
-}
 
 function getCityOptions(users: BrowseUser[]): SelectOption[] {
   const cities = users
@@ -149,6 +140,92 @@ function toProfileCardUser(user: BrowseUser): ProfileCardUser {
   };
 }
 
+function StyledDropdown({
+  name,
+  value,
+  options,
+  isOpen,
+  onToggle,
+  onSelect,
+}: {
+  name: FilterName;
+  value: string;
+  options: SelectOption[];
+  isOpen: boolean;
+  onToggle: () => void;
+  onSelect: (name: FilterName, value: string) => void;
+}) {
+  const selectedOption =
+    options.find((option) => option.value === value) ?? options[0];
+
+  return (
+    <div className="relative mt-2">
+      <button
+        type="button"
+        aria-haspopup="listbox"
+        aria-expanded={isOpen}
+        onClick={onToggle}
+        className="flex w-full cursor-pointer items-center justify-between rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-left text-[15px] font-semibold text-[#2B2A28] outline-none transition hover:border-[#E6DCCF] hover:bg-[#FBF7F1] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC] active:bg-[#F6F0E8]"
+      >
+        <span>{selectedOption.label}</span>
+        <span
+          aria-hidden="true"
+          className={`text-[#A89F94] transition-transform ${
+            isOpen ? "rotate-180" : ""
+          }`}
+        >
+          ▾
+        </span>
+      </button>
+
+      {isOpen && (
+        <div className="absolute left-0 right-0 top-[calc(100%+8px)] z-20 overflow-hidden rounded-2xl border border-[#EFE8DD] bg-white p-1.5 shadow-[0_18px_32px_-18px_rgba(43,42,40,0.45)]">
+          <div
+            role="listbox"
+            aria-label={name}
+            className="max-h-56 overflow-auto"
+          >
+            {options.map((option) => {
+              const isSelected = option.value === value;
+
+              return (
+                <button
+                  key={option.value}
+                  type="button"
+                  role="option"
+                  aria-selected={isSelected}
+                  onClick={() => onSelect(name, option.value)}
+                  className={`flex w-full cursor-pointer items-center justify-between rounded-xl px-3.5 py-2.5 text-left text-sm font-bold transition ${
+                    isSelected
+                      ? "bg-[#FDEAEC] text-[#D62F3C]"
+                      : "text-[#6E665C] hover:bg-[#F6F0E8] hover:text-[#2B2A28]"
+                  }`}
+                >
+                  <span>{option.label}</span>
+                  {isSelected && (
+                    <svg
+                      aria-hidden="true"
+                      viewBox="0 0 24 24"
+                      className="h-4 w-4 text-[#E63946]"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="3"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="m5 12 4 4 10-10" />
+                    </svg>
+                  )}
+                </button>
+              );
+            })}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 function BrowsePage() {
   const { users } = useApp() as AppContextValue;
   const { user: currentUser } = useAuth() as AuthContextValue;
@@ -158,6 +235,7 @@ function BrowsePage() {
   const [roleFilter, setRoleFilter] = useState("all");
   const [danishLevelFilter, setDanishLevelFilter] = useState("all");
   const [availabilityFilter, setAvailabilityFilter] = useState("all");
+  const [openDropdown, setOpenDropdown] = useState<FilterName | "">("");
 
   const availableUsers = users.filter(
     (profileUser) => !isCurrentUser(profileUser, currentUser)
@@ -173,29 +251,42 @@ function BrowsePage() {
       profileUser.danishLevel,
       danishLevelFilter
     );
-    const availabilityMatches = matchesFilter(profileUser.availability, availabilityFilter);
+    const availabilityMatches = matchesFilter(
+      profileUser.availability,
+      availabilityFilter
+    );
 
-    return searchMatches && cityMatches && roleMatches && danishLevelMatches && availabilityMatches;
+    return (
+      searchMatches &&
+      cityMatches &&
+      roleMatches &&
+      danishLevelMatches &&
+      availabilityMatches
+    );
   });
 
   function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.target.value);
   }
 
-  function handleCityChange(event: ChangeEvent<HTMLSelectElement>) {
-    setCityFilter(event.target.value);
-  }
+  function handleDropdownChange(name: FilterName, value: string) {
+    if (name === "city") {
+      setCityFilter(value);
+    }
 
-  function handleRoleChange(event: ChangeEvent<HTMLSelectElement>) {
-    setRoleFilter(event.target.value);
-  }
+    if (name === "role") {
+      setRoleFilter(value);
+    }
 
-  function handleDanishLevelChange(event: ChangeEvent<HTMLSelectElement>) {
-    setDanishLevelFilter(event.target.value);
-  }
+    if (name === "danishLevel") {
+      setDanishLevelFilter(value);
+    }
 
-  function handleAvailabilityChange(event: ChangeEvent<HTMLSelectElement>) {
-    setAvailabilityFilter(event.target.value);
+    if (name === "availability") {
+      setAvailabilityFilter(value);
+    }
+
+    setOpenDropdown("");
   }
 
   function handleResetFilters() {
@@ -204,6 +295,7 @@ function BrowsePage() {
     setRoleFilter("all");
     setDanishLevelFilter("all");
     setAvailabilityFilter("all");
+    setOpenDropdown("");
   }
 
   return (
@@ -237,94 +329,62 @@ function BrowsePage() {
 
             <label className={labelClass}>
               City
-              <div className="relative mt-2">
-                <select
-                  value={cityFilter}
-                  onChange={handleCityChange}
-                  className={selectClass}
-                >
-                  {cityOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#A89F94]"
-                >
-                  ▾
-                </span>
-              </div>
+              <StyledDropdown
+                name="city"
+                value={cityFilter}
+                options={cityOptions}
+                isOpen={openDropdown === "city"}
+                onToggle={() =>
+                  setOpenDropdown(openDropdown === "city" ? "" : "city")
+                }
+                onSelect={handleDropdownChange}
+              />
             </label>
 
             <label className={labelClass}>
               Role
-              <div className="relative mt-2">
-                <select
-                  value={roleFilter}
-                  onChange={handleRoleChange}
-                  className={selectClass}
-                >
-                  {roleOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </select>
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#A89F94]"
-                >
-                  ▾
-                </span>
-              </div>
+              <StyledDropdown
+                name="role"
+                value={roleFilter}
+                options={roleOptions}
+                isOpen={openDropdown === "role"}
+                onToggle={() =>
+                  setOpenDropdown(openDropdown === "role" ? "" : "role")
+                }
+                onSelect={handleDropdownChange}
+              />
             </label>
 
             <label className={labelClass}>
               Danish level
-              <div className="relative mt-2">
-                <select
-                  value={danishLevelFilter}
-                  onChange={handleDanishLevelChange}
-                  className={selectClass}
-                >
-                  {danishLevelOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label || getDisplayLabel(option.value)}
-                    </option>
-                  ))}
-                </select>
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#A89F94]"
-                >
-                  ▾
-                </span>
-              </div>
+              <StyledDropdown
+                name="danishLevel"
+                value={danishLevelFilter}
+                options={danishLevelOptions}
+                isOpen={openDropdown === "danishLevel"}
+                onToggle={() =>
+                  setOpenDropdown(
+                    openDropdown === "danishLevel" ? "" : "danishLevel"
+                  )
+                }
+                onSelect={handleDropdownChange}
+              />
             </label>
 
             <label className={labelClass}>
               Availability
-              <div className="relative mt-2">
-                <select
-                  value={availabilityFilter}
-                  onChange={handleAvailabilityChange}
-                  className={selectClass}
-                >
-                  {availabilityOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label || getDisplayLabel(option.value)}
-                    </option>
-                  ))}
-                </select>
-                <span
-                  aria-hidden="true"
-                  className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#A89F94]"
-                >
-                  ▾
-                </span>
-              </div>
+              <StyledDropdown
+                name="availability"
+                value={availabilityFilter}
+                options={availabilityOptions}
+                isOpen={openDropdown === "availability"}
+                onToggle={() =>
+                  setOpenDropdown(
+                    openDropdown === "availability" ? "" : "availability"
+                  )
+                }
+                onSelect={handleDropdownChange}
+              />
             </label>
           </div>
 
