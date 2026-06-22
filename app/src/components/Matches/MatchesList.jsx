@@ -78,7 +78,7 @@ Declined ({declined.length})
               </p>
             </div>
           ) : (
-            pending.map((m) => <MatchCard key={m.id} match={m} />)
+            pending.map((m) => <MatchCard key={m.id} match={m} context="pending" />)
           )}
         </div>
       )}
@@ -90,7 +90,7 @@ Declined ({declined.length})
           <p className="text-sm mt-1">Browse people and click Connect to send a request.</p>
         </div>
       ) : (
-        sent.map((m) => <MatchCard key={m.id} match={m} />)
+        sent.map((m) => <MatchCard key={m.id} match={m} context="sent"/>)
       )}
     </div>
   )}
@@ -105,7 +105,7 @@ Declined ({declined.length})
               </p>
             </div>
           ) : (
-            connected.map((m) => <MatchCard key={m.id} match={m} />)
+            connected.map((m) => <MatchCard key={m.id} match={m} context="connected"/>)
           )}
         </div>
         
@@ -122,7 +122,7 @@ If someone declines your connect request, it will show here.
 </p>
 </div>
 ) : (
-declined.map((m) => <MatchCard key={m.id} match={m} />)
+declined.map((m) => <MatchCard key={m.id} match={m} context="declined-by-them"/>)
 )}
 </div>
 )}
