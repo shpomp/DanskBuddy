@@ -14,20 +14,25 @@ export default function MessagesPage() {
     return <Navigate to="/login" />;
   }
 
-  const conversations = users
-    .filter((u) => String(u.id) !== String(user.id))
-    .map((otherUser) => {
-      const conversationId = [user.id, otherUser.id].sort().join("::");
+  const conversations = Object.entries(messages || {})
+    .map(([conversationId, msgs]) => {
+      const [id1, id2] = conversationId.split("::");
 
-      const msgs = messages[conversationId] || [];
+      const otherUserId = String(id1) === String(user.id) ? id2 : id1;
+
+      const otherUser = users.find((u) => String(u.id) === String(otherUserId));
+
+      if (!otherUser) {
+        return null;
+      }
 
       return {
         conversationId,
         otherUser,
-        lastMessage: msgs[msgs.length - 1]?.text || "Start conversation",
+        lastMessage: msgs[msgs.length - 1]?.text || "",
       };
-    });
-
+    })
+    .filter(Boolean);
   if (conversations.length === 0) {
     return (
       <EmptyState
