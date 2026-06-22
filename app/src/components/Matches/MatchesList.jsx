@@ -15,6 +15,9 @@ export default function MatchesList() {
     (m) => m.status === "pending" && m.requesterId === user.id
   );
   const connected = allMatches.filter((m) => m.status === "accepted");
+  const declined = allMatches.filter(
+(m) => m.status === "declined" && m.requesterId === user.id
+);
 
 
   return (
@@ -42,19 +45,16 @@ export default function MatchesList() {
     >
       Sent ({sent.length})
     </button>
+<button
+onClick={() => setActiveTab("declined")}
+className={`px-5 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors ${     activeTab === "declined"       ? "border-red-500 text-red-600"       : "border-transparent text-gray-500 hover:text-gray-700"   }`}
 
-        {activeTab === "sent" && (
-    <div>
-      {sent.length === 0 ? (
-        <div className="text-center py-16 text-gray-400">
-          <p className="text-lg">📤 No sent requests yet.</p>
-          <p className="text-sm mt-1">Browse people and click Connect to send a request.</p>
-        </div>
-      ) : (
-        sent.map((m) => <MatchCard key={m.id} match={m} />)
-      )}
-    </div>
-  )}
+> 
+
+
+Declined ({declined.length})
+</button>
+       
         <button
           onClick={() => setActiveTab("connected")}
           className={`px-5 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors ${
@@ -82,6 +82,18 @@ export default function MatchesList() {
           )}
         </div>
       )}
+      {activeTab === "sent" && (
+    <div>
+      {sent.length === 0 ? (
+        <div className="text-center py-16 text-gray-400">
+          <p className="text-lg">📤 No sent requests yet.</p>
+          <p className="text-sm mt-1">Browse people and click Connect to send a request.</p>
+        </div>
+      ) : (
+        sent.map((m) => <MatchCard key={m.id} match={m} />)
+      )}
+    </div>
+  )}
 
       {activeTab === "connected" && (
         <div>
@@ -96,7 +108,27 @@ export default function MatchesList() {
             connected.map((m) => <MatchCard key={m.id} match={m} />)
           )}
         </div>
+        
       )}
+      {/* ── Declined tab ── */}
+{activeTab === "declined" && (
+<div>
+{declined.length === 0 ? (
+<div className="text-center py-16 text-gray-400">
+<p className="text-2xl mb-2">✅</p>
+<p className="text-lg font-medium">No declined requests</p>
+<p className="text-sm mt-1">
+If someone declines your connect request, it will show here.
+</p>
+</div>
+) : (
+declined.map((m) => <MatchCard key={m.id} match={m} />)
+)}
+</div>
+)}
+      
+
+      
     </div>
   );
 }
