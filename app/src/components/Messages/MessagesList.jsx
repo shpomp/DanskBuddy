@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import Avatar from "../Shared/Avatar";
 export default function MessagesList({ conversations }) {
   const navigate = useNavigate();
 
@@ -11,8 +11,12 @@ export default function MessagesList({ conversations }) {
           className="conversation-item"
           onClick={() => navigate(`/messages/${conversation.otherUser.id}`)}
         >
-          <div className="avatar">{conversation.otherUser.avatar}</div>
-
+          {" "}
+          <Avatar
+            initials={conversation.otherUser.name.charAt(0)}
+            online={true}
+            size="md"
+          />
           <div>
             <h4>{conversation.otherUser.name}</h4>
 

@@ -3,9 +3,12 @@ import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 import { useAuth } from "../../context/AuthContext";
 import MessageBubble from "./MessageBubble";
-
+import Chip from "../Shared/Chip";
+import LevelBadge from "../Shared/LevelBadge";
+import Avatar from "../Shared/Avatar";
 import "./Messages.css";
-
+import { Phone, Video } from "lucide-react";
+import Button from "../Shared/Button";
 export default function ChatWindow() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -26,6 +29,14 @@ export default function ChatWindow() {
     return <p>User not found</p>;
   }
 
+  const displayLevel =
+    otherUser.danishLevel === "beginner"
+      ? "A1"
+      : otherUser.danishLevel === "intermediate"
+        ? "B1"
+        : otherUser.danishLevel === "advanced"
+          ? "C1"
+          : "native";
   const messages = getConversation(user.id, userId);
 
   const handleSend = () => {
@@ -40,14 +51,40 @@ export default function ChatWindow() {
 
   return (
     <div className="chat-window">
-      <button onClick={() => navigate("/messages")}>← Back</button>
-
       <div className="chat-header">
-        <div className="avatar">{otherUser.avatar}</div>
+        <Button
+          variant="outline"
+          className="back-button"
+          onClick={() => navigate("/messages")}
+        >
+          ←
+        </Button>
+        <Avatar initials={otherUser.name.charAt(0)} online={true} size="lg" />
+        <div className="chat-user-info">
+          <div className="chat-name-row">
+            <h3>{otherUser.name}</h3>
+          </div>
 
-        <div>
-          <h3>{otherUser.name}</h3>
-          <span>Online</span>
+          <div className="chat-meta">
+            <Chip variant="subtle">Online</Chip>
+
+            <span>·</span>
+
+            <Chip variant="subtle">{otherUser.role}</Chip>
+
+            <span>·</span>
+
+            <LevelBadge level={displayLevel} />
+          </div>
+        </div>
+        <div className="chat-actions">
+          <button title="Voice call">
+            <Phone size={20} />
+          </button>
+
+          <button title="Video call">
+            <Video size={20} />
+          </button>
         </div>
       </div>
 

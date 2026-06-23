@@ -4,17 +4,16 @@ interface Props {
   level: Level;
 }
 
-const BASE =
-  "inline-flex items-center justify-center px-[10px] py-[5px] rounded-sm text-xs font-extrabold";
+const BASE = "inline-flex items-center justify-center text-xs font-normal ";
 
-const VARIANT: Record<Level, string> = {
-  A1: "bg-secondary-light text-secondary-dark",
-  A2: "bg-secondary-light text-secondary-dark",
-  B1: "bg-primary-light text-primary",
-  B2: "bg-primary-light text-primary",
-  C1: "bg-primary-pale text-primary-dark",
-  C2: "bg-primary-pale text-primary-dark",
-  native: "bg-foreground text-background",
+const VARIANT = {
+  A1: "text-success",
+  A2: "text-success",
+  B1: "text-success",
+  B2: "text-success",
+  C1: "text-success",
+  C2: "text-success",
+  native: "text-success",
 };
 
 export default function LevelBadge({ level }: Props) {
