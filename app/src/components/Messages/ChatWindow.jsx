@@ -52,13 +52,10 @@ export default function ChatWindow() {
   return (
     <div className="chat-window">
       <div className="chat-header">
-        <Button
-          variant="outline"
-          className="back-button"
-          onClick={() => navigate("/messages")}
-        >
+        <button className="back-button" onClick={() => navigate("/messages")}>
           ←
-        </Button>
+        </button>
+
         <Avatar initials={otherUser.name.charAt(0)} online={true} size="lg" />
         <div className="chat-user-info">
           <div className="chat-name-row">
@@ -114,7 +111,9 @@ export default function ChatWindow() {
           }}
         />
 
-        <button onClick={handleSend}>Send</button>
+        <button onClick={handleSend} aria-label="send">
+          ➤
+        </button>
       </div>
     </div>
   );
