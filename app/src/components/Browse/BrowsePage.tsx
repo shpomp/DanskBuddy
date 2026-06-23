@@ -103,7 +103,7 @@ function matchesFilter(userValue: string | undefined, selectedValue: string) {
 
 function matchesArrayFilter(
   userValues: string[] | undefined,
-  selectedValue: string,
+  selectedValue: string
 ) {
   if (selectedValue === "all") {
     return true;
@@ -173,22 +173,22 @@ function BrowsePage() {
   }
 
   function handleDropdownChange(name: FilterName, value: string) {
-    if (name === "city") {
-      setCityFilter(value);
+    switch (name) {
+      case "city":
+        setCityFilter(value);
+        break;
+      case "role":
+        setRoleFilter(value);
+        break;
+      case "danishLevel":
+        setDanishLevelFilter(value);
+        break;
+      case "availability":
+        setAvailabilityFilter(value);
+        break;
+      default:
+        break;
     }
-
-    if (name === "role") {
-      setRoleFilter(value);
-    }
-
-    if (name === "danishLevel") {
-      setDanishLevelFilter(value);
-    }
-
-    if (name === "availability") {
-      setAvailabilityFilter(value);
-    }
-
     setOpenDropdown("");
   }
 
