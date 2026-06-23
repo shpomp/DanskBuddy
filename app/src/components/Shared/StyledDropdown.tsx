@@ -5,17 +5,17 @@ export type SelectOption = {
   label: string;
 };
 
-type StyledDropdownProps = {
-  name: string;
+type StyledDropdownProps<DName extends string> = {
+  name: DName;
   value: string;
   options: SelectOption[];
   isOpen: boolean;
   onToggle: () => void;
-  onSelect: (name: string, value: string) => void;
+  onSelect: (name: DName, value: string) => void;
   onClose: () => void;
 };
 
-export default function StyledDropdown({
+export default function StyledDropdown<DName extends string>({
   name,
   value,
   options,
@@ -23,7 +23,7 @@ export default function StyledDropdown({
   onToggle,
   onSelect,
   onClose,
-}: StyledDropdownProps) {
+}: StyledDropdownProps<DName>) {
   const dropdownRef = useRef<HTMLDivElement>(null);
   const selectedOption =
     options.find((option) => option.value === value) ?? options[0];
