@@ -6,27 +6,14 @@ import ProfileCard from "../ProfileCard/ProfileCard";
 import type { ProfileCardUser } from "../ProfileCard/ProfileCard";
 import EmptyState from "../Shared/EmptyState";
 import StyledDropdown, { type SelectOption } from "../Shared/StyledDropdown";
-
-type UserRole = "learner" | "native" | "both";
-
-type BrowseUser = {
-  id: string;
-  name: string;
-  avatar?: string;
-  city?: string;
-  role?: UserRole;
-  danishLevel?: string;
-  topics?: string[];
-  availability?: string;
-  bio?: string;
-};
+import type { User } from "../../types/types";
 
 type AppContextValue = {
-  users: BrowseUser[];
+  users: User[];
 };
 
 type AuthContextValue = {
-  user: BrowseUser | null;
+  user: User | null;
 };
 
 type FilterName = "city" | "role" | "danishLevel" | "availability";
@@ -65,7 +52,7 @@ const labelClass =
 const inputClass =
   "mt-2 w-full rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-[15px] font-semibold text-[#2B2A28] outline-none transition placeholder:text-[#A89F94] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]";
 
-function getCityOptions(users: BrowseUser[]): SelectOption[] {
+function getCityOptions(users: User[]): SelectOption[] {
   const cities = users
     .map((user) => user.city)
     .filter((city): city is string => Boolean(city));
@@ -81,10 +68,7 @@ function getCityOptions(users: BrowseUser[]): SelectOption[] {
   ];
 }
 
-function isCurrentUser(
-  profileUser: BrowseUser,
-  currentUser: BrowseUser | null
-) {
+function isCurrentUser(profileUser: User, currentUser: User | null) {
   if (!currentUser) {
     return false;
   }
@@ -92,7 +76,7 @@ function isCurrentUser(
   return String(profileUser.id) === String(currentUser.id);
 }
 
-function matchesSearch(user: BrowseUser, searchTerm: string) {
+function matchesSearch(user: User, searchTerm: string) {
   const normalizedSearch = searchTerm.trim().toLowerCase();
 
   if (!normalizedSearch) {
@@ -117,7 +101,22 @@ function matchesFilter(userValue: string | undefined, selectedValue: string) {
   return userValue === selectedValue;
 }
 
-function toProfileCardUser(user: BrowseUser): ProfileCardUser {
+function matchesArrayFilter(
+  userValues: string[] | undefined,
+  selectedValue: string,
+) {
+  if (selectedValue === "all") {
+    return true;
+  }
+
+  if (!userValues) {
+    return false;
+  }
+
+  return userValues.includes(selectedValue);
+}
+
+function toProfileCardUser(user: User): ProfileCardUser {
   return {
     id: user.id,
     name: user.name,
@@ -155,7 +154,7 @@ function BrowsePage() {
       profileUser.danishLevel,
       danishLevelFilter
     );
-    const availabilityMatches = matchesFilter(
+    const availabilityMatches = matchesArrayFilter(
       profileUser.availability,
       availabilityFilter
     );
