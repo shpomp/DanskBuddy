@@ -19,17 +19,17 @@ export default function MessageBubble({ message, isMine }) {
   } catch (err) {
     console.error("Translation failed:", err);
   } finally {
-    setIsLoading(false); // always runs, even if API fails
+    setIsLoading(false); 
   }
 }
-// 👇 this was missing
+
   function handleShowOriginal() {
     setIsTranslated(false);
   }
 
   return (
     <div className={isMine ? "message-row sent" : "message-row received"}>
-      {/* Message text — shows original or translated */}
+     
       <div className="message-bubble">
         {isTranslated ? translatedText : message?.text}
       </div>
