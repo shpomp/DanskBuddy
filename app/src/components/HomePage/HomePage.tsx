@@ -44,7 +44,6 @@ function HomePage() {
             <span className="relative z-10 flex items-center gap-1">
               Hej! <span aria-hidden="true">👋</span>
             </span>
-            
           </div>
         </div>
 
@@ -79,7 +78,6 @@ function HomePage() {
         </div>
 
         <p className="mt-4 text-sm text-neutral">Free to join</p>
-
       </section>
     </main>
   );

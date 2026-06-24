@@ -34,15 +34,14 @@ function ProtectedRoute({ children }) {
 initStorage();
 const router = createBrowserRouter([
   // Public routes — OUTSIDE Layout, no navbar
-  { path: "/", element: <HomePage />  },
+  { path: "/", element: <HomePage /> },
   { path: "/login", element: <Login /> },
   { path: "/register", element: <Register /> },
-  
+
   // Protected routes — INSIDE Layout, has navbar
   {
     element: <Layout />,
     children: [
-      
       {
         path: "/browse",
         element: (
