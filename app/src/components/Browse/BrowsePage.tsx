@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import type { ChangeEvent } from "react";
 import { useApp } from "../../context/AppContext";
 import { useAuth } from "../../context/AuthContext";
@@ -140,33 +140,46 @@ function BrowsePage() {
   const [availabilityFilter, setAvailabilityFilter] = useState("all");
   const [openDropdown, setOpenDropdown] = useState<FilterName | "">("");
 
-  const availableUsers = users.filter(
-    (profileUser) => !isCurrentUser(profileUser, currentUser)
-  );
-
-  const cityOptions = getCityOptions(availableUsers);
-
-  const filteredUsers = availableUsers.filter((profileUser) => {
-    const searchMatches = matchesSearch(profileUser, searchTerm);
-    const cityMatches = matchesFilter(profileUser.city, cityFilter);
-    const roleMatches = matchesFilter(profileUser.role, roleFilter);
-    const danishLevelMatches = matchesFilter(
-      profileUser.danishLevel,
-      danishLevelFilter
+  const availableUsers = useMemo(() => {
+    return users.filter(
+      (profileUser) => !isCurrentUser(profileUser, currentUser)
     );
-    const availabilityMatches = matchesArrayFilter(
-      profileUser.availability,
-      availabilityFilter
-    );
+  }, [users, currentUser]);
 
-    return (
-      searchMatches &&
-      cityMatches &&
-      roleMatches &&
-      danishLevelMatches &&
-      availabilityMatches
-    );
-  });
+  const cityOptions = useMemo(() => {
+    return getCityOptions(availableUsers);
+  }, [availableUsers]);
+
+  const filteredUsers = useMemo(() => {
+    return availableUsers.filter((profileUser) => {
+      const searchMatches = matchesSearch(profileUser, searchTerm);
+      const cityMatches = matchesFilter(profileUser.city, cityFilter);
+      const roleMatches = matchesFilter(profileUser.role, roleFilter);
+      const danishLevelMatches = matchesFilter(
+        profileUser.danishLevel,
+        danishLevelFilter
+      );
+      const availabilityMatches = matchesArrayFilter(
+        profileUser.availability,
+        availabilityFilter
+      );
+
+      return (
+        searchMatches &&
+        cityMatches &&
+        roleMatches &&
+        danishLevelMatches &&
+        availabilityMatches
+      );
+    });
+  }, [
+    availableUsers,
+    searchTerm,
+    cityFilter,
+    roleFilter,
+    danishLevelFilter,
+    availabilityFilter,
+  ]);
 
   function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.target.value);
