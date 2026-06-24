@@ -15,7 +15,7 @@ import DesignSystem from "./components/DesignSystem/DesignSystem.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
 import ChatWindow from "./components/Messages/ChatWindow.jsx";
 import MessagesPage from "./components/Messages/MessagesPage.jsx";
-
+import BrowsePage from "./components/Browse/BrowsePage.tsx";
 import Register from "./components/Auth/Register.jsx";
 import MyProfile from "./components/MyProfile/MyProfile.tsx";
 import "./main.css";
@@ -45,7 +45,7 @@ const router = createBrowserRouter([
         path: "/browse",
         element: (
           <ProtectedRoute>
-            <Placeholder name="Browse" />
+            <BrowsePage />
           </ProtectedRoute>
         ),
       },

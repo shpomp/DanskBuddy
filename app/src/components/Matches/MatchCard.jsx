@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../../context/AppContext.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
-export default function MatchCard({ match }) {
+export default function MatchCard({ match, context }) {
   const { respondToMatch, getUserById } = useApp();
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -59,13 +59,14 @@ export default function MatchCard({ match }) {
 
       {/* Actions */}
       <div className="flex flex-col items-end gap-2">
-        <span
-          className={`text-xs font-semibold px-3 py-1 rounded-full capitalize ${statusColors[match.status]}`}
-        >
-          {match.status}
-        </span>
+        <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColors[status]}`}>
+  {status === "accepted" && "Connected "}
+  {status === "declined" && (isReceiver ? "You declined" : "Declined by Receiver")}
+  {status === "pending" && context === "pending" && "Wants to connect"}
+  {status === "pending" && context === "sent" && "Awaiting reply"}
+</span>
 
-        {isReceiver && match.status === "pending" && (
+        {isReceiver && status === "pending" && context === "pending" && (
           <div className="flex gap-2">
             <button
               onClick={handleAccept}
