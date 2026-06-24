@@ -51,8 +51,8 @@ export default function MessagesPage() {
   }
 
   return (
-    <div className="messages-container">
-      <h2>Messages</h2>
+    <div className="max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold text-gray-900 mb-6">Messages</h1>
 
       <MessagesList conversations={conversations} />
     </div>

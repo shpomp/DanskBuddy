@@ -50,8 +50,8 @@ export default function ChatWindow() {
   };
 
   return (
-    <div className="chat-window">
-      <div className="chat-header bg-white flex items-center px-4 h-[70px]">
+    <div className="fixed top-16 bottom-0 left-0 right-0 md:left-0 flex flex-col bg-slate-100 overflow-hidden">
+      <div className="flex-shrink-0 flex items-center gap-3 px-5 py-4 bg-white border-b border-gray-200">
         <button className="back-button" onClick={() => navigate("/messages")}>
           ←
         </button>
@@ -59,7 +59,9 @@ export default function ChatWindow() {
         <Avatar initials={otherUser.name.charAt(0)} online={true} size="lg" />
         <div className="chat-user-info">
           <div className="chat-name-row">
-            <h3>{otherUser.name}</h3>
+            <h3 className="text-lg font-bold text-gray-900">
+              {otherUser.name}
+            </h3>
           </div>
 
           <div className="chat-meta">
@@ -85,7 +87,7 @@ export default function ChatWindow() {
         </div>
       </div>
 
-      <div className="chat-messages">
+      <div className="flex-1 min-h-0 overflow-y-auto p-4 space-y-3 bg-[#f5f3ef]">
         {messages.length === 0 ? (
           <p>No messages yet.</p>
         ) : (
@@ -99,8 +101,9 @@ export default function ChatWindow() {
         )}
       </div>
 
-      <div className="chat-input">
+      <div className="flex-shrink-0 flex items-center gap-2 p-4 bg-white border-t border-gray-200">
         <input
+          className="flex-1 px-4 py-3 rounded-full bg-gray-100 border-none focus:outline-none focus:ring-2 focus:ring-red-300"
           value={text}
           placeholder={`Message ${otherUser.name}`}
           onChange={(e) => setText(e.target.value)}
@@ -110,8 +113,11 @@ export default function ChatWindow() {
             }
           }}
         />
-
-        <button onClick={handleSend} aria-label="send">
+        <button
+          className="w-12 h-12 rounded-full bg-red-500 text-white flex items-center justify-center hover:bg-red-600 transition"
+          onClick={handleSend}
+          aria-label="send"
+        >
           ➤
         </button>
       </div>
