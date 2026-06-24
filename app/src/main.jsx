@@ -9,7 +9,7 @@ import { initStorage } from "./utils/initStorage";
 import { AppProvider } from "./context/AppContext";
 import { useAuth } from "./context/AuthContext";
 import Layout from "./components/Layout/Layout.jsx";
-import HomePage from "./components/HomePage/HomePage.jsx";
+import HomePage from "./components/HomePage/HomePage";
 import Login from "./components/Auth/Login.jsx";
 import DesignSystem from "./components/DesignSystem/DesignSystem.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
