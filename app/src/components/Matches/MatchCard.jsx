@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useApp } from "../../context/AppContext.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
+
 export default function MatchCard({ match, context }) {
   const { respondToMatch, getUserById } = useApp();
   const { user } = useAuth();
@@ -35,7 +36,10 @@ export default function MatchCard({ match, context }) {
     declined: "bg-red-100    text-red-800",
   };
   return (
+    
     <div className="flex items-center gap-4 bg-white border border-gray-200 rounded-xl p-4 mb-3 shadow-sm relative">
+      
+
       {/* Toast */}
       {toast && (
         <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-sm px-4 py-1 rounded-full whitespace-nowrap">
