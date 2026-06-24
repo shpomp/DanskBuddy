@@ -8,7 +8,7 @@ import LevelBadge from "../Shared/LevelBadge";
 import Avatar from "../Shared/Avatar";
 import "./Messages.css";
 import { Phone, Video } from "lucide-react";
-import Button from "../Shared/Button";
+
 export default function ChatWindow() {
   const { user } = useAuth();
   const navigate = useNavigate();
@@ -51,7 +51,7 @@ export default function ChatWindow() {
 
   return (
     <div className="chat-window">
-      <div className="chat-header">
+      <div className="chat-header bg-white flex items-center px-4 h-[70px]">
         <button className="back-button" onClick={() => navigate("/messages")}>
           ←
         </button>
