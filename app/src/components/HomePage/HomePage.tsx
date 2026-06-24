@@ -11,18 +11,18 @@ const benefits: string[] = [
 
 function HomePage() {
   return (
-    <main className="flex min-h-screen items-center justify-center bg-background px-4 py-6 text-foreground">
-      <section className="flex min-h-[720px] w-full max-w-[390px] flex-col items-center rounded-[36px] border border-[#efe8dd] bg-[#fffdf9] px-8 py-12 text-center shadow-elevated sm:min-h-[760px] sm:px-9">
+    <main className="flex min-h-screen items-center justify-center bg-[#fffdf9] text-foreground">
+      <section className="flex min-h-[720px] w-full max-w-[390px] flex-col items-center px-8 py-12 text-center">
         <img
           src={mark}
-          alt=""
+          alt="Logotype icon"
           className="h-16 w-16 drop-shadow-[0_18px_24px_rgba(230,57,70,0.2)]"
           aria-hidden="true"
         />
 
         <img
           src={wordmark}
-          alt="DanskBuddy"
+          alt="DanskBuddy logotype"
           className="mt-6 h-auto w-52"
         />
 
@@ -55,14 +55,14 @@ function HomePage() {
               className="flex items-center gap-3 text-left text-sm font-semibold text-neutral"
             >
               <span className="flex h-[23px] w-[23px] shrink-0 items-center justify-center rounded-pill bg-secondary text-[12px] font-bold leading-none text-white">
-                ✓
+                {"\u2713"}
               </span>
               <span>{benefit}</span>
             </div>
           ))}
         </div>
 
-        <div className="mt-7 flex w-full flex-col gap-3 sm:flex-row">
+        <div className="mt-7 flex w-full flex-col gap-3">
           <Link
             to="/register"
             className="rounded-pill bg-primary px-7 py-4 text-center font-bold text-white shadow-primary transition hover:bg-primary-dark"
@@ -80,28 +80,6 @@ function HomePage() {
 
         <p className="mt-4 text-sm text-neutral">Free to join</p>
 
-        <section className="hidden" aria-labelledby="benefits-heading">
-          <h2 id="benefits-heading" className="sr-only">
-            Why DanskBuddy?
-          </h2>
-
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {benefits.map((benefit) => (
-              <article
-                key={benefit}
-                className="rounded-card bg-white p-6 text-left shadow-card"
-              >
-                <div className="mb-4 flex h-11 w-11 items-center justify-center rounded-pill bg-secondary-light text-lg font-bold text-secondary-dark">
-                  ✓
-                </div>
-
-                <h3 className="text-lg font-bold text-foreground">
-                  {benefit}
-                </h3>
-              </article>
-            ))}
-          </div>
-        </section>
       </section>
     </main>
   );
