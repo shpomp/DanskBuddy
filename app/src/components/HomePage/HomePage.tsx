@@ -1,5 +1,8 @@
 import { Link } from "react-router-dom";
 
+import avatarLe from "../../assets/avatars/avatar-le.png";
+import avatarMi from "../../assets/avatars/avatar-mi.png";
+import avatarSo from "../../assets/avatars/avatar-so.png";
 import mark from "../../assets/icon/mark.svg";
 import wordmark from "../../assets/wordmark/wordmark.svg";
 
@@ -31,15 +34,21 @@ function HomePage() {
         </p>
 
         <div className="relative mt-8 h-[75px] w-[170px]">
-          <div className="absolute bottom-0 left-0 flex h-[52px] w-[52px] items-center justify-center rounded-pill bg-[#e8836b] text-base font-extrabold text-white">
-            LE
-          </div>
-          <div className="absolute bottom-[7px] left-[56px] flex h-[58px] w-[58px] items-center justify-center rounded-pill bg-[#e07a5f] text-lg font-extrabold text-white">
-            SO
-          </div>
-          <div className="absolute bottom-0 right-0 flex h-[52px] w-[52px] items-center justify-center rounded-pill bg-[#5b8def] text-base font-extrabold text-white">
-            MI
-          </div>
+          <img
+            src={avatarLe}
+            alt="Language partner"
+            className="absolute bottom-0 left-0 h-[52px] w-[52px] rounded-pill object-cover"
+          />
+          <img
+            src={avatarSo}
+            alt="Language partner"
+            className="absolute bottom-[7px] left-[56px] h-[58px] w-[58px] rounded-pill object-cover"
+          />
+          <img
+            src={avatarMi}
+            alt="Language partner"
+            className="absolute bottom-0 right-0 h-[52px] w-[52px] rounded-pill object-cover"
+          />
           <div className="absolute left-[101px] top-0 flex h-7 items-center rounded-[11px_11px_11px_3px] bg-foreground px-3 text-sm font-extrabold leading-none text-white">
             <span className="relative z-10 flex items-center gap-1">
               Hej! <span aria-hidden="true">👋</span>
