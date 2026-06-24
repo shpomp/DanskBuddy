@@ -13,6 +13,7 @@ import HomePage from "./components/HomePage/HomePage";
 import Login from "./components/Auth/Login.jsx";
 import DesignSystem from "./components/DesignSystem/DesignSystem.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
+import ChatWindow from "./components/Messages/ChatWindow.jsx";
 import MessagesPage from "./components/Messages/MessagesPage.jsx";
 import BrowsePage from "./components/Browse/BrowsePage.tsx";
 import Register from "./components/Auth/Register.jsx";
@@ -69,7 +70,7 @@ const router = createBrowserRouter([
         path: "/messages/:userId",
         element: (
           <ProtectedRoute>
-            <Placeholder name="Chat" />
+            <ChatWindow />
           </ProtectedRoute>
         ),
       },
