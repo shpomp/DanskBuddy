@@ -95,32 +95,32 @@ export default function Layout() {
 
       {/* Mobile menu */}
       {menuOpen && (
-        <div className="md:hidden fixed top-16 right-4 z-[100] bg-surface rounded-xl shadow-lg p-4 min-w-[180px] flex flex-col gap-3">
+        <div className="md:hidden bg-foreground flex flex-col gap-4 px-6 py-4">
           <NavLink
             to="/browse"
             onClick={() => setMenuOpen(false)}
-            className="text-foreground hover:text-primary"
+            className="text-background"
           >
             Browse
           </NavLink>
           <NavLink
             to="/matches"
             onClick={() => setMenuOpen(false)}
-            className="text-foreground hover:text-primary"
+            className="text-background"
           >
             Matches
           </NavLink>
           <NavLink
             to="/messages"
             onClick={() => setMenuOpen(false)}
-            className="text-foreground hover:text-primary"
+            className="text-background"
           >
             Messages
           </NavLink>
           <NavLink
             to="/feed"
             onClick={() => setMenuOpen(false)}
-            className="text-foreground hover:text-primary"
+            className="text-background"
           >
             Feed
           </NavLink>
