@@ -1,13 +1,58 @@
+import { Link } from "react-router-dom";
+
+type Benefit = {
+  title: string;
+  description: string;
+};
+
+const benefits: Benefit[] = [
+  {
+    title: "Practice Danish conversations",
+    description: "Build confidence through real conversations in Danish.",
+  },
+  {
+    title: "Find language partners",
+    description:
+      "Meet people with similar goals, interests, and language levels.",
+  },
+  {
+    title: "Join a supportive community",
+    description:
+      "Stay motivated while learning together with other Danish learners.",
+  },
+];
+
 export default function HomePage() {
   return (
-    <div className="flex flex-col items-center justify-center min-h-[70vh] text-center gap-4">
-      <h1 className="text-4xl font-bold text-primary">
-        The Hygge Way to Danish
-      </h1>
-      <p className="text-neutral max-w-md">
-        Connect with Danish speakers and learners to practice your language
-        skills together.
-      </p>
-    </div>
+    <main>
+      <section>
+        <p>Learn Danish together</p>
+
+        <h1>DanskBuddy</h1>
+
+        <p>
+          Find language partners, practise real conversations, and become more
+          confident speaking Danish.
+        </p>
+
+        <div>
+          <Link to="/register">Get Started</Link>
+          <Link to="/login">Login</Link>
+        </div>
+      </section>
+
+      <section>
+        <h2>Why DanskBuddy?</h2>
+
+        <div>
+          {benefits.map((benefit) => (
+            <article key={benefit.title}>
+              <h3>{benefit.title}</h3>
+              <p>{benefit.description}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+    </main>
   );
 }
