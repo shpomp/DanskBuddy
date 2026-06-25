@@ -28,16 +28,26 @@ export default function MessageBubble({ message, isMine }) {
   }
 
   return (
-    <div className={isMine ? "message-row sent" : "message-row received"}>
-     
-      <div className="message-bubble">
-        {isTranslated ? translatedText : message?.text}
-      </div>
+   <div className={isMine ? "flex flex-col items-end" : "flex flex-col items-start"}>
+  {/* Message bubble */}
+  <div className={`px-4 py-2 rounded-2xl max-w-[70%] text-sm ${
+    isMine 
+      ? "bg-[#E63946] text-white" 
+      : "bg-white text-gray-800 shadow-sm"
+  }`}>
+    {isTranslated ? translatedText : message?.text}
+  </div>
+  
 
-      {/* Translate toggle button */}
-      <button onClick={isTranslated ? handleShowOriginal : handleTranslate}>
-        {isLoading ? "Translating..." : isTranslated ? "Show original" : "Translate"}
-      </button>
-    </div>
+  <button
+    onClick={isTranslated ? handleShowOriginal : handleTranslate}
+    className="text-[#E63946] text-xs mt-1 font-medium hover:underline">
+    {isLoading
+      ? "Oversætter..."
+      : isTranslated
+      ? "Vis original"
+      : "Vis oversættelse"}
+  </button>
+</div>
   );
 }
