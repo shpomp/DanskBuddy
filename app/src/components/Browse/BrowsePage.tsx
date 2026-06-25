@@ -8,8 +8,23 @@ import EmptyState from "../Shared/EmptyState";
 import StyledDropdown, { type SelectOption } from "../Shared/StyledDropdown";
 import type { User } from "../../types/types";
 
+type SendMatchResult =
+  | {
+      success: true;
+      match: Match;
+    }
+  | {
+      success: false;
+      error: string;
+    };
+
 type AppContextValue = {
   users: User[];
+  matches: Match[];
+  sendMatchRequest: (
+    requesterId: string,
+    receiverId: string
+  ) => SendMatchResult;
 };
 
 type AuthContextValue = {
@@ -17,6 +32,16 @@ type AuthContextValue = {
 };
 
 type FilterName = "city" | "role" | "danishLevel" | "availability";
+
+type MatchStatus = "pending" | "accepted" | "declined";
+
+type Match = {
+  id: string;
+  requesterId: string;
+  receiverId: string;
+  status: MatchStatus;
+  createdAt: string;
+};
 
 const allOption: SelectOption = {
   value: "all",
@@ -129,8 +154,50 @@ function toProfileCardUser(user: User): ProfileCardUser {
   };
 }
 
+function findMatchBetweenUsers(
+  matches: Match[],
+  currentUserId: string,
+  profileUserId: string
+) {
+  return matches.find(
+    (match) =>
+      (match.requesterId === currentUserId &&
+        match.receiverId === profileUserId) ||
+      (match.requesterId === profileUserId &&
+        match.receiverId === currentUserId)
+  );
+}
+
+function getConnectButtonState(match: Match | undefined) {
+  if (!match) {
+    return {
+      label: "Connect",
+      disabled: false,
+    };
+  }
+
+  if (match.status === "pending") {
+    return {
+      label: "Pending",
+      disabled: true,
+    };
+  }
+
+  if (match.status === "accepted") {
+    return {
+      label: "Connected",
+      disabled: true,
+    };
+  }
+
+  return {
+    label: "Connect",
+    disabled: false,
+  };
+}
+
 function BrowsePage() {
-  const { users } = useApp() as AppContextValue;
+  const { users, matches, sendMatchRequest } = useApp() as AppContextValue;
   const { user: currentUser } = useAuth() as AuthContextValue;
 
   const [searchTerm, setSearchTerm] = useState("");
@@ -180,6 +247,14 @@ function BrowsePage() {
     danishLevelFilter,
     availabilityFilter,
   ]);
+
+  function handleConnect(profileUserId: string) {
+    if (!currentUser) {
+      return;
+    }
+
+    sendMatchRequest(currentUser.id, profileUserId);
+  }
 
   function handleSearchChange(event: ChangeEvent<HTMLInputElement>) {
     setSearchTerm(event.target.value);
@@ -328,13 +403,31 @@ function BrowsePage() {
             aria-label="Language partners"
             className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
           >
-            {filteredUsers.map((profileUser) => (
-              <ProfileCard
-                key={profileUser.id}
-                user={toProfileCardUser(profileUser)}
-                showViewProfileLink
-              />
-            ))}
+            {filteredUsers.map((profileUser) => {
+              const existingMatch = currentUser
+                ? findMatchBetweenUsers(matches, currentUser.id, profileUser.id)
+                : undefined;
+
+              const buttonState = getConnectButtonState(existingMatch);
+
+              return (
+                <ProfileCard
+                  key={profileUser.id}
+                  user={toProfileCardUser(profileUser)}
+                  showViewProfileLink
+                  actions={
+                    <button
+                      type="button"
+                      onClick={() => handleConnect(profileUser.id)}
+                      disabled={buttonState.disabled}
+                      className="rounded-pill bg-primary px-4 py-2 text-sm font-semibold text-white disabled:cursor-not-allowed disabled:opacity-60"
+                    >
+                      {buttonState.label}
+                    </button>
+                  }
+                />
+              );
+            })}
           </section>
         ) : (
           <EmptyState
