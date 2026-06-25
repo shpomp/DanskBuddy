@@ -29,7 +29,7 @@ export default function MessageBubble({ message, isMine }) {
 
   return (
    <div className={isMine ? "flex flex-col items-end" : "flex flex-col items-start"}>
-  {/* Message bubble */}
+ 
   <div className={`px-4 py-2 rounded-2xl max-w-[70%] text-sm ${
     isMine 
       ? "bg-[#E63946] text-white" 
