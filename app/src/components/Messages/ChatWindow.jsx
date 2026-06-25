@@ -72,8 +72,10 @@ export default function ChatWindow() {
             <Chip variant="subtle">{otherUser.role}</Chip>
 
             <span>·</span>
-
-            <LevelBadge level={displayLevel} />
+            <LevelBadge
+              level={displayLevel}
+              className="!bg-transparent !text-success !px-0 !py-0 !font-normal"
+            />
           </div>
         </div>
         <div className="chat-actions">
