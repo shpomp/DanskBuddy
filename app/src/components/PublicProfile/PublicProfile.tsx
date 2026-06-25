@@ -22,6 +22,10 @@ type AuthContextValue = {
 };
 
 function getRoleLabel(role: User["role"]) {
+  if (!role) {
+    return "Not added yet";
+  }
+
   if (role === "native") {
     return "Native speaker";
   }
@@ -62,26 +66,6 @@ function getLevelBadgeClass(level: string | undefined) {
   }
 
   return "bg-secondary-light text-secondary-dark";
-}
-
-function getLevelProgress(level: string | undefined) {
-  if (level === "native") {
-    return "100%";
-  }
-
-  if (level === "advanced") {
-    return "78%";
-  }
-
-  if (level === "intermediate") {
-    return "52%";
-  }
-
-  if (level === "beginner") {
-    return "28%";
-  }
-
-  return "12%";
 }
 
 function toList(items?: string[] | string) {
