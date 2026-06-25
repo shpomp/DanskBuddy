@@ -2,34 +2,18 @@ import { Link, useParams } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 import { useAuth } from "../../context/AuthContext";
 import EmptyState from "../Shared/EmptyState";
-import type { User } from "../../types/types";
-
-type MatchStatus = "pending" | "accepted" | "declined";
-
-type Match = {
-  id: string;
-  requesterId: string;
-  receiverId: string;
-  status: MatchStatus;
-  createdAt: string;
-};
-
-type SendMatchResult =
-  | {
-      success: true;
-      match: Match;
-    }
-  | {
-      success: false;
-      error: string;
-    };
+import type { Match, SendMatchResult, User } from "../../types/types";
+import {
+  findMatchBetweenUsers,
+  getConnectButtonLabel,
+} from "../../utils/matchUtils";
 
 type AppContextValue = {
   users: User[];
   matches: Match[];
   sendMatchRequest: (
     requesterId: string,
-    receiverId: string,
+    receiverId: string
   ) => SendMatchResult;
 };
 
@@ -37,43 +21,7 @@ type AuthContextValue = {
   user: User | null;
 };
 
-function findMatchBetweenUsers(
-  matches: Match[],
-  currentUserId: string,
-  profileUserId: string,
-) {
-  return matches.find(
-    (match) =>
-      (match.requesterId === currentUserId &&
-        match.receiverId === profileUserId) ||
-      (match.requesterId === profileUserId &&
-        match.receiverId === currentUserId),
-  );
-}
-
-function getConnectButtonLabel(match: Match | undefined) {
-  if (!match) {
-    return "Connect";
-  }
-
-  if (match.status === "pending") {
-    return "Pending";
-  }
-
-  if (match.status === "accepted") {
-    return "Connected";
-  }
-
-  return "Connect";
-}
-
-function ProfileDetail({
-  label,
-  value,
-}: {
-  label: string;
-  value?: string;
-}) {
+function ProfileDetail({ label, value }: { label: string; value?: string }) {
   return (
     <div>
       <strong>{label}: </strong>
@@ -155,11 +103,7 @@ function PublicProfile() {
       <section>
         <div>
           <div>
-            {profileUser.avatar ? (
-              <img src={profileUser.avatar} alt={profileUser.name} />
-            ) : (
-              <span>{profileUser.name.charAt(0)}</span>
-            )}
+            <span>{profileUser.avatar || profileUser.name.charAt(0)}</span>
           </div>
 
           <h1>{profileUser.name}</h1>
@@ -182,10 +126,7 @@ function PublicProfile() {
           <h2>Profile details</h2>
 
           <ProfileDetail label="Role" value={profileUser.role} />
-          <ProfileDetail
-            label="Danish level"
-            value={profileUser.danishLevel}
-          />
+          <ProfileDetail label="Danish level" value={profileUser.danishLevel} />
           <ProfileDetail
             label="Native language"
             value={profileUser.nativeLanguage}
