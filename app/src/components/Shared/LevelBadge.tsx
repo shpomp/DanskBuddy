@@ -2,7 +2,6 @@ export type Level = "A1" | "A2" | "B1" | "B2" | "C1" | "C2" | "native";
 
 interface Props {
   level: Level;
-  className?: string;
 }
 
 const BASE =
@@ -18,8 +17,6 @@ const VARIANT: Record<Level, string> = {
   native: "bg-foreground text-background",
 };
 
-export default function LevelBadge({ level, className = "" }: Props) {
-  return (
-    <span className={`${BASE} ${VARIANT[level]} ${className}`}>{level}</span>
-  );
+export default function LevelBadge({ level }: Props) {
+  return <span className={`${BASE} ${VARIANT[level]}`}>{level}</span>;
 }

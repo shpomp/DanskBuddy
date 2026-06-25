@@ -35,36 +35,9 @@
   margin-right: var(--space-3);
 }
 
-.chat-user-info {
-  flex: 1;
-}
-
-.chat-meta {
-  display: flex;
-
-  align-items: center;
-  gap: 3px;
-  margin-top: 4px;
-  font-size: var(--text-sm);
-
-  font-weight: 400;
-
-  color: var(--color-success);
-}
-
 /* =====================
    Call buttons
 ===================== */
-
-.chat-actions {
-  display: flex;
-
-  align-items: center;
-
-  gap: 16px;
-
-  margin-left: auto;
-}
 
 .chat-actions button {
   border: none;
@@ -74,9 +47,6 @@
   cursor: pointer;
 
   padding: 0;
-}
-.chat-window {
-  height: calc(100vh - 64px);
 }
 
 /* =====================
