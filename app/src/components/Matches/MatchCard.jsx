@@ -36,10 +36,7 @@ export default function MatchCard({ match, context }) {
     declined: "bg-red-100    text-red-800",
   };
   return (
-    
     <div className="flex items-center gap-4 bg-white border border-gray-200 rounded-xl p-4 mb-3 shadow-sm relative">
-      
-
       {/* Toast */}
       {toast && (
         <div className="absolute -top-8 left-1/2 -translate-x-1/2 bg-gray-900 text-white text-sm px-4 py-1 rounded-full whitespace-nowrap">
@@ -63,12 +60,15 @@ export default function MatchCard({ match, context }) {
 
       {/* Actions */}
       <div className="flex flex-col items-end gap-2">
-        <span className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColors[status]}`}>
-  {status === "accepted" && "Connected "}
-  {status === "declined" && (isReceiver ? "You declined" : "Declined by Receiver")}
-  {status === "pending" && context === "pending" && "Wants to connect"}
-  {status === "pending" && context === "sent" && "Awaiting reply"}
-</span>
+        <span
+          className={`text-xs font-semibold px-3 py-1 rounded-full ${statusColors[status]}`}
+        >
+          {status === "accepted" && "Connected "}
+          {status === "declined" &&
+            (isReceiver ? "You declined" : "Declined by Receiver")}
+          {status === "pending" && context === "pending" && "Wants to connect"}
+          {status === "pending" && context === "sent" && "Awaiting reply"}
+        </span>
 
         {isReceiver && status === "pending" && context === "pending" && (
           <div className="flex gap-2">

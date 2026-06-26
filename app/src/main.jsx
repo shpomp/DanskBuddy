@@ -15,7 +15,6 @@ import DesignSystem from "./components/DesignSystem/DesignSystem.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
 import ChatWindow from "./components/Messages/ChatWindow.jsx";
 
-
 import MessagesPage from "./components/Messages/MessagesPage.jsx";
 
 import Register from "./components/Auth/Register.jsx";
