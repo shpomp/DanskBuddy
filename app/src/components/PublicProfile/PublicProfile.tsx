@@ -104,9 +104,9 @@ function ProfileListSection({
 
       {listItems.length > 0 ? (
         <ul className="mt-4 flex flex-wrap gap-2">
-          {listItems.map((item) => (
+          {listItems.map((item, index) => (
             <li
-              key={item}
+              key={`${item}-${index}`}
               className="rounded-pill bg-surface px-3 py-2 text-sm font-bold text-neutral"
             >
               {item}
