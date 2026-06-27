@@ -5,6 +5,7 @@ export default function MessageBubble({ message, isMine }) {
   const [isTranslated, setIsTranslated] = useState(false);
   const [translatedText, setTranslatedText] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   async function handleTranslate() {
     if (translatedText) {
@@ -18,6 +19,7 @@ export default function MessageBubble({ message, isMine }) {
       setIsTranslated(true);
     } catch (err) {
       console.error("Translation failed:", err);
+      setError("Oversættelse mislykkedes");
     } finally {
       setIsLoading(false);
     }
@@ -53,6 +55,11 @@ export default function MessageBubble({ message, isMine }) {
             ? "Vis original"
             : "Vis oversættelse"}
       </button>
+      {error && (
+        <p className="text-red-500 text-xs mt-1">
+          Oversættelse mislykkedes
+        </p>
+      )}
     </div>
   );
 }
