@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth, hashPassword } from "../../context/AuthContext";
 import { useApp } from "../../context/AppContext";
@@ -37,7 +37,6 @@ function Register() {
       ...prev,
       [name]: value,
     }));
-    setOpenDropdown("");
   }
 
   async function handleRegister(event) {
@@ -46,11 +45,6 @@ function Register() {
 
     const rawPassword = formData.password;
     const hashedPassword = await hashPassword(formData.password);
-
-    const topicsArray = formData.topics
-      .split(",")
-      .map((topic) => topic.trim())
-      .filter(Boolean);
 
     const registerResult = registerUser({
       name: formData.name,
