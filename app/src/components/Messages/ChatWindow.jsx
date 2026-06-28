@@ -1,4 +1,5 @@
-import { useState } from "react";
+
+import { useState,useEffect } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import { useApp } from "../../context/AppContext";
 import { useAuth } from "../../context/AuthContext";
@@ -10,15 +11,22 @@ export default function ChatWindow() {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const { users, sendMessage, getConversation } = useApp();
+  const { users, sendMessage, getConversation, markAsRead,buildConversationId } = useApp();
 
   const { userId } = useParams();
 
   const [text, setText] = useState("");
+  useEffect(() => {
+    if (user && userId) {
+      markAsRead(buildConversationId(user.id, userId));
+    }
+  }, [userId]);
 
   if (!user) {
     return <Navigate to="/login" />;
   }
+
+  
 
   const otherUser = users.find((u) => String(u.id) === String(userId));
 
@@ -37,6 +45,10 @@ export default function ChatWindow() {
 
     setText("");
   };
+
+
+
+
 
   return (
     <div className="chat-window">
