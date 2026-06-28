@@ -2,44 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth, hashPassword } from "../../context/AuthContext";
 import { useApp } from "../../context/AppContext";
-import StyledDropdown from "../Shared/StyledDropdown";
 
 const roleOptions = [
   { value: "learner", label: "Learner" },
   { value: "native", label: "Native speaker" },
-  { value: "both", label: "Both" },
-];
-
-const avatarOptions = [
-  { value: "🙂", label: "🙂 Friendly" },
-  { value: "👩", label: "👩 Woman" },
-  { value: "👨", label: "👨 Man" },
-  { value: "👩‍🦰", label: "👩‍🦰 Red hair" },
-  { value: "👨‍🦱", label: "👨‍🦱 Curly hair" },
-  { value: "👩‍🦳", label: "👩‍🦳 Older woman" },
-  { value: "🧑", label: "🧑 Person" },
-];
-
-const cityOptions = [
-  { value: "Copenhagen", label: "Copenhagen" },
-  { value: "Aarhus", label: "Aarhus" },
-  { value: "Odense", label: "Odense" },
-  { value: "Other", label: "Other" },
-];
-
-const danishLevelOptions = [
-  { value: "beginner", label: "Beginner" },
-  { value: "intermediate", label: "Intermediate" },
-  { value: "advanced", label: "Advanced" },
-  { value: "native", label: "Native" },
-];
-
-const availabilityOptions = [
-  { value: "weekends", label: "Weekends" },
-  { value: "evenings", label: "Evenings" },
-  { value: "weekdays", label: "Weekdays" },
-  { value: "mornings", label: "Mornings" },
-  { value: "flexible", label: "Flexible" },
 ];
 
 function Register() {
@@ -53,18 +19,9 @@ function Register() {
     email: "",
     password: "",
     role: "learner",
-    avatar: "🙂",
-    city: "Copenhagen",
-    danishLevel: "beginner",
-    nativeLanguage: "",
-    learningGoals: "",
-    topics: "",
-    availability: "weekends",
-    bio: "",
   });
 
   const [error, setError] = useState("");
-  const [openDropdown, setOpenDropdown] = useState("");
 
   function handleChange(event) {
     const { name, value } = event.target;
@@ -100,14 +57,16 @@ function Register() {
       email: formData.email,
       password: hashedPassword,
       role: formData.role,
-      avatar: formData.avatar,
-      city: formData.city,
-      danishLevel: formData.danishLevel,
-      nativeLanguage: formData.nativeLanguage,
-      learningGoals: formData.learningGoals,
-      topics: topicsArray,
-      availability: formData.availability,
-      bio: formData.bio,
+
+      // Default profile fields. User can edit these later.
+      avatarBgColor: "#E63946",
+      city: "",
+      danishLevel: formData.role === "native" ? "native" : "",
+      nativeLanguage: "",
+      learningGoals: "",
+      topics: [],
+      availability: "",
+      bio: "",
       createdAt: new Date().toISOString(),
     });
 
@@ -132,21 +91,24 @@ function Register() {
     "block text-[12px] font-extrabold tracking-[-0.01em] text-[#6E665C]";
 
   return (
-    <section className="-m-8 min-h-[calc(100vh-8rem)] bg-[#F4EFE8] px-4 py-8 font-sans text-[#2B2A28] sm:px-6 lg:px-10">
-      <div className="mx-auto flex w-full max-w-6xl overflow-hidden rounded-[18px] border border-[#EAE3D8] bg-white shadow-[0_32px_64px_-24px_rgba(33,30,28,0.40),0_8px_20px_-12px_rgba(33,30,28,0.28)]">
-        <aside className="hidden w-[44%] flex-col justify-between bg-gradient-to-br from-[#E63946] via-[#F05258] to-[#F4A261] p-10 text-white lg:flex">
+    <section className="min-h-screen w-full flex font-['Poppins',_-apple-system,_BlinkMacSystemFont,_sans-serif]">
+      <div className="flex min-h-screen w-full bg-white">
+        <aside className="hidden w-1/2 flex-col justify-between overflow-hidden p-[46px_40px] text-white md:flex [background:linear-gradient(160deg,#E63946_0%,#EC5C52_55%,#F4A261_120%)]">
           <div className="flex items-center gap-3">
-            <span className="relative block h-10 w-10 shrink-0 overflow-hidden rounded-[12px] bg-[#F06A73]">
-              <span className="absolute left-1/2 top-0 h-full w-[7px] -translate-x-1/2 bg-white" />
-              <span className="absolute left-0 top-1/2 h-[7px] w-full -translate-y-1/2 bg-white" />
+            <div className="relative w-10 h-10 rounded-[13px] bg-white/20 shrink-0">
+              <div className="absolute top-0 bottom-0 left-[13px] w-1.5 bg-white" />
+              <div className="absolute left-0 right-0 top-[13px] h-1.5 bg-white" />
+            </div>
+            <span className="text-[23px] font-extrabold tracking-[-0.035em] text-white">
+              danskbuddy
             </span>
           </div>
 
-          <div className="max-w-xs pb-4">
-            <h2 className="text-[36px] font-extrabold leading-[0.98] tracking-[-0.03em]">
+          <div className="mt-auto max-w-xs pb-4">
+            <h2 className="text-[34px] font-extrabold leading-[1.12] tracking-[-0.02em]">
               Join in under a minute.
             </h2>
-            <p className="mt-5 text-[16px] font-semibold leading-relaxed text-[rgb(255,227,214)]">
+            <p className="mt-[14px] text-[15px] font-medium leading-relaxed text-[#FFE3D6]">
               Tell us your level and interests, we will match you with the right
               partners from day one.
             </p>
@@ -206,10 +168,10 @@ function Register() {
           </div>
         </aside>
 
-        <div className="flex w-full items-start justify-center bg-white px-5 py-8 sm:px-8 md:py-12 lg:w-[56%] lg:px-16">
-          <form onSubmit={handleRegister} className="w-full max-w-[380px]">
-            <h1 className="text-[28px] font-extrabold leading-tight tracking-[-0.02em] text-[#161616]">
-              Create account
+        <div className="flex w-full items-center justify-center bg-white px-5 py-8 sm:px-8 md:w-1/2 md:p-10">
+          <form onSubmit={handleRegister} className="w-full max-w-[360px]">
+            <h1 className="text-[26px] font-extrabold leading-tight tracking-[-0.02em] text-[#2B2A28]">
+              Opret din konto
             </h1>
 
             {error && (
@@ -224,7 +186,7 @@ function Register() {
             <div className="mt-8 space-y-4">
               <fieldset>
                 <legend className="text-[16px] font-extrabold tracking-[-0.01em] text-[#A89F94]">
-                  I am
+                  Jeg er…
                 </legend>
                 <div className="mt-2 flex rounded-full bg-[#F6F0E8] p-1">
                   {roleOptions.map((option) => {
@@ -238,7 +200,7 @@ function Register() {
                         onClick={() =>
                           handleDropdownChange("role", option.value)
                         }
-                        className={`min-w-0 flex-1 cursor-pointer whitespace-nowrap rounded-full px-2 py-3 text-center text-[11px] font-extrabold transition focus:outline-none focus:ring-4 focus:ring-[#FDEAEC] min-[380px]:text-[12px] sm:px-4 sm:text-[13px] ${
+                        className={`min-w-0 flex-1 cursor-pointer whitespace-nowrap rounded-full px-2 py-3 text-center text-[11px] font-extrabold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-[#FDEAEC] min-[380px]:text-[12px] sm:px-4 sm:text-[13px] ${
                           isSelected
                             ? "bg-[#E63946] text-white shadow-[0_10px_18px_-12px_rgba(230,57,70,0.75)]"
                             : "text-[#6E665C] hover:bg-[#EFE8DD] active:bg-[#E6DCCF]"
@@ -252,7 +214,7 @@ function Register() {
               </fieldset>
 
               <label className={labelClass}>
-                Name
+                Fulde navn
                 <input
                   name="name"
                   id="name"
@@ -280,7 +242,7 @@ function Register() {
               </label>
 
               <label className={labelClass}>
-                Password
+                Adgangskode
                 <input
                   name="password"
                   type="password"
@@ -292,130 +254,24 @@ function Register() {
                   className={fieldClass}
                 />
               </label>
-
-              <label className={labelClass}>
-                Avatar
-                <StyledDropdown
-                  name="avatar"
-                  value={formData.avatar}
-                  options={avatarOptions}
-                  isOpen={openDropdown === "avatar"}
-                  onToggle={() =>
-                    setOpenDropdown(openDropdown === "avatar" ? "" : "avatar")
-                  }
-                  onSelect={handleDropdownChange}
-                  onClose={() => setOpenDropdown("")}
-                />
-              </label>
-
-              <label className={labelClass}>
-                City
-                <StyledDropdown
-                  name="city"
-                  value={formData.city}
-                  options={cityOptions}
-                  isOpen={openDropdown === "city"}
-                  onToggle={() =>
-                    setOpenDropdown(openDropdown === "city" ? "" : "city")
-                  }
-                  onSelect={handleDropdownChange}
-                  onClose={() => setOpenDropdown("")}
-                />
-              </label>
-
-              <label className={labelClass}>
-                Danish level
-                <StyledDropdown
-                  name="danishLevel"
-                  value={formData.danishLevel}
-                  options={danishLevelOptions}
-                  isOpen={openDropdown === "danishLevel"}
-                  onToggle={() =>
-                    setOpenDropdown(
-                      openDropdown === "danishLevel" ? "" : "danishLevel"
-                    )
-                  }
-                  onSelect={handleDropdownChange}
-                  onClose={() => setOpenDropdown("")}
-                />
-              </label>
-
-              <label className={labelClass}>
-                Native language
-                <input
-                  name="nativeLanguage"
-                  id="nativeLanguage"
-                  type="text"
-                  placeholder="English"
-                  value={formData.nativeLanguage}
-                  onChange={handleChange}
-                  required
-                  className={fieldClass}
-                />
-              </label>
-
-              <label className={labelClass}>
-                Learning goals
-                <input
-                  name="learningGoals"
-                  id="learningGoals"
-                  type="text"
-                  value={formData.learningGoals}
-                  onChange={handleChange}
-                  placeholder="Example: Improve conversational Danish"
-                  className={fieldClass}
-                />
-              </label>
-
-              <label className={labelClass}>
-                Availability
-                <StyledDropdown
-                  name="availability"
-                  value={formData.availability}
-                  options={availabilityOptions}
-                  isOpen={openDropdown === "availability"}
-                  onToggle={() =>
-                    setOpenDropdown(
-                      openDropdown === "availability" ? "" : "availability"
-                    )
-                  }
-                  onSelect={handleDropdownChange}
-                  onClose={() => setOpenDropdown("")}
-                />
-              </label>
-
-              <label className={labelClass}>
-                Bio
-                <textarea
-                  name="bio"
-                  id="bio"
-                  value={formData.bio}
-                  onChange={handleChange}
-                  placeholder="Tell others a little about yourself"
-                  className={`${fieldClass} min-h-28 resize-y`}
-                />
-              </label>
-
-              <label className={labelClass}>
-                Topics
-                <input
-                  name="topics"
-                  id="topics"
-                  type="text"
-                  value={formData.topicsText}
-                  onChange={handleChange}
-                  placeholder="culture, food, travel"
-                  className={fieldClass}
-                />
-              </label>
             </div>
 
             <button
               type="submit"
               className="mt-6 w-full cursor-pointer rounded-full bg-[#E63946] px-6 py-3.5 text-[15px] font-extrabold text-white shadow-[0_14px_24px_-12px_rgba(230,57,70,0.75)] transition hover:bg-[#D62F3C] focus:outline-none focus:ring-4 focus:ring-[#FAD2D5] active:translate-y-px"
             >
-              Register
+              Fortsæt
             </button>
+
+            <p className="text-center text-[13px] font-semibold text-[#7C756B] mt-4">
+              Har du allerede en konto?{" "}
+              <span
+                className="text-[#E63946] font-bold cursor-pointer"
+                onClick={() => navigate("/login")}
+              >
+                Log ind
+              </span>
+            </p>
           </form>
         </div>
       </div>
