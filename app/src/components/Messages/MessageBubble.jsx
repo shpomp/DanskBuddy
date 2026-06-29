@@ -48,7 +48,7 @@ export default function MessageBubble({ message, isMine }) {
 
       <button
         onClick={isTranslated ? handleShowOriginal : handleTranslate}
-        disabled={isLoading}
+       disabled={isLoading}
         className="text-[#E63946] text-xs mt-1 font-medium hover:underline"
       >
         {isLoading
