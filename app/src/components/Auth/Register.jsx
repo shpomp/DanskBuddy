@@ -85,89 +85,93 @@ function Register() {
     "block text-[12px] font-extrabold tracking-[-0.01em] text-[#6E665C]";
 
   return (
-    <section className="min-h-screen w-full flex font-['Poppins',_-apple-system,_BlinkMacSystemFont,_sans-serif]">
-      <div className="flex min-h-screen w-full bg-white">
-        <aside className="hidden w-1/2 flex-col justify-between overflow-hidden p-[46px_40px] text-white md:flex [background:linear-gradient(160deg,#E63946_0%,#EC5C52_55%,#F4A261_120%)]">
-          <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 rounded-[13px] bg-white/20 shrink-0">
-              <div className="absolute top-0 bottom-0 left-[13px] w-1.5 bg-white" />
-              <div className="absolute left-0 right-0 top-[13px] h-1.5 bg-white" />
-            </div>
-            <span className="text-[23px] font-extrabold tracking-[-0.035em] text-white">
-              danskbuddy
+    <div className="min-h-screen flex font-['Poppins',_-apple-system,_BlinkMacSystemFont,_sans-serif]">
+      {/* Left hero panel — desktop only */}
+      <div className="hidden md:flex w-[44%] flex-col overflow-hidden p-[46px_40px] [background:linear-gradient(160deg,#E63946_0%,#EC5C52_55%,#F4A261_120%)]">
+        {/* Logo */}
+        <div className="flex items-center gap-[11px]">
+          <div className="relative w-10 h-10 rounded-[13px] bg-white/20 shrink-0">
+            <div className="absolute top-0 bottom-0 left-[13px] w-1.5 bg-white" />
+            <div className="absolute left-0 right-0 top-[13px] h-1.5 bg-white" />
+          </div>
+          <span className="text-[23px] font-extrabold tracking-[-0.035em] text-white">
+            danskbuddy
+          </span>
+        </div>
+
+        {/* Tagline + avatars */}
+        <div className="mt-auto max-w-xs pb-4">
+          <h2 className="text-[34px] font-extrabold tracking-[-0.02em] text-white leading-[1.12]">
+            Join in under a minute.
+          </h2>
+          <p className="mt-[14px] text-[15px] font-medium leading-relaxed text-[#FFE3D6]">
+            Tell us your level and interests, we will match you with the right
+            partners from day one.
+          </p>
+          <div className="mt-7 flex flex-col gap-3">
+            <span className="flex items-center gap-3 text-[15px] font-bold text-white">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m5 12 4 4 10-10" />
+                </svg>
+              </span>
+              Quick to start
+            </span>
+            <span className="flex items-center gap-3 text-[15px] font-bold text-white">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m5 12 4 4 10-10" />
+                </svg>
+              </span>
+              Verified community
+            </span>
+            <span className="flex items-center gap-3 text-[15px] font-bold text-white">
+              <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
+                <svg
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  className="h-3.5 w-3.5"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                >
+                  <path d="m5 12 4 4 10-10" />
+                </svg>
+              </span>
+              Real meetups near you
             </span>
           </div>
+        </div>
+      </div>
 
-          <div className="mt-auto max-w-xs pb-4">
-            <h2 className="text-[34px] font-extrabold leading-[1.12] tracking-[-0.02em]">
-              Join in under a minute.
-            </h2>
-            <p className="mt-[14px] text-[15px] font-medium leading-relaxed text-[#FFE3D6]">
-              Tell us your level and interests, we will match you with the right
-              partners from day one.
-            </p>
-            <div className="mt-7 flex flex-col gap-3">
-              <span className="flex items-center gap-3 text-[15px] font-bold">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="h-3.5 w-3.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="m5 12 4 4 10-10" />
-                  </svg>
-                </span>
-                Quick to start
-              </span>
-              <span className="flex items-center gap-3 text-[15px] font-bold">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="h-3.5 w-3.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="m5 12 4 4 10-10" />
-                  </svg>
-                </span>
-                Verified community
-              </span>
-              <span className="flex items-center gap-3 text-[15px] font-bold">
-                <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
-                  <svg
-                    aria-hidden="true"
-                    viewBox="0 0 24 24"
-                    className="h-3.5 w-3.5"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="3"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="m5 12 4 4 10-10" />
-                  </svg>
-                </span>
-                Real meetups near you
-              </span>
-            </div>
-          </div>
-        </aside>
+      {/* Right form panel */}
+      <div className="flex-1 flex items-center justify-center p-10 bg-white">
+        <div className="w-full max-w-[360px]">
+          <h1 className="text-[26px] font-extrabold tracking-[-0.02em] text-[#2B2A28]">
+            Opret din konto
+          </h1>
 
-        <div className="flex w-full items-center justify-center bg-white px-5 py-8 sm:px-8 md:w-1/2 md:p-10">
           <form onSubmit={handleRegister} className="w-full max-w-[360px]">
-            <h1 className="text-[26px] font-extrabold leading-tight tracking-[-0.02em] text-[#2B2A28]">
-              Opret din konto
-            </h1>
-
             {error && (
               <p
                 role="alert"
@@ -207,7 +211,7 @@ function Register() {
                 </div>
               </fieldset>
 
-              <label className={labelClass}>
+              <label className="flex flex-col gap-1.5 text-xs font-bold text-[#7C756B]">
                 Fulde navn
                 <input
                   name="name"
@@ -217,11 +221,11 @@ function Register() {
                   onChange={handleChange}
                   placeholder="Maria Holm"
                   required
-                  className={fieldClass}
+                  className="bg-white border-[1.5px] border-[#ECE6DD] rounded-[14px] px-[15px] py-[13px] text-sm font-semibold text-[#2B2A28] outline-none w-full font-[inherit] focus:border-[#E63946]"
                 />
               </label>
 
-              <label className={labelClass}>
+              <label className="flex flex-col gap-1.5 text-xs font-bold text-[#7C756B]">
                 Email
                 <input
                   name="email"
@@ -231,11 +235,11 @@ function Register() {
                   onChange={handleChange}
                   placeholder="maria@email.dk"
                   required
-                  className={fieldClass}
+                  className="bg-white border-[1.5px] border-[#ECE6DD] rounded-[14px] px-[15px] py-[13px] text-sm font-semibold text-[#2B2A28] outline-none w-full font-[inherit] focus:border-[#E63946]"
                 />
               </label>
 
-              <label className={labelClass}>
+              <label className="flex flex-col gap-1.5 text-xs font-bold text-[#7C756B]">
                 Adgangskode
                 <input
                   name="password"
@@ -245,7 +249,7 @@ function Register() {
                   onChange={handleChange}
                   placeholder="••••••••"
                   required
-                  className={fieldClass}
+                  className="bg-white border-[1.5px] border-[#ECE6DD] rounded-[14px] px-[15px] py-[13px] text-sm font-semibold text-[#2B2A28] outline-none w-full font-[inherit] focus:border-[#E63946]"
                 />
               </label>
             </div>
@@ -269,7 +273,7 @@ function Register() {
           </form>
         </div>
       </div>
-    </section>
+    </div>
   );
 }
 
