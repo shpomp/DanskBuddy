@@ -66,9 +66,9 @@ function Login() {
 
         {/* Tagline + avatars */}
         <div className="mt-auto">
-          <p className="text-[34px] font-extrabold tracking-[-0.02em] text-white leading-[1.12]">
+          <h2 className="text-[34px] font-extrabold tracking-[-0.02em] text-white leading-[1.12]">
             Practice Danish with real people.
-          </p>
+          </h2>
           <p className="text-[15px] font-medium text-[#FFE3D6] mt-[14px] leading-relaxed max-w-[300px]">
             Find native speakers and fellow learners at your level — over
             coffee, chat or a meetup.
@@ -99,10 +99,10 @@ function Login() {
       <div className="flex-1 flex items-center justify-center p-10 bg-white">
         <div className="w-full max-w-[360px]">
           <h1 className="text-[26px] font-extrabold tracking-[-0.02em] text-[#2B2A28]">
-            Welcome back
+            Velkommen tilbage
           </h1>
           <p className="text-sm font-semibold text-[#7C756B] mt-1">
-            Log in to continue your practice.
+            Log ind for at fortsætte din øvelse.
           </p>
 
           <form
@@ -125,20 +125,20 @@ function Login() {
                 type="email"
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="Email address"
+                placeholder="maria@email.dk"
                 required
                 className="bg-white border-[1.5px] border-[#ECE6DD] rounded-[14px] px-[15px] py-[13px] text-sm font-semibold text-[#2B2A28] outline-none w-full font-[inherit] focus:border-[#E63946]"
               />
             </label>
 
             <label className="flex flex-col gap-1.5 text-xs font-bold text-[#7C756B]">
-              Password
+              Adgangskode
               <input
                 id="password"
                 type="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                placeholder="Password"
+                placeholder="••••••••"
                 required
                 className="bg-white border-[1.5px] border-[#ECE6DD] rounded-[14px] px-[15px] py-[13px] text-sm font-semibold text-[#2B2A28] outline-none w-full font-[inherit] focus:border-[#E63946]"
               />
@@ -153,12 +153,12 @@ function Login() {
             </button>
 
             <p className="text-center text-[13px] font-semibold text-[#7C756B] mt-2">
-              New here?{" "}
+              Ny her?{" "}
               <span
                 className="text-[#E63946] font-bold cursor-pointer"
                 onClick={() => navigate("/register")}
               >
-                Create account
+                Opret konto
               </span>
             </p>
           </form>
