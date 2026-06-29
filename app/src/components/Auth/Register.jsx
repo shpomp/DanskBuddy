@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth, hashPassword } from "../../context/AuthContext";
 import { useApp } from "../../context/AppContext";
+import PasswordInput from "./PasswordInput";
 
 const roleOptions = [
   { value: "learner", label: "Learner" },
@@ -241,15 +242,13 @@ function Register() {
 
               <label className="flex flex-col gap-1.5 text-xs font-bold text-[#7C756B]">
                 Adgangskode
-                <input
-                  name="password"
-                  type="password"
+                <PasswordInput
                   id="password"
+                  name="password"
                   value={formData.password}
                   onChange={handleChange}
                   placeholder="••••••••"
                   required
-                  className="bg-white border-[1.5px] border-[#ECE6DD] rounded-[14px] px-[15px] py-[13px] text-sm font-semibold text-[#2B2A28] outline-none w-full font-[inherit] focus:border-[#E63946]"
                 />
               </label>
             </div>

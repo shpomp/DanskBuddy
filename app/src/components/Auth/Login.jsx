@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import PasswordInput from "./PasswordInput";
 
 function Login() {
   const navigate = useNavigate();
@@ -133,14 +134,13 @@ function Login() {
 
             <label className="flex flex-col gap-1.5 text-xs font-bold text-[#7C756B]">
               Adgangskode
-              <input
+              <PasswordInput
                 id="password"
-                type="password"
+                name="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
                 placeholder="••••••••"
                 required
-                className="bg-white border-[1.5px] border-[#ECE6DD] rounded-[14px] px-[15px] py-[13px] text-sm font-semibold text-[#2B2A28] outline-none w-full font-[inherit] focus:border-[#E63946]"
               />
             </label>
 
