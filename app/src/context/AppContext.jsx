@@ -27,7 +27,7 @@ export function AppProvider({ children }) {
   const [matches, setMatches] = useState(() => getMatches());
   const [messages, setMessages] = useState(() => getMessages());
   const [posts, setPosts] = useState(() => getPosts());
-  const [readTimestamps, setReadTimestamps] = useState({});
+  const [messageReadTimestamps, setMessageReadTimestamps] = useState({});
 
   useEffect(() => {
     saveUsers(users);
@@ -157,8 +157,8 @@ export function AppProvider({ children }) {
     },
     [messages, buildConversationId]
   );
-  const markAsRead = useCallback((conversationId) => {
-    setReadTimestamps((prev) => ({
+  const markMessagesAsRead= useCallback((conversationId) => {
+      setMessageReadTimestamps((prev) => ({
       ...prev,
       [conversationId]: Date.now(),
     }));
@@ -205,6 +205,14 @@ export function AppProvider({ children }) {
     },
     [posts]
   );
+  const getPendingMatches = useCallback(
+    (userId) => {
+      return matches.filter(
+        (m) => m.status === "pending" && m.receiverId === userId
+      );
+    },
+    [matches]
+  );
 
   return (
     <AppContext.Provider
@@ -224,11 +232,12 @@ export function AppProvider({ children }) {
         buildConversationId,
         sendMessage,
         getConversation,
-        markAsRead,
-        readTimestamps,
+        markMessagesAsRead,
+        messageReadTimestamps,
         createPost,
         toggleLike,
         deletePost,
+        getPendingMatches,
       }}
     >
       <AuthProvider onUpdateUser={handleUpdateUser}>{children}</AuthProvider>
