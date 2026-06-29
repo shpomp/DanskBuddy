@@ -38,7 +38,7 @@ function Login() {
         setError(result.error);
       }
     } catch (error) {
-      setError("Something went wrong. Please try again.");
+      setError("Der gik noget galt. Prøv igen.");
     } finally {
       setIsLoading(false);
     }
@@ -68,11 +68,10 @@ function Login() {
         {/* Tagline + avatars */}
         <div className="mt-auto">
           <h2 className="text-[34px] font-extrabold tracking-[-0.02em] text-white leading-[1.12]">
-            Practice Danish with real people.
+            Øv dansk med rigtige mennesker.
           </h2>
           <p className="text-[15px] font-medium text-[#FFE3D6] mt-[14px] leading-relaxed max-w-[300px]">
-            Find native speakers and fellow learners at your level — over
-            coffee, chat or a meetup.
+            Find modersmålstalere og andre sprogstuderende på dit niveau — over en kop kaffe, en chat eller et meetup.
           </p>
 
           <div className="flex items-center mt-6">
@@ -90,7 +89,7 @@ function Login() {
               </div>
             ))}
             <span className="text-[13px] font-semibold text-[#FFE3D6] ml-3">
-              2.400+ buddies
+              2.400+ sprogvenner
             </span>
           </div>
         </div>
@@ -149,7 +148,7 @@ function Login() {
               disabled={isLoading}
               className="w-full border-none cursor-pointer bg-[#E63946] text-white font-[inherit] font-bold text-[15px] py-[14px] rounded-full mt-1 shadow-[0_12px_22px_-10px_rgba(230,57,70,0.6)] disabled:bg-[#EC8C94] disabled:cursor-not-allowed disabled:shadow-none"
             >
-              {isLoading ? "Logging in..." : "Login"}
+              {isLoading ? "Logger ind..." : "Log ind"}
             </button>
 
             <p className="text-center text-[13px] font-semibold text-[#7C756B] mt-2">
