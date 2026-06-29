@@ -12,7 +12,7 @@ export default function MessageBubble({ message, isMine }) {
       setIsTranslated(true);
       return;
     }
-      setError(null);
+    setError(null);
     setIsLoading(true);
     try {
       const translated = await translateMessage(message.text);
@@ -48,7 +48,7 @@ export default function MessageBubble({ message, isMine }) {
 
       <button
         onClick={isTranslated ? handleShowOriginal : handleTranslate}
-       disabled={isLoading}
+        disabled={isLoading}
         className="text-[#E63946] text-xs mt-1 font-medium hover:underline"
       >
         {isLoading
@@ -58,9 +58,7 @@ export default function MessageBubble({ message, isMine }) {
             : "Vis oversættelse"}
       </button>
       {error && (
-        <p className="text-red-500 text-xs mt-1">
-          Oversættelse mislykkedes
-        </p>
+        <p className="text-red-500 text-xs mt-1">Oversættelse mislykkedes</p>
       )}
     </div>
   );
