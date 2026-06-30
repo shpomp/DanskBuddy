@@ -14,7 +14,7 @@ export default function ChatWindow() {
     users,
     sendMessage,
     getConversation,
-   markMessagesAsRead,
+    markMessagesAsRead,
     buildConversationId,
   } = useApp();
 
@@ -23,9 +23,9 @@ export default function ChatWindow() {
   const [text, setText] = useState("");
   useEffect(() => {
     if (user && userId) {
-      markMessageAsRead(buildConversationId(user.id, userId));
+      markMessagesAsRead(buildConversationId(user.id, userId));
     }
-  }, [userId, marMessagekAsRead, buildConversationId]);
+  }, [userId, markMessagesAsRead, buildConversationId]);
 
   if (!user) {
     return <Navigate to="/login" />;
