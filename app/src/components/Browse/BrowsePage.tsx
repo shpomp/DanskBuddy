@@ -45,22 +45,23 @@ type Match = {
 
 const allOption: SelectOption = {
   value: "all",
-  label: "All",
+  label: "Alle",
 };
 
 const roleOptions: SelectOption[] = [
   allOption,
-  { value: "learner", label: "Learner" },
-  { value: "native", label: "Native speaker" },
-  { value: "both", label: "Both" },
+  { value: "learner", label: "Lærer dansk" },
+  { value: "native", label: "Taler dansk" },
 ];
 
 const danishLevelOptions: SelectOption[] = [
   allOption,
-  { value: "beginner", label: "Beginner" },
-  { value: "intermediate", label: "Intermediate" },
-  { value: "advanced", label: "Advanced" },
-  { value: "native", label: "Native" },
+  { value: "a1", label: "A1" },
+  { value: "a2", label: "A2" },
+  { value: "b1", label: "B1" },
+  { value: "b2", label: "B2" },
+  { value: "c1", label: "C1" },
+  { value: "c2", label: "C2" },
 ];
 
 const availabilityOptions: SelectOption[] = [
@@ -171,27 +172,27 @@ function findMatchBetweenUsers(
 function getConnectButtonState(match: Match | undefined) {
   if (!match) {
     return {
-      label: "Connect",
+      label: "Opret forbindelse",
       disabled: false,
     };
   }
 
   if (match.status === "pending") {
     return {
-      label: "Pending",
+      label: "Afventer",
       disabled: true,
     };
   }
 
   if (match.status === "accepted") {
     return {
-      label: "Connected",
+      label: "Forbundet",
       disabled: true,
     };
   }
 
   return {
-    label: "Connect",
+    label: "Opret forbindelse",
     disabled: false,
   };
 }
@@ -294,7 +295,7 @@ function BrowsePage() {
       <div className="mx-auto w-full max-w-5xl">
         <header className="mb-6">
           <h1 className="text-[28px] font-extrabold leading-tight tracking-[-0.02em] text-[#161616]">
-            Browse language partners
+            Hvem vil du møde?
           </h1>
         </header>
 
@@ -307,19 +308,19 @@ function BrowsePage() {
               htmlFor="search"
               className={`${labelClass} col-span-2 lg:col-span-4`}
             >
-              Search by name or topic
+              Søg efter interesser
               <input
                 type="search"
                 id="search"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                placeholder="Example: Maja, food"
+                placeholder="hunde"
                 className={inputClass}
               />
             </label>
 
             <label className={labelClass}>
-              City
+              By
               <StyledDropdown
                 name="city"
                 value={cityFilter}
@@ -334,7 +335,7 @@ function BrowsePage() {
             </label>
 
             <label className={labelClass}>
-              Role
+              Hvem vil du møde?
               <StyledDropdown
                 name="role"
                 value={roleFilter}
@@ -349,7 +350,7 @@ function BrowsePage() {
             </label>
 
             <label className={labelClass}>
-              Danish level
+              Danskniveau
               <StyledDropdown
                 name="danishLevel"
                 value={danishLevelFilter}
@@ -366,7 +367,7 @@ function BrowsePage() {
             </label>
 
             <label className={labelClass}>
-              Availability
+              Tilgængelighed
               <StyledDropdown
                 name="availability"
                 value={availabilityFilter}
@@ -389,13 +390,13 @@ function BrowsePage() {
               onClick={handleResetFilters}
               className="cursor-pointer rounded-full bg-[#ECE6DD] px-5 py-2.5 text-sm font-extrabold text-[#6E665C] transition hover:bg-[#F6F0E8] focus:outline-none focus:ring-4 focus:ring-[#FDEAEC] active:translate-y-px"
             >
-              Reset filters
+              Nulstil filtre
             </button>
           </div>
         </section>
 
         <p className="mt-4 text-sm font-semibold text-[#7C756B]">
-          Showing {filteredUsers.length} of {availableUsers.length} users
+          Viser {filteredUsers.length} ud af {availableUsers.length} ud af
         </p>
 
         {filteredUsers.length > 0 ? (
