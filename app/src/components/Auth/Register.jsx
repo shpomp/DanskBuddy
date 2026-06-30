@@ -5,8 +5,8 @@ import { useApp } from "../../context/AppContext";
 import PasswordInput from "./PasswordInput";
 
 const roleOptions = [
-  { value: "learner", label: "Learner" },
-  { value: "native", label: "Native speaker" },
+  { value: "learner", label: "Jeg lærer dansk" },
+  { value: "native", label: "Jeg taler dansk" },
 ];
 
 function Register() {
@@ -23,26 +23,32 @@ function Register() {
   });
 
   const [error, setError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
-  function handleChange(event) {
-    const { name, value } = event.target;
-
+  function updateFormField(name, value) {
     setFormData((prev) => ({
       ...prev,
       [name]: value,
     }));
   }
 
-  function handleDropdownChange(name, value) {
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  function handleChange(event) {
+    const { name, value } = event.target;
+    updateFormField(name, value);
+
+    if (name === "password") {
+      setPasswordError("");
+    }
   }
 
   async function handleRegister(event) {
     event.preventDefault();
     setError("");
+
+    if (formData.password.length < 8) {
+      setPasswordError("Adgangskoden skal være mindst 8 tegn.");
+      return;
+    }
 
     const rawPassword = formData.password;
     const hashedPassword = await hashPassword(formData.password);
@@ -80,11 +86,6 @@ function Register() {
     navigate("/profile/me");
   }
 
-  const fieldClass =
-    "mt-2 w-full rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-[15px] font-semibold text-[#2B2A28] outline-none transition placeholder:text-[#A89F94] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]";
-  const labelClass =
-    "block text-[12px] font-extrabold tracking-[-0.01em] text-[#6E665C]";
-
   return (
     <div className="min-h-screen flex font-['Poppins',_-apple-system,_BlinkMacSystemFont,_sans-serif]">
       {/* Left hero panel — desktop only */}
@@ -103,11 +104,11 @@ function Register() {
         {/* Tagline + avatars */}
         <div className="mt-auto max-w-xs pb-4">
           <h2 className="text-[34px] font-extrabold tracking-[-0.02em] text-white leading-[1.12]">
-            Join in under a minute.
+            Tilmeld dig på under et minut.
           </h2>
           <p className="mt-[14px] text-[15px] font-medium leading-relaxed text-[#FFE3D6]">
-            Tell us your level and interests, we will match you with the right
-            partners from day one.
+            Fortæl os om dit niveau og dine interesser, så matcher vi dig med de
+            rette samtalepartnere fra dag ét.
           </p>
           <div className="mt-7 flex flex-col gap-3">
             <span className="flex items-center gap-3 text-[15px] font-bold text-white">
@@ -125,7 +126,7 @@ function Register() {
                   <path d="m5 12 4 4 10-10" />
                 </svg>
               </span>
-              Quick to start
+              Hurtigt at komme i gang
             </span>
             <span className="flex items-center gap-3 text-[15px] font-bold text-white">
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
@@ -142,7 +143,7 @@ function Register() {
                   <path d="m5 12 4 4 10-10" />
                 </svg>
               </span>
-              Verified community
+              Verificeret fællesskab
             </span>
             <span className="flex items-center gap-3 text-[15px] font-bold text-white">
               <span className="flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-[rgba(255,255,255,0.22)] text-[#FFFFFF]">
@@ -159,7 +160,7 @@ function Register() {
                   <path d="m5 12 4 4 10-10" />
                 </svg>
               </span>
-              Real meetups near you
+              Ægte møder i nærheden af dig.
             </span>
           </div>
         </div>
@@ -196,9 +197,7 @@ function Register() {
                         key={option.value}
                         type="button"
                         aria-pressed={isSelected}
-                        onClick={() =>
-                          handleDropdownChange("role", option.value)
-                        }
+                        onClick={() => updateFormField("role", option.value)}
                         className={`min-w-0 flex-1 cursor-pointer whitespace-nowrap rounded-full px-2 py-3 text-center text-[11px] font-extrabold transition focus:outline-none focus-visible:ring-4 focus-visible:ring-[#FDEAEC] min-[380px]:text-[12px] sm:px-4 sm:text-[13px] ${
                           isSelected
                             ? "bg-[#E63946] text-white shadow-[0_10px_18px_-12px_rgba(230,57,70,0.75)]"
@@ -250,6 +249,11 @@ function Register() {
                   placeholder="••••••••"
                   required
                 />
+                {passwordError && (
+                  <p className="text-xs text-[#B0202C]">
+                    {passwordError}
+                  </p>
+                )}
               </label>
             </div>
 
