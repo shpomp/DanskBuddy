@@ -20,7 +20,6 @@ import Register from "./components/Auth/Register.jsx";
 import MyProfile from "./components/MyProfile/MyProfile.tsx";
 import PublicProfile from "./components/PublicProfile/PublicProfile.tsx";
 import "./main.css";
-import ChatWindow from "./components/Messages/ChatWindow.jsx";
 function Placeholder({ name }) {
   return (
     <div className="flex flex-col items-center justify-center min-h-[60vh] text-gray-400">
@@ -73,7 +72,7 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ChatWindow />
-            <ChatWindow />
+         
           </ProtectedRoute>
         ),
       },
