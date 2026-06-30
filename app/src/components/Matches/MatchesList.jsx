@@ -49,8 +49,7 @@ export default function MatchesList() {
       )}
 
       <h1 className="text-3xl font-bold text-gray-900 mb-6">My Matches</h1>
-
-      <div className="flex gap-2 border-b border-gray-200 mb-6 overflow-x-auto scrollbar-hide pr-4">
+<div className="flex gap-2 border-b border-gray-200 mb-6 overflow-x-auto pr-4 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
         {tabs.map((tab) => (
   <button
     key={tab.id}
