@@ -13,27 +13,33 @@ export default function MessagesPage() {
   if (!user) {
     return <Navigate to="/login" />;
   }
-
-  const conversations = Object.entries(messages || {})
-    .map(([conversationId, msgs]) => {
+  const conversations = Object.entries(messages || [])
+    .reduce((result, [conversationId, msgs]) => {
       const [id1, id2] = conversationId.split("::");
+
+      const isMine =
+        String(id1) === String(user.id) || String(id2) === String(user.id);
+
+      if (!isMine) return result;
 
       const otherUserId = String(id1) === String(user.id) ? id2 : id1;
 
       const otherUser = users.find((u) => String(u.id) === String(otherUserId));
 
-      if (!otherUser) {
-        return null;
-      }
+      if (!otherUser) return result;
 
-      return {
+      const lastMsg = msgs[msgs.length - 1];
+
+      result.push({
         conversationId,
         otherUser,
-        lastMessage: msgs[msgs.length - 1]?.text || "",
-      };
-    })
-    .filter(Boolean);
+        lastMessage: lastMsg?.text ?? "",
+        lastMessageAt: lastMsg?.createdAt ?? "",
+      });
 
+      return result;
+    }, [])
+    .sort((a, b) => new Date(b.lastMessageAt) - new Date(a.lastMessageAt));
   if (conversations.length === 0) {
     return (
       <EmptyState
@@ -45,8 +51,8 @@ export default function MessagesPage() {
   }
 
   return (
-    <div className="messages-container">
-      <h2>Messages</h2>
+    <div className="max-w-2xl mx-auto">
+      <h1 className="text-3xl font-bold text-gray-900 mb-6">Messages</h1>
 
       <MessagesList conversations={conversations} />
     </div>
