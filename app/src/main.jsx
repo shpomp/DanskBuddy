@@ -13,10 +13,12 @@ import HomePage from "./components/HomePage/HomePage";
 import Login from "./components/Auth/Login.jsx";
 import DesignSystem from "./components/DesignSystem/DesignSystem.jsx";
 import MatchesList from "./components/Matches/MatchesList.jsx";
+import ChatWindow from "./components/Messages/ChatWindow.jsx";
 import MessagesPage from "./components/Messages/MessagesPage.jsx";
 import BrowsePage from "./components/Browse/BrowsePage.tsx";
 import Register from "./components/Auth/Register.jsx";
 import MyProfile from "./components/MyProfile/MyProfile.tsx";
+import PublicProfile from "./components/PublicProfile/PublicProfile.tsx";
 import "./main.css";
 import ChatWindow from "./components/Messages/ChatWindow.jsx";
 function Placeholder({ name }) {
@@ -71,6 +73,7 @@ const router = createBrowserRouter([
         element: (
           <ProtectedRoute>
             <ChatWindow />
+            <ChatWindow />
           </ProtectedRoute>
         ),
       },
@@ -94,7 +97,7 @@ const router = createBrowserRouter([
         path: "/profile/:id",
         element: (
           <ProtectedRoute>
-            <Placeholder name="Public Profile" />
+            <PublicProfile />
           </ProtectedRoute>
         ),
       },

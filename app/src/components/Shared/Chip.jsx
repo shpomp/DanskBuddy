@@ -4,7 +4,7 @@ const BASE =
 const VARIANT = {
   filled: "bg-primary text-white border-0",
   outline: "bg-white text-neutral border border-surface",
-  // TODO: add more variants (e.g. "subtle" with bg-surface)
+  subtle: "bg-transparent text-success border-0 !px-0 !py-0 font-normal",
 };
 
 export default function Chip({ children, variant = "filled", onClick }) {
