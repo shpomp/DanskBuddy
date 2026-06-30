@@ -3,9 +3,11 @@ import { useAuth } from "../context/AuthContext";
 
 export function useUnreadCount() {
   const { user } = useAuth();
-  const { messages, readTimestamps } = useApp();
+  const { messages, messageReadTimestamps } = useApp();
 
   if (!user) return 0;
+
+  
 
   return Object.keys(messages).filter((convId) => {
     const [id1, id2] = convId.split("::");
@@ -15,7 +17,9 @@ export function useUnreadCount() {
     const lastMessage = convMessages[convMessages.length - 1];
     if (!lastMessage) return false;
     if (String(lastMessage.senderId) === String(user.id)) return false;
-    const lastRead = readTimestamps?.[convId] || 0;
+    const lastRead = messageReadTimestamps?.[convId] || 0;
+
     return new Date(lastMessage.createdAt).getTime() > lastRead;
   }).length;
+  
 }
