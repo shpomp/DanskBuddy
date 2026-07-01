@@ -44,19 +44,38 @@ type Match = {
   createdAt: string;
 };
 
-const allOption: SelectOption = {
+const cityAllOption = {
   value: "all",
-  label: "Alle",
+  label: "By",
+  menuLabel: "Vis alle",
 };
 
-const roleOptions: SelectOption[] = [
-  allOption,
+const roleAllOption = {
+  value: "all",
+  label: "Hvem vil du møde?",
+  menuLabel: "Vis alle",
+};
+
+const danishLevelAllOption = {
+  value: "all",
+  label: "Danskniveau",
+  menuLabel: "Vis alle",
+};
+
+const availabilityAllOption = {
+  value: "all",
+  label: "Tilgængelighed",
+  menuLabel: "Vis alle",
+};
+
+const roleOptions = [
+  roleAllOption,
   { value: "learner", label: "Lærer dansk" },
   { value: "native", label: "Taler dansk" },
 ];
 
-const danishLevelOptions: SelectOption[] = [
-  allOption,
+const danishLevelOptions = [
+  danishLevelAllOption,
   { value: "a1", label: "A1" },
   { value: "a2", label: "A2" },
   { value: "b1", label: "B1" },
@@ -65,19 +84,13 @@ const danishLevelOptions: SelectOption[] = [
   { value: "c2", label: "C2" },
 ];
 
-const availabilityOptions: SelectOption[] = [
-  allOption,
+const availabilityOptions = [
+  availabilityAllOption,
   { value: "mornings", label: "Mornings" },
   { value: "evenings", label: "Evenings" },
   { value: "weekends", label: "Weekends" },
   { value: "flexible", label: "Flexible" },
 ];
-
-const labelClass =
-  "block text-[12px] font-extrabold tracking-[-0.01em] text-[#6E665C]";
-
-const inputClass =
-  "mt-2 w-full rounded-2xl border border-[#ECE6DD] bg-white px-4 py-3.5 text-[15px] font-semibold text-[#2B2A28] outline-none transition placeholder:text-[#A89F94] focus:border-[#E63946] focus:ring-4 focus:ring-[#FDEAEC]";
 
 function getCityOptions(users: User[]): SelectOption[] {
   const cities = users
@@ -87,7 +100,7 @@ function getCityOptions(users: User[]): SelectOption[] {
   const uniqueCities = Array.from(new Set(cities)).sort();
 
   return [
-    allOption,
+    cityAllOption,
     ...uniqueCities.map((city) => ({
       value: city,
       label: city,
@@ -295,9 +308,9 @@ function BrowsePage() {
     <main className="-m-8 min-h-[calc(100vh-8rem)] bg-background font-sans">
       <section
         aria-label="Search and filter"
-        className="w-full border-b border-surface bg-white px-4 py-4 sm:px-6 lg:px-8"
+        className="relative z-20 w-full overflow-visible border-b border-surface bg-white px-4 py-4 sm:px-6 lg:px-8"
       >
-        <div className="mx-auto w-full max-w-7xl">
+        <div className="relative mx-auto w-full max-w-7xl overflow-visible">
           <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
             <h1 className="text-[28px] font-extrabold leading-tight tracking-[-0.02em] text-[#161616]">
               Hvem vil du møde?
@@ -321,88 +334,79 @@ function BrowsePage() {
               />
             </label>
           </div>
+          <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div className="flex max-w-full flex-nowrap items-center gap-2 overflow-x-auto overflow-y-visible py-3 px-1">
+              <div className="shrink-0">
+                <StyledDropdown //By
+                  name="city"
+                  value={cityFilter}
+                  options={cityOptions}
+                  isOpen={openDropdown === "city"}
+                  onToggle={() =>
+                    setOpenDropdown(openDropdown === "city" ? "" : "city")
+                  }
+                  onSelect={handleDropdownChange}
+                  onClose={() => setOpenDropdown("")}
+                />
+              </div>
 
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-            <label className={labelClass}>
-              By
-              <StyledDropdown
-                name="city"
-                value={cityFilter}
-                options={cityOptions}
-                isOpen={openDropdown === "city"}
-                onToggle={() =>
-                  setOpenDropdown(openDropdown === "city" ? "" : "city")
-                }
-                onSelect={handleDropdownChange}
-                onClose={() => setOpenDropdown("")}
-              />
-            </label>
+              <div className="shrink-0">
+                <StyledDropdown //Hvem vil du møde?
+                  name="role"
+                  value={roleFilter}
+                  options={roleOptions}
+                  isOpen={openDropdown === "role"}
+                  onToggle={() =>
+                    setOpenDropdown(openDropdown === "role" ? "" : "role")
+                  }
+                  onSelect={handleDropdownChange}
+                  onClose={() => setOpenDropdown("")}
+                />
+              </div>
 
-            <label className={labelClass}>
-              Hvem vil du møde?
-              <StyledDropdown
-                name="role"
-                value={roleFilter}
-                options={roleOptions}
-                isOpen={openDropdown === "role"}
-                onToggle={() =>
-                  setOpenDropdown(openDropdown === "role" ? "" : "role")
-                }
-                onSelect={handleDropdownChange}
-                onClose={() => setOpenDropdown("")}
-              />
-            </label>
+              <div className="shrink-0">
+                <StyledDropdown //Danskniveau
+                  name="danishLevel"
+                  value={danishLevelFilter}
+                  options={danishLevelOptions}
+                  isOpen={openDropdown === "danishLevel"}
+                  onToggle={() =>
+                    setOpenDropdown(
+                      openDropdown === "danishLevel" ? "" : "danishLevel"
+                    )
+                  }
+                  onSelect={handleDropdownChange}
+                  onClose={() => setOpenDropdown("")}
+                />
+              </div>
 
-            <label className={labelClass}>
-              Danskniveau
-              <StyledDropdown
-                name="danishLevel"
-                value={danishLevelFilter}
-                options={danishLevelOptions}
-                isOpen={openDropdown === "danishLevel"}
-                onToggle={() =>
-                  setOpenDropdown(
-                    openDropdown === "danishLevel" ? "" : "danishLevel"
-                  )
-                }
-                onSelect={handleDropdownChange}
-                onClose={() => setOpenDropdown("")}
-              />
-            </label>
+              <div className="shrink-0">
+                <StyledDropdown //Tilgængelighed
+                  name="availability"
+                  value={availabilityFilter}
+                  options={availabilityOptions}
+                  isOpen={openDropdown === "availability"}
+                  onToggle={() =>
+                    setOpenDropdown(
+                      openDropdown === "availability" ? "" : "availability"
+                    )
+                  }
+                  onSelect={handleDropdownChange}
+                  onClose={() => setOpenDropdown("")}
+                />
+              </div>
+            </div>
 
-            <label className={labelClass}>
-              Tilgængelighed
-              <StyledDropdown
-                name="availability"
-                value={availabilityFilter}
-                options={availabilityOptions}
-                isOpen={openDropdown === "availability"}
-                onToggle={() =>
-                  setOpenDropdown(
-                    openDropdown === "availability" ? "" : "availability"
-                  )
-                }
-                onSelect={handleDropdownChange}
-                onClose={() => setOpenDropdown("")}
-              />
-            </label>
-          </div>
-
-          <div className="mt-5 flex justify-end">
-            <button
-              type="button"
-              onClick={handleResetFilters}
-              className="cursor-pointer rounded-full bg-[#ECE6DD] px-5 py-2.5 text-sm font-extrabold text-[#6E665C] transition hover:bg-[#F6F0E8] focus:outline-none focus:ring-4 focus:ring-[#FDEAEC] active:translate-y-px"
-            >
-              Nulstil filtre
-            </button>
+            <p className="hidden shrink-0 text-sm font-semibold text-neutral-light md:block">
+              {filteredUsers.length} partnere
+            </p>
+            <div className="flex items-center justify-between text-[14px] font-semibold text-neutral-light md:hidden">
+              <span>Best match</span>
+              <span>{filteredUsers.length} partnere</span>
+            </div>
           </div>
         </div>
       </section>
-
-      <p className="mt-4 text-sm font-semibold text-[#7C756B]">
-        Viser {filteredUsers.length} ud af {availableUsers.length} brugere
-      </p>
 
       {filteredUsers.length > 0 ? (
         <div className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
