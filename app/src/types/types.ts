@@ -1,4 +1,4 @@
-export type UserRole = "learner" | "native" | "both";
+export type UserRole = "learner" | "native";
 
 export type User = {
   id: string;
@@ -10,7 +10,7 @@ export type User = {
   danishLevel?: string;
   nativeLanguage?: string;
   learningGoals?: string[];
-  topics?: string[];
+  interests?: string[];
   availability?: string[];
   bio?: string;
   createdAt?: string;

@@ -29,7 +29,7 @@ const seedData = [
     avatarBgColor: "#457B9D",
     age: 34,
     city: "Aarhus",
-    danishLevel: "native",
+    danishLevel: "C2",
     nativeLanguage: "Danish",
     learningGoals: "Practice English while teaching Danish",
     interests: ["sports", "technology", "music"],
