@@ -4,6 +4,7 @@ import { useApp } from "../../context/AppContext.jsx";
 import { useAuth } from "../../context/AuthContext.jsx";
 
 export default function MatchCard({ match, onAction }) {
+
   const { respondToMatch, getUserById } = useApp();
   const { user } = useAuth();
   const navigate = useNavigate();
