@@ -7,6 +7,7 @@ import type { ProfileCardUser } from "../ProfileCard/ProfileCard";
 import EmptyState from "../Shared/EmptyState";
 import StyledDropdown, { type SelectOption } from "../Shared/StyledDropdown";
 import type { User } from "../../types/types";
+import { Search } from "lucide-react";
 
 type SendMatchResult =
   | {
@@ -110,13 +111,13 @@ function matchesSearch(user: User, searchTerm: string) {
   }
 
   const name = user.name.toLowerCase();
-  const topics = user.topics ?? [];
+  const interests = user.interests ?? [];
 
-  const topicMatches = topics.some((topic) =>
-    topic.toLowerCase().includes(normalizedSearch)
+  const interestsMatches = interests.some((interests) =>
+    interests.toLowerCase().includes(normalizedSearch)
   );
 
-  return name.includes(normalizedSearch) || topicMatches;
+  return name.includes(normalizedSearch) || interestsMatches;
 }
 
 function matchesFilter(userValue: string | undefined, selectedValue: string) {
@@ -150,7 +151,7 @@ function toProfileCardUser(user: User): ProfileCardUser {
     city: user.city ?? "Unknown city",
     role: user.role ?? "learner",
     danishLevel: user.danishLevel ?? "Not selected",
-    topics: user.topics ?? [],
+    interests: user.interests ?? [],
     bio: user.bio ?? "No bio yet.",
   };
 }
@@ -291,34 +292,37 @@ function BrowsePage() {
   }
 
   return (
-    <main className="-m-8 min-h-[calc(100vh-8rem)] bg-background px-4 py-8 font-sans sm:px-6 lg:px-10">
-      <div className="mx-auto w-full max-w-5xl">
-        <header className="mb-6">
-          <h1 className="text-[28px] font-extrabold leading-tight tracking-[-0.02em] text-[#161616]">
-            Hvem vil du møde?
-          </h1>
-        </header>
-
-        <section
-          aria-label="Search and filter"
-          className="rounded-[18px] border border-[#EAE3D8] bg-white p-5 shadow-card sm:p-6"
-        >
-          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
+    <main className="-m-8 min-h-[calc(100vh-8rem)] bg-background font-sans">
+      <section
+        aria-label="Search and filter"
+        className="w-full border-b border-surface bg-white px-4 py-4 sm:px-6 lg:px-8"
+      >
+        <div className="mx-auto w-full max-w-7xl">
+          <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
+            <h1 className="text-[28px] font-extrabold leading-tight tracking-[-0.02em] text-[#161616]">
+              Hvem vil du møde?
+            </h1>
             <label
               htmlFor="search"
-              className={`${labelClass} col-span-2 lg:col-span-4`}
+              className={`relative w-full md:max-w-sm lg:max-w-md`}
             >
-              Søg efter interesser
+              <span className="sr-only">Søg efter interesser</span>
+              <Search
+                aria-hidden="true"
+                className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-neutral-light"
+              />
               <input
                 type="search"
                 id="search"
                 value={searchTerm}
                 onChange={handleSearchChange}
-                placeholder="hunde"
-                className={inputClass}
+                placeholder="Søg efter interesser"
+                className="w-full rounded-pill border border-surface bg-surface-alt py-3 pl-11 pr-4 text-sm font-semibold text-foreground outline-none placeholder:text-neutral-light focus:border-primary focus:ring-4 focus:ring-primary-pale"
               />
             </label>
+          </div>
 
+          <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
             <label className={labelClass}>
               By
               <StyledDropdown
@@ -393,13 +397,15 @@ function BrowsePage() {
               Nulstil filtre
             </button>
           </div>
-        </section>
+        </div>
+      </section>
 
-        <p className="mt-4 text-sm font-semibold text-[#7C756B]">
-          Viser {filteredUsers.length} ud af {availableUsers.length} ud af
-        </p>
+      <p className="mt-4 text-sm font-semibold text-[#7C756B]">
+        Viser {filteredUsers.length} ud af {availableUsers.length} brugere
+      </p>
 
-        {filteredUsers.length > 0 ? (
+      {filteredUsers.length > 0 ? (
+        <div className="mx-auto w-full max-w-7xl px-4 py-5 sm:px-6 lg:px-8">
           <section
             aria-label="Language partners"
             className="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
@@ -430,13 +436,13 @@ function BrowsePage() {
               );
             })}
           </section>
-        ) : (
-          <EmptyState
-            title="No users found"
-            message="Try changing your search or filters."
-          />
-        )}
-      </div>
+        </div>
+      ) : (
+        <EmptyState
+          title="No users found"
+          message="Try changing your search or filters."
+        />
+      )}
     </main>
   );
 }
